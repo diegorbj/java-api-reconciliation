@@ -49,6 +49,7 @@ class ModalityResourceTest {
     @Test
     @Order(3)
     public void shouldReturnUpdateModality() throws Exception {
+        this.shouldReturnInsertModality();
         JSONObject mapToUpdate = setObjectToUpdate();
         this.mockMvc.perform(put("/reconciliation/v1/modalities/1").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(mapToUpdate))).andExpect(status().isOk());
@@ -57,18 +58,21 @@ class ModalityResourceTest {
     @Test
     @Order(4)
     public void shouldReturnFindByIdModality() throws Exception {
+        this.shouldReturnInsertModality();
         this.mockMvc.perform(get("/reconciliation/v1/modalities/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
     public void shouldReturnFindAllModalities() throws Exception {
+        this.shouldReturnInsertModality();
         this.mockMvc.perform(get("/reconciliation/v1/modalities")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdModality() throws Exception {
+        this.shouldReturnInsertModality();
         this.mockMvc.perform(delete("/reconciliation/v1/modalities/1")).andExpect(status().isNoContent());
     }
 

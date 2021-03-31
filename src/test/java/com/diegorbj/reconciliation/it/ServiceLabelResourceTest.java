@@ -49,6 +49,7 @@ class ServiceLabelResourceTest {
     @Test
     @Order(3)
     public void shouldReturnUpdateServiceLabel() throws Exception {
+        this.shouldReturnInsertServiceLabel();
         JSONObject mapToUpdate = setObjectToUpdate();
         this.mockMvc.perform(put("/reconciliation/v1/servicelabels/1").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(mapToUpdate))).andExpect(status().isOk());
@@ -57,18 +58,21 @@ class ServiceLabelResourceTest {
     @Test
     @Order(4)
     public void shouldReturnFindByIdServiceLabel() throws Exception {
+        this.shouldReturnInsertServiceLabel();
         this.mockMvc.perform(get("/reconciliation/v1/servicelabels/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
     public void shouldReturnFindAllServiceLabels() throws Exception {
+        this.shouldReturnInsertServiceLabel();
         this.mockMvc.perform(get("/reconciliation/v1/servicelabels")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdServiceLabel() throws Exception {
+        this.shouldReturnInsertServiceLabel();
         this.mockMvc.perform(delete("/reconciliation/v1/servicelabels/1")).andExpect(status().isNoContent());
     }
 

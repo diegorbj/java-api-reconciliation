@@ -49,6 +49,7 @@ class CardTypeResourceTest {
     @Test
     @Order(3)
     public void shouldReturnUpdateCardType() throws Exception {
+        this.shouldReturnInsertCardType();
         JSONObject mapToUpdate = setObjectToUpdate();
         this.mockMvc.perform(put("/reconciliation/v1/cardtypes/1").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(mapToUpdate))).andExpect(status().isOk());
@@ -57,18 +58,21 @@ class CardTypeResourceTest {
     @Test
     @Order(4)
     public void shouldReturnFindByIdCardType() throws Exception {
+        this.shouldReturnInsertCardType();
         this.mockMvc.perform(get("/reconciliation/v1/cardtypes/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
     public void shouldReturnFindAllCardTypes() throws Exception {
+        this.shouldReturnInsertCardType();
         this.mockMvc.perform(get("/reconciliation/v1/cardtypes")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdCardType() throws Exception {
+        this.shouldReturnInsertCardType();
         this.mockMvc.perform(delete("/reconciliation/v1/cardtypes/1")).andExpect(status().isNoContent());
     }
 

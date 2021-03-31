@@ -49,6 +49,7 @@ class MerchantResourceTest {
     @Test
     @Order(3)
     public void shouldReturnUpdateMerchant() throws Exception {
+        this.shouldReturnInsertMerchant();
         JSONObject mapToUpdate = setObjectToUpdate();
         this.mockMvc.perform(put("/reconciliation/v1/merchants/1").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(mapToUpdate))).andExpect(status().isOk());
@@ -57,18 +58,21 @@ class MerchantResourceTest {
     @Test
     @Order(4)
     public void shouldReturnFindByIdMerchant() throws Exception {
+        this.shouldReturnInsertMerchant();
         this.mockMvc.perform(get("/reconciliation/v1/merchants/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
     public void shouldReturnFindAllMerchants() throws Exception {
+        this.shouldReturnInsertMerchant();
         this.mockMvc.perform(get("/reconciliation/v1/merchants")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdMerchant() throws Exception {
+        this.shouldReturnInsertMerchant();
         this.mockMvc.perform(delete("/reconciliation/v1/merchants/1")).andExpect(status().isNoContent());
     }
 

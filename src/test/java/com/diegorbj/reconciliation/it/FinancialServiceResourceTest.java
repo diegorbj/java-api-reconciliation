@@ -49,6 +49,7 @@ class FinancialServiceResourceTest {
     @Test
     @Order(3)
     public void shouldReturnUpdateFinancialService() throws Exception {
+        this.shouldReturnInsertFinancialService();
         JSONObject mapToUpdate = setObjectToUpdate();
         this.mockMvc.perform(put("/reconciliation/v1/financialservices/1").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(mapToUpdate))).andExpect(status().isOk());
@@ -57,18 +58,21 @@ class FinancialServiceResourceTest {
     @Test
     @Order(4)
     public void shouldReturnFindByIdFinancialService() throws Exception {
+        this.shouldReturnInsertFinancialService();
         this.mockMvc.perform(get("/reconciliation/v1/financialservices/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
     public void shouldReturnFindAllFinancialServices() throws Exception {
+        this.shouldReturnInsertFinancialService();
         this.mockMvc.perform(get("/reconciliation/v1/financialservices")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdFinancialService() throws Exception {
+        this.shouldReturnInsertFinancialService();
         this.mockMvc.perform(delete("/reconciliation/v1/financialservices/1")).andExpect(status().isNoContent());
     }
 
