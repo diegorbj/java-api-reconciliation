@@ -1,6 +1,7 @@
 package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.domain.Merchant;
+import com.diegorbj.reconciliation.resources.MerchantResource;
 import com.diegorbj.reconciliation.services.MerchantService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
 public class MerchantServiceTest {
 
     @Autowired
@@ -33,11 +34,10 @@ public class MerchantServiceTest {
 
     @Test
     @Order(2)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnMerchantCreatedWithSuccess() throws Exception {
+    public void shouldReturnMerchantCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(MerchantService.toMerchant(jsonObject));
+        testObject = _service.insert(MerchantResource.toMerchant(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -45,11 +45,10 @@ public class MerchantServiceTest {
 
     @Test
     @Order(3)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnMerchantUpdatedWithSuccess() throws Exception {
+    public void shouldReturnMerchantUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        Merchant updatedObject = MerchantService.toMerchant(jsonObject);
+        Merchant updatedObject = MerchantResource.toMerchant(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);
@@ -61,34 +60,29 @@ public class MerchantServiceTest {
 
     @Test
     @Order(4)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnNotNullMerchantFindAll() throws Exception {
+    public void shouldReturnNotNullMerchantFindAll() {
         assertNotNull(_service.findAll());
     }
 
     @Test
     @Order(5)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnNotNullMerchantFindById() throws Exception {
+    public void shouldReturnNotNullMerchantFindById() {
         assertNotNull(_service.findById(testObject.getId()));
     }
 
     @Test
     @Order(6)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnMerchantDeletedWithSuccess() throws Exception {
+    public void shouldReturnMerchantDeletedWithSuccess() {
         _service.delete(testObject.getId());
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 0L); //TODO change to JSONObject.NULL
+        map.put("id", JSONObject.NULL);
         map.put("name", "Magazine 25th Av.");
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());

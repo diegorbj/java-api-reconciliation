@@ -1,6 +1,7 @@
 package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.domain.CardType;
+import com.diegorbj.reconciliation.resources.CardTypeResource;
 import com.diegorbj.reconciliation.services.CardTypeService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
 public class CardTypeServiceTest {
 
     @Autowired
@@ -33,11 +34,10 @@ public class CardTypeServiceTest {
 
     @Test
     @Order(2)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnCardTypeCreatedWithSuccess() throws Exception {
+    public void shouldReturnCardTypeCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
-
-        testObject = _service.insert(CardTypeService.toCardType(jsonObject));
+        System.out.println("whatever:: " + jsonObject.toString());
+        testObject = _service.insert(CardTypeResource.toCardType(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -45,11 +45,10 @@ public class CardTypeServiceTest {
 
     @Test
     @Order(3)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnCardTypeUpdatedWithSuccess() throws Exception {
+    public void shouldReturnCardTypeUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        CardType updatedObject = CardTypeService.toCardType(jsonObject);
+        CardType updatedObject = CardTypeResource.toCardType(jsonObject);
         testObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(testObject);
@@ -61,34 +60,29 @@ public class CardTypeServiceTest {
 
     @Test
     @Order(4)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnNotNullCardTypeFindAll() throws Exception {
+    public void shouldReturnNotNullCardTypeFindAll() {
         assertNotNull(_service.findAll());
     }
 
     @Test
     @Order(5)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnNotNullCardTypeFindById() throws Exception {
+    public void shouldReturnNotNullCardTypeFindById() {
         assertNotNull(_service.findById(testObject.getId()));
     }
 
     @Test
     @Order(6)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnCardTypeDeletedWithSuccess() throws Exception {
+    public void shouldReturnCardTypeDeletedWithSuccess() {
         _service.delete(testObject.getId());
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 0L); //TODO change to JSONObject.NULL
+        map.put("id", JSONObject.NULL);
         map.put("name", "Black");
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());

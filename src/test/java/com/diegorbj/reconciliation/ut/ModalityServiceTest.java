@@ -1,6 +1,7 @@
 package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.domain.Modality;
+import com.diegorbj.reconciliation.resources.ModalityResource;
 import com.diegorbj.reconciliation.services.ModalityService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
 public class ModalityServiceTest {
 
     @Autowired
@@ -33,11 +34,10 @@ public class ModalityServiceTest {
 
     @Test
     @Order(2)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnModalityCreatedWithSuccess() throws Exception {
+    public void shouldReturnModalityCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(ModalityService.toModality(jsonObject));
+        testObject = _service.insert(ModalityResource.toModality(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -45,11 +45,10 @@ public class ModalityServiceTest {
 
     @Test
     @Order(3)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnModalityUpdatedWithSuccess() throws Exception {
+    public void shouldReturnModalityUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        Modality updatedObject = ModalityService.toModality(jsonObject);
+        Modality updatedObject = ModalityResource.toModality(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);
@@ -61,34 +60,29 @@ public class ModalityServiceTest {
 
     @Test
     @Order(4)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnNotNullModalityFindAll() throws Exception {
+    public void shouldReturnNotNullModalityFindAll() {
         assertNotNull(_service.findAll());
     }
 
     @Test
     @Order(5)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnNotNullModalityFindById() throws Exception {
+    public void shouldReturnNotNullModalityFindById() {
         assertNotNull(_service.findById(testObject.getId()));
     }
 
     @Test
     @Order(6)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnModalityDeletedWithSuccess() throws Exception {
+    public void shouldReturnModalityDeletedWithSuccess() {
         _service.delete(testObject.getId());
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 0L); //TODO change to JSONObject.NULL
+        map.put("id", JSONObject.NULL);
         map.put("name", "Magnetic");
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());

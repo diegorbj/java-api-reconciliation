@@ -1,6 +1,7 @@
 package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.domain.FinancialInstitution;
+import com.diegorbj.reconciliation.resources.FinancialInstitutionResource;
 import com.diegorbj.reconciliation.services.FinancialInstitutionService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
 public class FinancialInstitutionServiceTest {
 
     @Autowired
@@ -33,11 +34,10 @@ public class FinancialInstitutionServiceTest {
 
     @Test
     @Order(2)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnFinancialInstitutionCreatedWithSuccess() throws Exception {
+    public void shouldReturnFinancialInstitutionCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(FinancialInstitutionService.toFinancialInstitution(jsonObject));
+        testObject = _service.insert(FinancialInstitutionResource.toFinancialInstitution(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -45,11 +45,10 @@ public class FinancialInstitutionServiceTest {
 
     @Test
     @Order(3)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnFinancialInstitutionUpdatedWithSuccess() throws Exception {
+    public void shouldReturnFinancialInstitutionUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        FinancialInstitution updatedObject = FinancialInstitutionService.toFinancialInstitution(jsonObject);
+        FinancialInstitution updatedObject = FinancialInstitutionResource.toFinancialInstitution(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);
@@ -61,34 +60,29 @@ public class FinancialInstitutionServiceTest {
 
     @Test
     @Order(4)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnNotNullFinancialInstitutionFindAll() throws Exception {
+    public void shouldReturnNotNullFinancialInstitutionFindAll() {
         assertNotNull(_service.findAll());
     }
 
     @Test
     @Order(5)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnNotNullFinancialInstitutionFindById() throws Exception {
+    public void shouldReturnNotNullFinancialInstitutionFindById() {
         assertNotNull(_service.findById(testObject.getId()));
     }
 
     @Test
     @Order(6)
-    @SuppressWarnings("unchecked")
-    public void shouldReturnFinancialInstitutionDeletedWithSuccess() throws Exception {
+    public void shouldReturnFinancialInstitutionDeletedWithSuccess() {
         _service.delete(testObject.getId());
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 0L); //TODO change to JSONObject.NULL
+        map.put("id", JSONObject.NULL);
         map.put("name", "Mint Co.");
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());

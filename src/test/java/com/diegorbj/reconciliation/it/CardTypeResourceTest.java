@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
 class CardTypeResourceTest {
 
     @Autowired
@@ -75,7 +75,7 @@ class CardTypeResourceTest {
     @SuppressWarnings("unchecked")
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
+        map.put("id", JSONObject.NULL);
         map.put("name", "Black");
         return map;
     }
