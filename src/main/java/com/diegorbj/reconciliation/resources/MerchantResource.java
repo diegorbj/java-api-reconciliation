@@ -49,8 +49,8 @@ public class MerchantResource {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Merchant> update(@PathVariable("id") Long id, @RequestBody String data) {
-        _service.update(id, MerchantService.toMerchant(new JSONObject(data)));
-        return ResponseEntity.noContent().build();
+        Merchant obj = _service.update(id, MerchantService.toMerchant(new JSONObject(data)));
+        return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

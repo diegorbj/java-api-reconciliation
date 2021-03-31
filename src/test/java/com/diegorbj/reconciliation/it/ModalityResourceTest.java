@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener;
-import org.springframework.core.annotation.Order;
+import org.junit.jupiter.api.Order;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
@@ -43,36 +42,32 @@ class ModalityResourceTest {
     public void shouldReturnInsertModality() throws Exception {
         JSONObject mapToCreate = setObjectToCreate();
         this.mockMvc.perform(post("/reconciliation/v1/modalities").contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(mapToCreate))).andExpect(status().isCreated());
+                .content(mapToCreate.toString())).andExpect(status().isCreated());
     }
 
     @Test
     @Order(3)
     public void shouldReturnUpdateModality() throws Exception {
-        this.shouldReturnInsertModality();
         JSONObject mapToUpdate = setObjectToUpdate();
         this.mockMvc.perform(put("/reconciliation/v1/modalities/1").contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(mapToUpdate))).andExpect(status().isOk());
+                .content(mapToUpdate.toString())).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
     public void shouldReturnFindByIdModality() throws Exception {
-        this.shouldReturnInsertModality();
         this.mockMvc.perform(get("/reconciliation/v1/modalities/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
     public void shouldReturnFindAllModalities() throws Exception {
-        this.shouldReturnInsertModality();
         this.mockMvc.perform(get("/reconciliation/v1/modalities")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdModality() throws Exception {
-        this.shouldReturnInsertModality();
         this.mockMvc.perform(delete("/reconciliation/v1/modalities/1")).andExpect(status().isNoContent());
     }
 

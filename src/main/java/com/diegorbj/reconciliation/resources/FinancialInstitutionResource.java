@@ -51,8 +51,8 @@ public class FinancialInstitutionResource {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<FinancialInstitution> update(@PathVariable("id") Long id, @RequestBody String data) {
-        _service.update(id, FinancialInstitutionService.toFinancialInstitution(new JSONObject(data)));
-        return ResponseEntity.noContent().build();
+        FinancialInstitution obj = _service.update(id, FinancialInstitutionService.toFinancialInstitution(new JSONObject(data)));
+        return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

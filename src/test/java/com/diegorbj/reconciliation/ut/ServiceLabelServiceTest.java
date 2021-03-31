@@ -23,6 +23,8 @@ public class ServiceLabelServiceTest {
     @Autowired
     private ServiceLabelService _service;
 
+    private ServiceLabel testObject;
+
     @Test
     @Order(1)
     public void shouldReturnNotNullServiceLabelService() {
@@ -33,31 +35,28 @@ public class ServiceLabelServiceTest {
     @Order(2)
     @SuppressWarnings("unchecked")
     public void shouldReturnServiceLabelCreatedWithSuccess() throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", 1);
-        jsonObject.put("name", "Black");
+        JSONObject jsonObject = setObjectToCreate();
 
-        ServiceLabel obj = _service.insert(ServiceLabelService.toServiceLabel(jsonObject));
+        testObject = _service.insert(ServiceLabelService.toServiceLabel(jsonObject));
 
-        assertNotNull(obj);
-        assertEquals(obj.getId().longValue(), jsonObject.get("id"));
-        assertEquals(obj.getName(), jsonObject.get("name"));
+        assertNotNull(testObject);
+        assertEquals(testObject.getName(), jsonObject.get("name"));
     }
 
     @Test
     @Order(3)
     @SuppressWarnings("unchecked")
     public void shouldReturnServiceLabelUpdatedWithSuccess() throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", 1);
-        jsonObject.put("name", "Platinum");
+        JSONObject jsonObject = setObjectToUpdate();
 
-        ServiceLabel obj = ServiceLabelService.toServiceLabel(jsonObject);
-        obj = _service.update(obj.getId(), obj);
+        ServiceLabel updatedObject = ServiceLabelService.toServiceLabel(jsonObject);
+        updatedObject = _service.update(testObject.getId(), updatedObject);
 
-        assertNotNull(obj);
-        assertEquals(obj.getId().longValue(), jsonObject.get("id"));
-        assertEquals(obj.getName(), jsonObject.get("name"));
+        assertNotNull(updatedObject);
+        assertEquals(updatedObject.getId(), jsonObject.get("id"));
+        assertEquals(updatedObject.getName(), jsonObject.get("name"));
+
+        testObject = updatedObject;
     }
 
     @Test
@@ -71,15 +70,30 @@ public class ServiceLabelServiceTest {
     @Order(5)
     @SuppressWarnings("unchecked")
     public void shouldReturnNotNullServiceLabelFindById() throws Exception {
-        assertNotNull(_service.findById(1L));
+        assertNotNull(_service.findById(testObject.getId()));
     }
 
     @Test
     @Order(6)
     @SuppressWarnings("unchecked")
     public void shouldReturnServiceLabelDeletedWithSuccess() throws Exception {
-        _service.delete(1L);
-        assertNull(_service.findById(1L));
+        _service.delete(testObject.getId());
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject setObjectToCreate() {
+        JSONObject map = new JSONObject();
+        map.put("id", 0L); //TODO change to JSONObject.NULL
+        map.put("name", "Visa");
+        return map;
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject setObjectToUpdate() {
+        JSONObject map = new JSONObject();
+        map.put("id", testObject.getId());
+        map.put("name", "Master");
+        return map;
     }
 
 }

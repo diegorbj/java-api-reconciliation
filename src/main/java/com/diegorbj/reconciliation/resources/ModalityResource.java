@@ -49,8 +49,8 @@ public class ModalityResource {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Modality> update(@PathVariable("id") Long id, @RequestBody String data) {
-        _service.update(id, ModalityService.toModality(new JSONObject(data)));
-        return ResponseEntity.noContent().build();
+        Modality obj = _service.update(id, ModalityService.toModality(new JSONObject(data)));
+        return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -49,8 +49,8 @@ public class ServiceLabelResource {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ServiceLabel> update(@PathVariable("id") Long id, @RequestBody String data) {
-        _service.update(id, ServiceLabelService.toServiceLabel(new JSONObject(data)));
-        return ResponseEntity.noContent().build();
+        ServiceLabel obj = _service.update(id, ServiceLabelService.toServiceLabel(new JSONObject(data)));
+        return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

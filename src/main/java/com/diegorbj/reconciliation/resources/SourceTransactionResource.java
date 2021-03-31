@@ -53,8 +53,8 @@ public class SourceTransactionResource {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<SourceTransaction> update(@PathVariable("id") Long id, @RequestBody SourceTransaction obj) {
-        _service.update(id, obj);
-        return ResponseEntity.noContent().build();
+        obj = _service.update(id, obj);
+        return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

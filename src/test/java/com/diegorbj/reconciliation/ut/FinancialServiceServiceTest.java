@@ -23,6 +23,8 @@ public class FinancialServiceServiceTest {
     @Autowired
     private FinancialServiceService _service;
 
+    private FinancialService testObject;
+
     @Test
     @Order(1)
     public void shouldReturnNotNullFinancialServiceService() {
@@ -33,31 +35,28 @@ public class FinancialServiceServiceTest {
     @Order(2)
     @SuppressWarnings("unchecked")
     public void shouldReturnFinancialServiceCreatedWithSuccess() throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", 1);
-        jsonObject.put("name", "Credit Card");
+        JSONObject jsonObject = setObjectToCreate();
 
-        FinancialService obj = _service.insert(FinancialServiceService.toFinancialService(jsonObject));
+        testObject = _service.insert(FinancialServiceService.toFinancialService(jsonObject));
 
-        assertNotNull(obj);
-        assertEquals(obj.getId().longValue(), jsonObject.get("id"));
-        assertEquals(obj.getName(), jsonObject.get("name"));
+        assertNotNull(testObject);
+        assertEquals(testObject.getName(), jsonObject.get("name"));
     }
 
     @Test
     @Order(3)
     @SuppressWarnings("unchecked")
     public void shouldReturnFinancialServiceUpdatedWithSuccess() throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", 1);
-        jsonObject.put("name", "Debit Card");
+        JSONObject jsonObject = setObjectToUpdate();
 
-        FinancialService obj = FinancialServiceService.toFinancialService(jsonObject);
-        obj = _service.update(obj.getId(), obj);
+        FinancialService updatedObject = FinancialServiceService.toFinancialService(jsonObject);
+        updatedObject = _service.update(testObject.getId(), updatedObject);
 
-        assertNotNull(obj);
-        assertEquals(obj.getId().longValue(), jsonObject.get("id"));
-        assertEquals(obj.getName(), jsonObject.get("name"));
+        assertNotNull(updatedObject);
+        assertEquals(updatedObject.getId(), jsonObject.get("id"));
+        assertEquals(updatedObject.getName(), jsonObject.get("name"));
+
+        testObject = updatedObject;
     }
 
     @Test
@@ -71,15 +70,30 @@ public class FinancialServiceServiceTest {
     @Order(5)
     @SuppressWarnings("unchecked")
     public void shouldReturnNotNullFinancialServiceFindById() throws Exception {
-        assertNotNull(_service.findById(1L));
+        assertNotNull(_service.findById(testObject.getId()));
     }
 
     @Test
     @Order(6)
     @SuppressWarnings("unchecked")
     public void shouldReturnFinancialServiceDeletedWithSuccess() throws Exception {
-        _service.delete(1L);
-        assertNull(_service.findById(1L));
+        _service.delete(testObject.getId());
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject setObjectToCreate() {
+        JSONObject map = new JSONObject();
+        map.put("id", 0L); //TODO change to JSONObject.NULL
+        map.put("name", "Credit Card");
+        return map;
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject setObjectToUpdate() {
+        JSONObject map = new JSONObject();
+        map.put("id", testObject.getId());
+        map.put("name", "Debit Card");
+        return map;
     }
 
 }
