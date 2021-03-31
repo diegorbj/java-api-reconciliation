@@ -1,21 +1,18 @@
 package com.diegorbj.reconciliation.it;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-public class MerchantsApiIntegrationTest {
+class CardTypeResourceTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,43 +25,43 @@ public class MerchantsApiIntegrationTest {
 
     @Test
     @Order(2)
-    public void shouldReturnCreateMerchant() throws Exception {
+    public void shouldReturnInsertCardType() throws Exception {
         JSONObject mapToCreate = setObjectToCreate();
-        this.mockMvc.perform(post("/reconciliation/v1/merchants").contentType(MediaType.APPLICATION_JSON)
+        this.mockMvc.perform(post("/reconciliation/v1/cardtypes").contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(mapToCreate))).andExpect(status().isCreated());
     }
 
     @Test
     @Order(3)
-    public void shouldReturnUpdateMerchant() throws Exception {
+    public void shouldReturnUpdateCardType() throws Exception {
         JSONObject mapToUpdate = setObjectToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/merchants/1").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/cardtypes/1").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(mapToUpdate))).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
-    public void shouldReturnGetOneMerchant() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/merchants/1")).andExpect(status().isOk());
+    public void shouldReturnFindByIdCardType() throws Exception {
+        this.mockMvc.perform(get("/reconciliation/v1/cardtypes/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
-    public void shouldReturnGetAllMerchants() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/merchants")).andExpect(status().isOk());
+    public void shouldReturnFindAllCardTypes() throws Exception {
+        this.mockMvc.perform(get("/reconciliation/v1/cardtypes")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
-    public void shouldReturnRemoveAllMerchants() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/merchants/1")).andExpect(status().isNoContent());
+    public void shouldReturnRemoveByIdCardType() throws Exception {
+        this.mockMvc.perform(delete("/reconciliation/v1/cardtypes/1")).andExpect(status().isNoContent());
     }
 
     @SuppressWarnings("unchecked")
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", 1L);
-        map.put("name", "Magazine 25th Av.");
+        map.put("name", "Black");
         return map;
     }
 
@@ -72,7 +69,8 @@ public class MerchantsApiIntegrationTest {
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", 1L);
-        map.put("name", "Mini 5th Av.");
+        map.put("name", "Platinum");
         return map;
     }
+
 }

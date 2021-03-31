@@ -1,21 +1,18 @@
 package com.diegorbj.reconciliation.it;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-public class FinancialServicesApiIntegrationTest {
+class ModalityResourceTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,43 +25,43 @@ public class FinancialServicesApiIntegrationTest {
 
     @Test
     @Order(2)
-    public void shouldReturnCreateFinancialService() throws Exception {
+    public void shouldReturnInsertModality() throws Exception {
         JSONObject mapToCreate = setObjectToCreate();
-        this.mockMvc.perform(post("/reconciliation/v1/financialservices").contentType(MediaType.APPLICATION_JSON)
+        this.mockMvc.perform(post("/reconciliation/v1/modalities").contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(mapToCreate))).andExpect(status().isCreated());
     }
 
     @Test
     @Order(3)
-    public void shouldReturnUpdateFinancialService() throws Exception {
+    public void shouldReturnUpdateModality() throws Exception {
         JSONObject mapToUpdate = setObjectToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/financialservices/1").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/modalities/1").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(mapToUpdate))).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
-    public void shouldReturnGetOneFinancialService() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/financialservices/1")).andExpect(status().isOk());
+    public void shouldReturnFindByIdModality() throws Exception {
+        this.mockMvc.perform(get("/reconciliation/v1/modalities/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
-    public void shouldReturnGetAllFinancialServices() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/financialservices")).andExpect(status().isOk());
+    public void shouldReturnFindAllModalities() throws Exception {
+        this.mockMvc.perform(get("/reconciliation/v1/modalities")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
-    public void shouldReturnRemoveAllFinancialServices() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/financialservices/1")).andExpect(status().isNoContent());
+    public void shouldReturnRemoveByIdModality() throws Exception {
+        this.mockMvc.perform(delete("/reconciliation/v1/modalities/1")).andExpect(status().isNoContent());
     }
 
     @SuppressWarnings("unchecked")
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", 1L);
-        map.put("name", "Credit Card");
+        map.put("name", "Magnetic");
         return map;
     }
 
@@ -72,7 +69,8 @@ public class FinancialServicesApiIntegrationTest {
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", 1L);
-        map.put("name", "Debit Card");
+        map.put("name", "Chip");
         return map;
     }
+
 }

@@ -12,7 +12,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Configuration
-@Profile("dev")
+@Profile("test")
 public class InitialLoad implements CommandLineRunner {
 
     @Autowired
