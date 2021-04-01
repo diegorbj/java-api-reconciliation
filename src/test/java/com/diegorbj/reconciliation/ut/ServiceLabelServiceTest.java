@@ -37,7 +37,7 @@ public class ServiceLabelServiceTest {
     public void shouldReturnServiceLabelCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(ServiceLabelResource.toServiceLabel(jsonObject));
+        testObject = _service.insert(ServiceLabelDTO.fromJSON(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -48,7 +48,7 @@ public class ServiceLabelServiceTest {
     public void shouldReturnServiceLabelUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        ServiceLabelDTO updatedObject = ServiceLabelResource.toServiceLabel(jsonObject);
+        ServiceLabelDTO updatedObject = ServiceLabelDTO.fromJSON(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);

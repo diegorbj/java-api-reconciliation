@@ -46,7 +46,7 @@ public class ServiceLabelResource {
     public ResponseEntity<ServiceLabelDTO> insert(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                ServiceLabelDTO obj = _service.insert(ServiceLabelResource.toServiceLabel(new JSONObject(data)));
+                ServiceLabelDTO obj = _service.insert(ServiceLabelDTO.fromJSON(data));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -64,7 +64,7 @@ public class ServiceLabelResource {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ServiceLabelDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
-        ServiceLabelDTO obj = _service.update(id, ServiceLabelResource.toServiceLabel(new JSONObject(data)));
+        ServiceLabelDTO obj = _service.update(id, ServiceLabelDTO.fromJSON(data));
         return ResponseEntity.ok().body(obj);
     }
 
@@ -72,13 +72,6 @@ public class ServiceLabelResource {
     public ResponseEntity<ServiceLabelDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    public static ServiceLabelDTO toServiceLabel(JSONObject jsonObject) {
-        ServiceLabelDTO obj = new ServiceLabelDTO();
-        obj.setId(jsonObject.get("id") == JSONObject.NULL ? null: Long.parseLong(jsonObject.get("id").toString()));
-        obj.setName(jsonObject.get("name") == JSONObject.NULL ? null: jsonObject.get("name").toString());
-        return obj;
     }
 
 }

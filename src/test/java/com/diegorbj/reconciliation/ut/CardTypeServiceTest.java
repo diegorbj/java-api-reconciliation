@@ -36,7 +36,7 @@ public class CardTypeServiceTest {
     @Order(2)
     public void shouldReturnCardTypeCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
-        testObject = _service.insert(CardTypeResource.toCardType(jsonObject));
+        testObject = _service.insert(CardTypeDTO.fromJSON(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -47,7 +47,7 @@ public class CardTypeServiceTest {
     public void shouldReturnCardTypeUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        CardTypeDTO updatedObject = CardTypeResource.toCardType(jsonObject);
+        CardTypeDTO updatedObject = CardTypeDTO.fromJSON(jsonObject);
         testObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(testObject);

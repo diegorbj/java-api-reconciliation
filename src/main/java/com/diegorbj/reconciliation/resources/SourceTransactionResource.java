@@ -1,9 +1,9 @@
 package com.diegorbj.reconciliation.resources;
 
-import com.diegorbj.reconciliation.domain.Installment;
-import com.diegorbj.reconciliation.domain.SourceTransaction;
 import com.diegorbj.reconciliation.services.InstallmentService;
 import com.diegorbj.reconciliation.services.SourceTransactionService;
+import com.diegorbj.reconciliation.services.dto.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +23,8 @@ public class SourceTransactionResource {
     private InstallmentService _childService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<SourceTransaction>> findAll() {
-        List<SourceTransaction> list = _service.findAll();
+    public ResponseEntity<List<SourceTransactionDTO>> findAll() {
+        List<SourceTransactionDTO> list = _service.findAll();
         if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -32,8 +32,8 @@ public class SourceTransactionResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<SourceTransaction> findById(@PathVariable("id") Long id) {
-        SourceTransaction obj = _service.findById(id);
+    public ResponseEntity<SourceTransactionDTO> findById(@PathVariable("id") Long id) {
+        SourceTransactionDTO obj = _service.findById(id);
         if (obj == null) {
             return ResponseEntity.notFound().build();
         }
@@ -41,8 +41,8 @@ public class SourceTransactionResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<SourceTransaction> insert(@RequestBody SourceTransaction obj) {
-        obj = _service.insert(obj);
+    public ResponseEntity<SourceTransactionDTO> insert(@RequestBody String data) {
+        SourceTransactionDTO obj = _service.insert(SourceTransactionDTO.fromJSON(data));
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -52,30 +52,15 @@ public class SourceTransactionResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<SourceTransaction> update(@PathVariable("id") Long id, @RequestBody SourceTransaction obj) {
-        obj = _service.update(id, obj);
+    public ResponseEntity<SourceTransactionDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
+        SourceTransactionDTO obj = _service.update(id, SourceTransactionDTO.fromJSON(data));
         return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<SourceTransaction> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<SourceTransactionDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-    @RequestMapping(value = "/{id}/installments", method = RequestMethod.POST)
-    public ResponseEntity<Installment> insert(@PathVariable("id") Long id, @RequestBody Installment obj) {
-        if (obj.getQuota().getSourceTransaction().getId() != id){
-            return ResponseEntity.badRequest().build();
-        }
-        obj = _childService.insert(obj);
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{number}")
-                .buildAndExpand(obj.getQuota().getNumber())
-                .toUri();
-        return ResponseEntity.created(uri).body(obj);
-    }
-
 
 }

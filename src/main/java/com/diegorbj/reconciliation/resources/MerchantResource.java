@@ -46,7 +46,7 @@ public class MerchantResource {
     public ResponseEntity<MerchantDTO> insert(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                MerchantDTO obj = _service.insert(MerchantResource.toMerchant(new JSONObject(data)));
+                MerchantDTO obj = _service.insert(MerchantDTO.fromJSON(data));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -66,7 +66,7 @@ public class MerchantResource {
     public ResponseEntity<MerchantDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                MerchantDTO obj = _service.update(id, MerchantResource.toMerchant(new JSONObject(data)));
+                MerchantDTO obj = _service.update(id, MerchantDTO.fromJSON(data));
                 return ResponseEntity.ok().body(obj);
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
@@ -81,13 +81,6 @@ public class MerchantResource {
     public ResponseEntity<MerchantDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    public static MerchantDTO toMerchant(JSONObject jsonObject) {
-        MerchantDTO obj = new MerchantDTO();
-        obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
-        obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
-        return obj;
     }
 
 }

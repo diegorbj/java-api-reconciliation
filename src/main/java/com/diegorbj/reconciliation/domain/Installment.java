@@ -1,6 +1,5 @@
 package com.diegorbj.reconciliation.domain;
 
-import com.diegorbj.reconciliation.domain.pk.InstallmentId;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,15 +16,21 @@ public class Installment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EqualsAndHashCode.Include
-    @EmbeddedId
-    private InstallmentId quota = new InstallmentId();
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Integer number;
     private Double grossAmount;
 
-    public Installment(SourceTransaction sourceTransaction, Integer quota, Double grossAmount) {
-        this.quota.setSourceTransaction(sourceTransaction);
-        this.quota.setNumber(quota);
+    @ManyToOne
+    @JoinColumn(name = "sourceTransaction_id")
+    private SourceTransaction sourceTransaction;
+
+    public Installment(Long id, Integer number, Double grossAmount, SourceTransaction sourceTransaction) {
+        this.id = id;
+        this.number = number;
         this.grossAmount = grossAmount;
+        this.setSourceTransaction(sourceTransaction);
     }
 
 }

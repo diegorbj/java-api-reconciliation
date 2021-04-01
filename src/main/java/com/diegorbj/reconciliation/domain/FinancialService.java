@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "tb_financialservice")
+@Table(name = "tb_financialService")
 public class FinancialService implements Serializable {
 
     private static final long serialVersionUID = 1L;

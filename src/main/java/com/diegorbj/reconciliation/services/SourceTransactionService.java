@@ -1,15 +1,54 @@
 package com.diegorbj.reconciliation.services;
 
-
-import com.diegorbj.reconciliation.domain.Installment;
 import com.diegorbj.reconciliation.domain.SourceTransaction;
+import com.diegorbj.reconciliation.repositories.SourceTransactionRepository;
+import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
+import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
+import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class SourceTransactionService extends GenericService<SourceTransaction> {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-    @Override
-    protected void updateData(SourceTransaction from, SourceTransaction to) {
+@Service
+public class SourceTransactionService {
+
+    @Autowired
+    protected SourceTransactionRepository _repository;
+
+    public List<SourceTransactionDTO> findAll() {
+        List<SourceTransaction> list = _repository.findAll();
+        List<SourceTransactionDTO> listDTO = new ArrayList<>();
+        for (SourceTransaction obj : list){
+            listDTO.add(SourceTransactionDTO.fromDomain(obj));
+        }
+        return listDTO;
+    }
+
+    public SourceTransactionDTO findById(Long id) {
+        Optional<SourceTransaction> obj = _repository.findById(id);
+        return SourceTransactionDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+    }
+
+    public SourceTransactionDTO insert(SourceTransactionDTO obj) {
+        return SourceTransactionDTO.fromDomain(_repository.save(obj.toDomain()));
+    }
+
+    public SourceTransactionDTO update(Long id, SourceTransactionDTO obj) {
+        SourceTransactionDTO currentState = this.findById(id);
+        updateData(obj, currentState);
+        return SourceTransactionDTO.fromDomain(_repository.save(currentState.toDomain()));
+    }
+
+    public void delete(Long id) {
+        Optional<SourceTransaction> obj = _repository.findById(id);
+        obj.orElseThrow(() -> new ResourceNotFondException(id));
+        _repository.deleteById(id);
+    }
+
+    protected void updateData(SourceTransactionDTO from, SourceTransactionDTO to) {
         to.setDate(from.getDate());
         to.setUniqueSequentialNumber(from.getUniqueSequentialNumber());
         to.setTransactionId(from.getTransactionId());
@@ -23,7 +62,7 @@ public class SourceTransactionService extends GenericService<SourceTransaction> 
         to.setServiceLabel(from.getServiceLabel());
         to.setCardType(from.getCardType());
         to.setModality(from.getModality());
-        for (Installment i : from.getInstallments()) {
+        for (InstallmentDTO i : from.getInstallments()) {
             to.getInstallments().add(i);
         }
     }

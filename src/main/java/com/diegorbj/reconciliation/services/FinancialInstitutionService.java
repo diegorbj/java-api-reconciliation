@@ -21,21 +21,21 @@ public class FinancialInstitutionService {
 
     public List<FinancialInstitutionDTO> findAll() {
         List<FinancialInstitution> list = _repository.findAll();
-        List<FinancialInstitutionDTO> newList = new ArrayList<>();
+        List<FinancialInstitutionDTO> listDTO = new ArrayList<>();
         for (FinancialInstitution obj : list) {
-            newList.add(createToDTO(obj));
+            listDTO.add(FinancialInstitutionDTO.fromDomain(obj));
         }
-        return newList;
+        return listDTO;
     }
 
     public FinancialInstitutionDTO findById(Long id) {
         Optional<FinancialInstitution> obj = _repository.findById(id);
-        return createToDTO(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return FinancialInstitutionDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public FinancialInstitutionDTO insert(FinancialInstitutionDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return createToDTO(_repository.save(createFromDTO(obj)));
+            return FinancialInstitutionDTO.fromDomain(_repository.save(obj.toDomain()));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +46,7 @@ public class FinancialInstitutionService {
             if (id == obj.getId()) {
                 FinancialInstitutionDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return createToDTO(_repository.save(createFromDTO(currentState)));
+                return FinancialInstitutionDTO.fromDomain(_repository.save(currentState.toDomain()));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
@@ -63,20 +63,6 @@ public class FinancialInstitutionService {
 
     private void updateData(FinancialInstitutionDTO from, FinancialInstitutionDTO to) {
         to.setName(from.getName());
-    }
-
-    public static FinancialInstitutionDTO createToDTO(FinancialInstitution obj){
-        FinancialInstitutionDTO newObj = new FinancialInstitutionDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
-
-    public static FinancialInstitution createFromDTO(FinancialInstitutionDTO obj){
-        FinancialInstitution newObj = new FinancialInstitution();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
     }
 
 }

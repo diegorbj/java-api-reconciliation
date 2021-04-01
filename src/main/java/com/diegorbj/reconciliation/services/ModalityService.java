@@ -21,21 +21,21 @@ public class ModalityService {
 
     public List<ModalityDTO> findAll() {
         List<Modality> list = _repository.findAll();
-        List<ModalityDTO> newList = new ArrayList<>();
+        List<ModalityDTO> listDTO = new ArrayList<>();
         for (Modality obj : list) {
-            newList.add(createToDTO(obj));
+            listDTO.add(ModalityDTO.fromDomain(obj));
         }
-        return newList;
+        return listDTO;
     }
 
     public ModalityDTO findById(Long id) {
         Optional<Modality> obj = _repository.findById(id);
-        return createToDTO(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return ModalityDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public ModalityDTO insert(ModalityDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return createToDTO(_repository.save(createFromDTO(obj)));
+            return ModalityDTO.fromDomain(_repository.save(obj.toDomain()));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +46,7 @@ public class ModalityService {
             if (id == obj.getId()) {
                 ModalityDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return createToDTO(_repository.save(createFromDTO(currentState)));
+                return ModalityDTO.fromDomain(_repository.save(currentState.toDomain()));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
@@ -63,20 +63,6 @@ public class ModalityService {
 
     private void updateData(ModalityDTO from, ModalityDTO to) {
         to.setName(from.getName());
-    }
-
-    public static ModalityDTO createToDTO(Modality obj){
-        ModalityDTO newObj = new ModalityDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
-
-    public static Modality createFromDTO(ModalityDTO obj){
-        Modality newObj = new Modality();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
     }
 
 }

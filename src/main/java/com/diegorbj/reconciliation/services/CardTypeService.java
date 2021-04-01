@@ -23,19 +23,19 @@ public class CardTypeService {
         List<CardType> list = _repository.findAll();
         List<CardTypeDTO> newList = new ArrayList<>();
         for (CardType obj : list) {
-            newList.add(createToDTO(obj));
+            newList.add(CardTypeDTO.fromDomain(obj));
         }
         return newList;
     }
 
     public CardTypeDTO findById(Long id) {
         Optional<CardType> obj = _repository.findById(id);
-        return createToDTO(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return CardTypeDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public CardTypeDTO insert(CardTypeDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return createToDTO(_repository.save(createFromDTO(obj)));
+            return CardTypeDTO.fromDomain(_repository.save(obj.toDomain()));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +46,7 @@ public class CardTypeService {
             if (id == obj.getId()) {
                 CardTypeDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return createToDTO(_repository.save(createFromDTO(currentState)));
+                return CardTypeDTO.fromDomain(_repository.save(currentState.toDomain()));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
@@ -63,20 +63,6 @@ public class CardTypeService {
 
     private void updateData(CardTypeDTO from, CardTypeDTO to) {
         to.setName(from.getName());
-    }
-
-    public static CardTypeDTO createToDTO(CardType obj){
-        CardTypeDTO newObj = new CardTypeDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
-
-    public static CardType createFromDTO(CardTypeDTO obj){
-        CardType newObj = new CardType();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
     }
 
 }

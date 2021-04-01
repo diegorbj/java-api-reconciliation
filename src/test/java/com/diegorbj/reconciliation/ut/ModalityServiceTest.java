@@ -37,7 +37,7 @@ public class ModalityServiceTest {
     public void shouldReturnModalityCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(ModalityResource.toModality(jsonObject));
+        testObject = _service.insert(ModalityDTO.fromJSON(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -48,7 +48,7 @@ public class ModalityServiceTest {
     public void shouldReturnModalityUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        ModalityDTO updatedObject = ModalityResource.toModality(jsonObject);
+        ModalityDTO updatedObject = ModalityDTO.fromJSON(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);

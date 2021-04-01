@@ -21,21 +21,21 @@ public class ServiceLabelService {
 
     public List<ServiceLabelDTO> findAll() {
         List<ServiceLabel> list = _repository.findAll();
-        List<ServiceLabelDTO> newList = new ArrayList<>();
+        List<ServiceLabelDTO> listDTO = new ArrayList<>();
         for (ServiceLabel obj : list) {
-            newList.add(createToDTO(obj));
+            listDTO.add(ServiceLabelDTO.fromDomain(obj));
         }
-        return newList;
+        return listDTO;
     }
 
     public ServiceLabelDTO findById(Long id) {
         Optional<ServiceLabel> obj = _repository.findById(id);
-        return createToDTO(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return ServiceLabelDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public ServiceLabelDTO insert(ServiceLabelDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return createToDTO(_repository.save(createFromDTO(obj)));
+            return ServiceLabelDTO.fromDomain(_repository.save(obj.toDomain()));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +46,7 @@ public class ServiceLabelService {
             if (id == obj.getId()) {
                 ServiceLabelDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return createToDTO(_repository.save(createFromDTO(currentState)));
+                return ServiceLabelDTO.fromDomain(_repository.save(currentState.toDomain()));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
@@ -63,20 +63,6 @@ public class ServiceLabelService {
 
     private void updateData(ServiceLabelDTO from, ServiceLabelDTO to) {
         to.setName(from.getName());
-    }
-
-    public static ServiceLabelDTO createToDTO(ServiceLabel obj){
-        ServiceLabelDTO newObj = new ServiceLabelDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
-
-    public static ServiceLabel createFromDTO(ServiceLabelDTO obj){
-        ServiceLabel newObj = new ServiceLabel();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
     }
 
 }

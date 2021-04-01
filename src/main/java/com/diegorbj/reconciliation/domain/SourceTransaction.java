@@ -1,12 +1,10 @@
 package com.diegorbj.reconciliation.domain;
 
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,9 +12,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "tb_sourcetransaction")
+@ToString
+@Table(name = "tb_sourceTransaction")
 public class SourceTransaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,7 +23,6 @@ public class SourceTransaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant date;
     private Long uniqueSequentialNumber;
     private String transactionId;
@@ -59,7 +56,8 @@ public class SourceTransaction implements Serializable {
     @JoinColumn(name = "modality_id")
     private Modality modality;
 
-    @OneToMany(mappedBy = "quota.sourceTransaction")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "installment_id")
     private Set<Installment> installments = new HashSet<>();
 
     public SourceTransaction(Long id, Instant date, Long uniqueSequentialNumber, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, Merchant merchant, FinancialInstitution financialInstitution, FinancialService financialService, ServiceLabel serviceLabel, CardType cardType, Modality modality) {
@@ -78,6 +76,5 @@ public class SourceTransaction implements Serializable {
         this.serviceLabel = serviceLabel;
         this.cardType = cardType;
         this.modality = modality;
-        this.installments = installments;
     }
 }

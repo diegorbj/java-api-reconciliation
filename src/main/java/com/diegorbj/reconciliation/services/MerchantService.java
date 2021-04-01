@@ -21,21 +21,21 @@ public class MerchantService {
 
     public List<MerchantDTO> findAll() {
         List<Merchant> list = _repository.findAll();
-        List<MerchantDTO> newList = new ArrayList<>();
+        List<MerchantDTO> listDTO = new ArrayList<>();
         for (Merchant obj : list) {
-            newList.add(createToDTO(obj));
+            listDTO.add(MerchantDTO.fromDomain(obj));
         }
-        return newList;
+        return listDTO;
     }
 
     public MerchantDTO findById(Long id) {
         Optional<Merchant> obj = _repository.findById(id);
-        return createToDTO(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return MerchantDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public MerchantDTO insert(MerchantDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return createToDTO(_repository.save(createFromDTO(obj)));
+            return MerchantDTO.fromDomain(_repository.save(obj.toDomain()));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +46,7 @@ public class MerchantService {
             if (id == obj.getId()) {
                 MerchantDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return createToDTO(_repository.save(createFromDTO(currentState)));
+                return MerchantDTO.fromDomain(_repository.save(currentState.toDomain()));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
@@ -63,20 +63,6 @@ public class MerchantService {
 
     private void updateData(MerchantDTO from, MerchantDTO to) {
         to.setName(from.getName());
-    }
-
-    public static MerchantDTO createToDTO(Merchant obj){
-        MerchantDTO newObj = new MerchantDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
-
-    public static Merchant createFromDTO(MerchantDTO obj){
-        Merchant newObj = new Merchant();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
     }
 
 }

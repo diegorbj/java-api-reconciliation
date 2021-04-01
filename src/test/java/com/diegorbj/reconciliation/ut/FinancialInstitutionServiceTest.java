@@ -37,7 +37,7 @@ public class FinancialInstitutionServiceTest {
     public void shouldReturnFinancialInstitutionCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(FinancialInstitutionResource.toFinancialInstitution(jsonObject));
+        testObject = _service.insert(FinancialInstitutionDTO.fromJSON(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -48,7 +48,7 @@ public class FinancialInstitutionServiceTest {
     public void shouldReturnFinancialInstitutionUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        FinancialInstitutionDTO updatedObject = FinancialInstitutionResource.toFinancialInstitution(jsonObject);
+        FinancialInstitutionDTO updatedObject = FinancialInstitutionDTO.fromJSON(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);

@@ -46,7 +46,7 @@ public class ModalityResource {
     public ResponseEntity<ModalityDTO> insert(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                ModalityDTO obj = _service.insert(ModalityResource.toModality(new JSONObject(data)));
+                ModalityDTO obj = _service.insert(ModalityDTO.fromJSON(data));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -64,7 +64,7 @@ public class ModalityResource {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ModalityDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
-        ModalityDTO obj = _service.update(id, ModalityResource.toModality(new JSONObject(data)));
+        ModalityDTO obj = _service.update(id, ModalityDTO.fromJSON(data));
         return ResponseEntity.ok().body(obj);
     }
 
@@ -72,13 +72,6 @@ public class ModalityResource {
     public ResponseEntity<ModalityDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    public static ModalityDTO toModality(JSONObject jsonObject) {
-        ModalityDTO obj = new ModalityDTO();
-        obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
-        obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
-        return obj;
     }
 
 }

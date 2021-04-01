@@ -46,7 +46,7 @@ public class FinancialInstitutionResource {
     public ResponseEntity<FinancialInstitutionDTO> insert(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                FinancialInstitutionDTO obj = _service.insert(FinancialInstitutionResource.toFinancialInstitution(new JSONObject(data)));
+                FinancialInstitutionDTO obj = _service.insert(FinancialInstitutionDTO.fromJSON(data));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -66,7 +66,7 @@ public class FinancialInstitutionResource {
     public ResponseEntity<FinancialInstitutionDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                FinancialInstitutionDTO obj = _service.update(id, FinancialInstitutionResource.toFinancialInstitution(new JSONObject(data)));
+                FinancialInstitutionDTO obj = _service.update(id, FinancialInstitutionDTO.fromJSON(data));
                 return ResponseEntity.ok().body(obj);
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
@@ -81,13 +81,6 @@ public class FinancialInstitutionResource {
     public ResponseEntity<FinancialInstitutionDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    public static FinancialInstitutionDTO toFinancialInstitution(JSONObject jsonObject) {
-        FinancialInstitutionDTO obj = new FinancialInstitutionDTO();
-        obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
-        obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
-        return obj;
     }
 
 }

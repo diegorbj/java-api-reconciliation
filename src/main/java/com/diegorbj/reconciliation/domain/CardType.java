@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "tb_cardtype")
+@Table(name = "tb_cardType")
 public class CardType implements Serializable {
 
     private static final long serialVersionUID = 1L;

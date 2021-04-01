@@ -48,7 +48,7 @@ public class CardTypeResource {
     public ResponseEntity<CardTypeDTO> insert(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                CardTypeDTO obj = _service.insert(CardTypeResource.toCardType(new JSONObject(data)));
+                CardTypeDTO obj = _service.insert(CardTypeDTO.fromJSON(data));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -68,7 +68,7 @@ public class CardTypeResource {
     public ResponseEntity<CardTypeDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                CardTypeDTO obj = _service.update(id, CardTypeResource.toCardType(new JSONObject(data)));
+                CardTypeDTO obj = _service.update(id, CardTypeDTO.fromJSON(data));
                 return ResponseEntity.ok().body(obj);
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
@@ -83,13 +83,6 @@ public class CardTypeResource {
     public ResponseEntity<CardTypeDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    public static CardTypeDTO toCardType(JSONObject jsonObject) {
-        CardTypeDTO obj = new CardTypeDTO();
-        obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
-        obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
-        return obj;
     }
 
 }

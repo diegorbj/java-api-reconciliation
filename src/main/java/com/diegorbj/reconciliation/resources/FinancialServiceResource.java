@@ -3,7 +3,6 @@ package com.diegorbj.reconciliation.resources;
 import com.diegorbj.reconciliation.services.FinancialServiceService;
 import com.diegorbj.reconciliation.services.dto.FinancialServiceDTO;
 import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
-import com.diegorbj.reconciliation.services.GenericService;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -47,7 +46,7 @@ public class FinancialServiceResource {
     public ResponseEntity<FinancialServiceDTO> insert(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                FinancialServiceDTO obj = _service.insert(FinancialServiceResource.toFinancialService(new JSONObject(data)));
+                FinancialServiceDTO obj = _service.insert(FinancialServiceDTO.fromJSON(data));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -67,7 +66,7 @@ public class FinancialServiceResource {
     public ResponseEntity<FinancialServiceDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                FinancialServiceDTO obj = _service.update(id, FinancialServiceResource.toFinancialService(new JSONObject(data)));
+                FinancialServiceDTO obj = _service.update(id, FinancialServiceDTO.fromJSON(data));
                 return ResponseEntity.ok().body(obj);
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
@@ -82,13 +81,6 @@ public class FinancialServiceResource {
     public ResponseEntity<FinancialServiceDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
-    }
-
-    public static FinancialServiceDTO toFinancialService(JSONObject jsonObject) {
-        FinancialServiceDTO obj = new FinancialServiceDTO();
-        obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
-        obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
-        return obj;
     }
 
 }

@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "tb_servicelabel")
+@Table(name = "tb_serviceLabel")
 public class ServiceLabel implements Serializable {
 
     private static final long serialVersionUID = 1L;

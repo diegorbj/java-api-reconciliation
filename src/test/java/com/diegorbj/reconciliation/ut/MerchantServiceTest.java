@@ -37,7 +37,7 @@ public class MerchantServiceTest {
     public void shouldReturnMerchantCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(MerchantResource.toMerchant(jsonObject));
+        testObject = _service.insert(MerchantDTO.fromJSON(jsonObject));
 
         assertNotNull(testObject);
         assertEquals(testObject.getName(), jsonObject.get("name"));
@@ -48,7 +48,7 @@ public class MerchantServiceTest {
     public void shouldReturnMerchantUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        MerchantDTO updatedObject = MerchantResource.toMerchant(jsonObject);
+        MerchantDTO updatedObject = MerchantDTO.fromJSON(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);
