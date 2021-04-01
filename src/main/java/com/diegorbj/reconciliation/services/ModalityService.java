@@ -1,12 +1,12 @@
 package com.diegorbj.reconciliation.services;
 
 import com.diegorbj.reconciliation.domain.Modality;
+import com.diegorbj.reconciliation.repositories.ModalityRepository;
 import com.diegorbj.reconciliation.services.dto.ModalityDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ModalityService {
 
     @Autowired
-    protected JpaRepository<Modality, Long> _repository;
+    protected ModalityRepository _repository;
 
     public List<ModalityDTO> findAll() {
         List<Modality> list = _repository.findAll();
@@ -43,7 +43,7 @@ public class ModalityService {
 
     public ModalityDTO update(Long id, ModalityDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            if (id == obj.getId()) {
+            if (obj.getId().equals(id)) {
                 ModalityDTO currentState = this.findById(id);
                 updateData(obj, currentState);
                 return ModalityDTO.fromDomain(_repository.save(currentState.toDomain()));

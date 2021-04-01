@@ -29,7 +29,7 @@ public class ServiceLabelDTO implements Serializable {
         return newObj;
     }
 
-    public static ServiceLabelDTO fromDomain(ServiceLabel obj){
+    public static ServiceLabelDTO fromDomain(ServiceLabel obj) {
         ServiceLabelDTO newObj = new ServiceLabelDTO();
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());
@@ -42,8 +42,8 @@ public class ServiceLabelDTO implements Serializable {
 
     public static ServiceLabelDTO fromJSON(JSONObject jsonObject) {
         ServiceLabelDTO obj = new ServiceLabelDTO();
-        obj.setId(jsonObject.get("id") == JSONObject.NULL ? null: Long.parseLong(jsonObject.get("id").toString()));
-        obj.setName(jsonObject.get("name") == JSONObject.NULL ? null: jsonObject.get("name").toString());
+        obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
+        obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
         return obj;
     }
 

@@ -34,7 +34,7 @@ public class InstallmentDTO implements Serializable {
         return newObj;
     }
 
-    public static InstallmentDTO fromDomain(Installment obj){
+    public static InstallmentDTO fromDomain(Installment obj) {
         InstallmentDTO newObj = new InstallmentDTO();
         newObj.setId(obj.getId());
         newObj.setNumber(obj.getNumber());

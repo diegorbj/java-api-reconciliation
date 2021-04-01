@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class ModalityDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private Long id;
     private String name;
 
@@ -29,7 +29,7 @@ public class ModalityDTO implements Serializable {
         return newObj;
     }
 
-    public static ModalityDTO fromDomain(Modality obj){
+    public static ModalityDTO fromDomain(Modality obj) {
         ModalityDTO newObj = new ModalityDTO();
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());

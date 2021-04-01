@@ -21,7 +21,7 @@ public class SourceTransactionService {
     public List<SourceTransactionDTO> findAll() {
         List<SourceTransaction> list = _repository.findAll();
         List<SourceTransactionDTO> listDTO = new ArrayList<>();
-        for (SourceTransaction obj : list){
+        for (SourceTransaction obj : list) {
             listDTO.add(SourceTransactionDTO.fromDomain(obj));
         }
         return listDTO;

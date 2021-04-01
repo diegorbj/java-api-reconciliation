@@ -1,7 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.services.dto.ServiceLabelDTO;
-import com.diegorbj.reconciliation.resources.ServiceLabelResource;
 import com.diegorbj.reconciliation.services.ServiceLabelService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;

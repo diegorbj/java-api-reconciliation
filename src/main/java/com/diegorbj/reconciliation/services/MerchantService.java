@@ -1,12 +1,12 @@
 package com.diegorbj.reconciliation.services;
 
 import com.diegorbj.reconciliation.domain.Merchant;
+import com.diegorbj.reconciliation.repositories.MerchantRepository;
 import com.diegorbj.reconciliation.services.dto.MerchantDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class MerchantService {
 
     @Autowired
-    protected JpaRepository<Merchant, Long> _repository;
+    protected MerchantRepository _repository;
 
     public List<MerchantDTO> findAll() {
         List<Merchant> list = _repository.findAll();
@@ -43,7 +43,7 @@ public class MerchantService {
 
     public MerchantDTO update(Long id, MerchantDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            if (id == obj.getId()) {
+            if (obj.getId().equals(id)) {
                 MerchantDTO currentState = this.findById(id);
                 updateData(obj, currentState);
                 return MerchantDTO.fromDomain(_repository.save(currentState.toDomain()));

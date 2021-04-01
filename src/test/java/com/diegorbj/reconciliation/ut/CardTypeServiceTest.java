@@ -1,6 +1,5 @@
 package com.diegorbj.reconciliation.ut;
 
-import com.diegorbj.reconciliation.resources.CardTypeResource;
 import com.diegorbj.reconciliation.services.CardTypeService;
 import com.diegorbj.reconciliation.services.dto.CardTypeDTO;
 import org.json.JSONObject;

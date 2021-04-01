@@ -30,7 +30,7 @@ public class FinancialInstitutionDTO implements Serializable {
         return newObj;
     }
 
-    public static FinancialInstitutionDTO fromDomain(FinancialInstitution obj){
+    public static FinancialInstitutionDTO fromDomain(FinancialInstitution obj) {
         FinancialInstitutionDTO newObj = new FinancialInstitutionDTO();
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());

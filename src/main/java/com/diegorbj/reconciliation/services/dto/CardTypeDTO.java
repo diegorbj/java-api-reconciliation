@@ -30,7 +30,7 @@ public class CardTypeDTO implements Serializable {
         return newObj;
     }
 
-    public static CardTypeDTO fromDomain(CardType obj){
+    public static CardTypeDTO fromDomain(CardType obj) {
         CardTypeDTO newObj = new CardTypeDTO();
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());

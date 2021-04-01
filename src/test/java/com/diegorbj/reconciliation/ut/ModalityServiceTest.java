@@ -1,7 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.services.dto.ModalityDTO;
-import com.diegorbj.reconciliation.resources.ModalityResource;
 import com.diegorbj.reconciliation.services.ModalityService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;

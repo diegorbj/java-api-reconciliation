@@ -5,7 +5,6 @@ import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
 import com.diegorbj.reconciliation.services.ServiceLabelService;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -43,7 +43,7 @@ public class FinancialInstitutionService {
 
     public FinancialInstitutionDTO update(Long id, FinancialInstitutionDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            if (id == obj.getId()) {
+            if (obj.getId().equals(id)) {
                 FinancialInstitutionDTO currentState = this.findById(id);
                 updateData(obj, currentState);
                 return FinancialInstitutionDTO.fromDomain(_repository.save(currentState.toDomain()));

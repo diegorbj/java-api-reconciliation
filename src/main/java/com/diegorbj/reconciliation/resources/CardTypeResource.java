@@ -4,7 +4,6 @@ import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
 import com.diegorbj.reconciliation.services.CardTypeService;
 import com.diegorbj.reconciliation.services.dto.CardTypeDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

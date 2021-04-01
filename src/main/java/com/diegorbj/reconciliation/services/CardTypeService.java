@@ -43,7 +43,7 @@ public class CardTypeService {
 
     public CardTypeDTO update(Long id, CardTypeDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            if (id == obj.getId()) {
+            if (obj.getId().equals(id)) {
                 CardTypeDTO currentState = this.findById(id);
                 updateData(obj, currentState);
                 return CardTypeDTO.fromDomain(_repository.save(currentState.toDomain()));

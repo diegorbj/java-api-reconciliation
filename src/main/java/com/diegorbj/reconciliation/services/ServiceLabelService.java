@@ -1,12 +1,12 @@
 package com.diegorbj.reconciliation.services;
 
 import com.diegorbj.reconciliation.domain.ServiceLabel;
+import com.diegorbj.reconciliation.repositories.ServiceLabelRepository;
 import com.diegorbj.reconciliation.services.dto.ServiceLabelDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ServiceLabelService {
 
     @Autowired
-    protected JpaRepository<ServiceLabel, Long> _repository;
+    protected ServiceLabelRepository _repository;
 
     public List<ServiceLabelDTO> findAll() {
         List<ServiceLabel> list = _repository.findAll();
@@ -43,7 +43,7 @@ public class ServiceLabelService {
 
     public ServiceLabelDTO update(Long id, ServiceLabelDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            if (id == obj.getId()) {
+            if (obj.getId().equals(id)) {
                 ServiceLabelDTO currentState = this.findById(id);
                 updateData(obj, currentState);
                 return ServiceLabelDTO.fromDomain(_repository.save(currentState.toDomain()));

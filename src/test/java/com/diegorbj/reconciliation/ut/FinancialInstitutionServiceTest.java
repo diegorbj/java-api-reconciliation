@@ -1,7 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.services.dto.FinancialInstitutionDTO;
-import com.diegorbj.reconciliation.resources.FinancialInstitutionResource;
 import com.diegorbj.reconciliation.services.FinancialInstitutionService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;

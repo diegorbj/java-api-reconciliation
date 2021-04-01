@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
-import java.util.List;
 
 @Configuration
 @Profile("dev")
@@ -93,7 +92,7 @@ public class InitialLoad implements CommandLineRunner {
         SourceTransactionDTO st2 = new SourceTransactionDTO(null, Instant.now(), 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", m1, fi2, fs1, sl1, ct3, mod3);
         st2 = _sourceTransactionService.insert(st2);
         _installmentService.insert(new InstallmentDTO(null, 1, 75.00, st2));
-        _installmentService.insert(new InstallmentDTO(null,  2, 75.00, st2));
+        _installmentService.insert(new InstallmentDTO(null, 2, 75.00, st2));
 
         SourceTransactionDTO st3 = new SourceTransactionDTO(null, Instant.now(), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", m3, fi2, fs1, sl1, ct1, mod3);
         st3 = _sourceTransactionService.insert(st3);

@@ -71,7 +71,6 @@ class ModalityResourceTest {
         this.mockMvc.perform(delete("/reconciliation/v1/modalities/1")).andExpect(status().isNoContent());
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", 1L);
@@ -79,7 +78,6 @@ class ModalityResourceTest {
         return map;
     }
 
-    @SuppressWarnings("unchecked")
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", 1L);

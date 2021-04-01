@@ -29,7 +29,7 @@ public class MerchantDTO implements Serializable {
         return newObj;
     }
 
-    public static MerchantDTO fromDomain(Merchant obj){
+    public static MerchantDTO fromDomain(Merchant obj) {
         MerchantDTO newObj = new MerchantDTO();
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());
