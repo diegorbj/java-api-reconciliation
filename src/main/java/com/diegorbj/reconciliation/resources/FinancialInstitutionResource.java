@@ -1,7 +1,7 @@
 package com.diegorbj.reconciliation.resources;
 
-import com.diegorbj.reconciliation.domain.FinancialInstitution;
-import com.diegorbj.reconciliation.resources.util.Util;
+import com.diegorbj.reconciliation.services.dto.FinancialInstitutionDTO;
+import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
 import com.diegorbj.reconciliation.services.FinancialInstitutionService;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import org.apache.log4j.Logger;
@@ -25,8 +25,8 @@ public class FinancialInstitutionResource {
     private static final Logger logger = Logger.getLogger(CardTypeResource.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<FinancialInstitution>> findAll() {
-        List<FinancialInstitution> list = _service.findAll();
+    public ResponseEntity<List<FinancialInstitutionDTO>> findAll() {
+        List<FinancialInstitutionDTO> list = _service.findAll();
         if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -34,8 +34,8 @@ public class FinancialInstitutionResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<FinancialInstitution> findById(@PathVariable("id") Long id) {
-        FinancialInstitution obj = _service.findById(id);
+    public ResponseEntity<FinancialInstitutionDTO> findById(@PathVariable("id") Long id) {
+        FinancialInstitutionDTO obj = _service.findById(id);
         if (obj == null) {
             return ResponseEntity.notFound().build();
         }
@@ -43,10 +43,10 @@ public class FinancialInstitutionResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<FinancialInstitution> insert(@RequestBody String data) {
-        if (Util.isJSONValid(data)) {
+    public ResponseEntity<FinancialInstitutionDTO> insert(@RequestBody String data) {
+        if (ResourceUtil.isJSONValid(data)) {
             try {
-                FinancialInstitution obj = _service.insert(FinancialInstitutionResource.toFinancialInstitution(new JSONObject(data)));
+                FinancialInstitutionDTO obj = _service.insert(FinancialInstitutionResource.toFinancialInstitution(new JSONObject(data)));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -63,10 +63,10 @@ public class FinancialInstitutionResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<FinancialInstitution> update(@PathVariable("id") Long id, @RequestBody String data) {
-        if (Util.isJSONValid(data)) {
+    public ResponseEntity<FinancialInstitutionDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
+        if (ResourceUtil.isJSONValid(data)) {
             try {
-                FinancialInstitution obj = _service.update(id, FinancialInstitutionResource.toFinancialInstitution(new JSONObject(data)));
+                FinancialInstitutionDTO obj = _service.update(id, FinancialInstitutionResource.toFinancialInstitution(new JSONObject(data)));
                 return ResponseEntity.ok().body(obj);
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
@@ -78,13 +78,13 @@ public class FinancialInstitutionResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<FinancialInstitution> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<FinancialInstitutionDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    public static FinancialInstitution toFinancialInstitution(JSONObject jsonObject) {
-        FinancialInstitution obj = new FinancialInstitution();
+    public static FinancialInstitutionDTO toFinancialInstitution(JSONObject jsonObject) {
+        FinancialInstitutionDTO obj = new FinancialInstitutionDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
         obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
         return obj;

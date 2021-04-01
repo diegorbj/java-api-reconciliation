@@ -1,6 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
-import com.diegorbj.reconciliation.domain.Merchant;
+import com.diegorbj.reconciliation.services.dto.MerchantDTO;
 import com.diegorbj.reconciliation.resources.MerchantResource;
 import com.diegorbj.reconciliation.services.MerchantService;
 import org.json.JSONObject;
@@ -24,7 +24,7 @@ public class MerchantServiceTest {
     @Autowired
     private MerchantService _service;
 
-    private Merchant testObject;
+    private MerchantDTO testObject;
 
     @Test
     @Order(1)
@@ -48,7 +48,7 @@ public class MerchantServiceTest {
     public void shouldReturnMerchantUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        Merchant updatedObject = MerchantResource.toMerchant(jsonObject);
+        MerchantDTO updatedObject = MerchantResource.toMerchant(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);

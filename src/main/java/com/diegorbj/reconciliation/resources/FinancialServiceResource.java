@@ -1,7 +1,8 @@
 package com.diegorbj.reconciliation.resources;
 
-import com.diegorbj.reconciliation.domain.FinancialService;
-import com.diegorbj.reconciliation.resources.util.Util;
+import com.diegorbj.reconciliation.services.FinancialServiceService;
+import com.diegorbj.reconciliation.services.dto.FinancialServiceDTO;
+import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
 import com.diegorbj.reconciliation.services.GenericService;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import org.apache.log4j.Logger;
@@ -20,13 +21,13 @@ import java.util.List;
 public class FinancialServiceResource {
 
     @Autowired
-    private GenericService<FinancialService> _service;
+    private FinancialServiceService _service;
 
     private static final Logger logger = Logger.getLogger(CardTypeResource.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<FinancialService>> findAll() {
-        List<FinancialService> list = _service.findAll();
+    public ResponseEntity<List<FinancialServiceDTO>> findAll() {
+        List<FinancialServiceDTO> list = _service.findAll();
         if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -34,8 +35,8 @@ public class FinancialServiceResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<FinancialService> findById(@PathVariable("id") Long id) {
-        FinancialService obj = _service.findById(id);
+    public ResponseEntity<FinancialServiceDTO> findById(@PathVariable("id") Long id) {
+        FinancialServiceDTO obj = _service.findById(id);
         if (obj == null) {
             return ResponseEntity.notFound().build();
         }
@@ -43,10 +44,10 @@ public class FinancialServiceResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<FinancialService> insert(@RequestBody String data) {
-        if (Util.isJSONValid(data)) {
+    public ResponseEntity<FinancialServiceDTO> insert(@RequestBody String data) {
+        if (ResourceUtil.isJSONValid(data)) {
             try {
-                FinancialService obj = _service.insert(FinancialServiceResource.toFinancialService(new JSONObject(data)));
+                FinancialServiceDTO obj = _service.insert(FinancialServiceResource.toFinancialService(new JSONObject(data)));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -63,10 +64,10 @@ public class FinancialServiceResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<FinancialService> update(@PathVariable("id") Long id, @RequestBody String data) {
-        if (Util.isJSONValid(data)) {
+    public ResponseEntity<FinancialServiceDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
+        if (ResourceUtil.isJSONValid(data)) {
             try {
-                FinancialService obj = _service.update(id, FinancialServiceResource.toFinancialService(new JSONObject(data)));
+                FinancialServiceDTO obj = _service.update(id, FinancialServiceResource.toFinancialService(new JSONObject(data)));
                 return ResponseEntity.ok().body(obj);
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
@@ -78,13 +79,13 @@ public class FinancialServiceResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<FinancialService> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<FinancialServiceDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    public static FinancialService toFinancialService(JSONObject jsonObject) {
-        FinancialService obj = new FinancialService();
+    public static FinancialServiceDTO toFinancialService(JSONObject jsonObject) {
+        FinancialServiceDTO obj = new FinancialServiceDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
         obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
         return obj;

@@ -1,10 +1,10 @@
-package com.diegorbj.reconciliation.resources.util;
+package com.diegorbj.reconciliation.resources.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
-public class Util {
+public class ResourceUtil {
 
     public static boolean isJSONValid(String jsonInString) {
         try {

@@ -1,7 +1,7 @@
 package com.diegorbj.reconciliation.resources;
 
-import com.diegorbj.reconciliation.domain.Merchant;
-import com.diegorbj.reconciliation.resources.util.Util;
+import com.diegorbj.reconciliation.services.dto.MerchantDTO;
+import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
 import com.diegorbj.reconciliation.services.MerchantService;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import org.apache.log4j.Logger;
@@ -25,8 +25,8 @@ public class MerchantResource {
     private static final Logger logger = Logger.getLogger(CardTypeResource.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Merchant>> findAll() {
-        List<Merchant> list = _service.findAll();
+    public ResponseEntity<List<MerchantDTO>> findAll() {
+        List<MerchantDTO> list = _service.findAll();
         if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -34,8 +34,8 @@ public class MerchantResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Merchant> findById(@PathVariable("id") Long id) {
-        Merchant obj = _service.findById(id);
+    public ResponseEntity<MerchantDTO> findById(@PathVariable("id") Long id) {
+        MerchantDTO obj = _service.findById(id);
         if (obj == null) {
             return ResponseEntity.notFound().build();
         }
@@ -43,10 +43,10 @@ public class MerchantResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Merchant> insert(@RequestBody String data) {
-        if (Util.isJSONValid(data)) {
+    public ResponseEntity<MerchantDTO> insert(@RequestBody String data) {
+        if (ResourceUtil.isJSONValid(data)) {
             try {
-                Merchant obj = _service.insert(MerchantResource.toMerchant(new JSONObject(data)));
+                MerchantDTO obj = _service.insert(MerchantResource.toMerchant(new JSONObject(data)));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -63,10 +63,10 @@ public class MerchantResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Merchant> update(@PathVariable("id") Long id, @RequestBody String data) {
-        if (Util.isJSONValid(data)) {
+    public ResponseEntity<MerchantDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
+        if (ResourceUtil.isJSONValid(data)) {
             try {
-                Merchant obj = _service.update(id, MerchantResource.toMerchant(new JSONObject(data)));
+                MerchantDTO obj = _service.update(id, MerchantResource.toMerchant(new JSONObject(data)));
                 return ResponseEntity.ok().body(obj);
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
@@ -78,13 +78,13 @@ public class MerchantResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Merchant> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<MerchantDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    public static Merchant toMerchant(JSONObject jsonObject) {
-        Merchant obj = new Merchant();
+    public static MerchantDTO toMerchant(JSONObject jsonObject) {
+        MerchantDTO obj = new MerchantDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
         obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
         return obj;

@@ -1,6 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
-import com.diegorbj.reconciliation.domain.Modality;
+import com.diegorbj.reconciliation.services.dto.ModalityDTO;
 import com.diegorbj.reconciliation.resources.ModalityResource;
 import com.diegorbj.reconciliation.services.ModalityService;
 import org.json.JSONObject;
@@ -24,7 +24,7 @@ public class ModalityServiceTest {
     @Autowired
     private ModalityService _service;
 
-    private Modality testObject;
+    private ModalityDTO testObject;
 
     @Test
     @Order(1)
@@ -48,7 +48,7 @@ public class ModalityServiceTest {
     public void shouldReturnModalityUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        Modality updatedObject = ModalityResource.toModality(jsonObject);
+        ModalityDTO updatedObject = ModalityResource.toModality(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);

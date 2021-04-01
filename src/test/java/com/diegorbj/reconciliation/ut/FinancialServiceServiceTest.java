@@ -1,6 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
-import com.diegorbj.reconciliation.domain.FinancialService;
+import com.diegorbj.reconciliation.services.dto.FinancialServiceDTO;
 import com.diegorbj.reconciliation.resources.FinancialServiceResource;
 import com.diegorbj.reconciliation.services.FinancialServiceService;
 import org.json.JSONObject;
@@ -24,7 +24,7 @@ public class FinancialServiceServiceTest {
     @Autowired
     private FinancialServiceService _service;
 
-    private FinancialService testObject;
+    private FinancialServiceDTO testObject;
 
     @Test
     @Order(1)
@@ -48,7 +48,7 @@ public class FinancialServiceServiceTest {
     public void shouldReturnFinancialServiceUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        FinancialService updatedObject = FinancialServiceResource.toFinancialService(jsonObject);
+        FinancialServiceDTO updatedObject = FinancialServiceResource.toFinancialService(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);

@@ -1,8 +1,7 @@
 package com.diegorbj.reconciliation.resources;
 
-import com.diegorbj.reconciliation.domain.FinancialService;
-import com.diegorbj.reconciliation.domain.Modality;
-import com.diegorbj.reconciliation.resources.util.Util;
+import com.diegorbj.reconciliation.services.dto.ModalityDTO;
+import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
 import com.diegorbj.reconciliation.services.ModalityService;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import org.apache.log4j.Logger;
@@ -26,8 +25,8 @@ public class ModalityResource {
     private static final Logger logger = Logger.getLogger(CardTypeResource.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Modality>> findAll() {
-        List<Modality> list = _service.findAll();
+    public ResponseEntity<List<ModalityDTO>> findAll() {
+        List<ModalityDTO> list = _service.findAll();
         if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -35,8 +34,8 @@ public class ModalityResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Modality> findById(@PathVariable("id") Long id) {
-        Modality obj = _service.findById(id);
+    public ResponseEntity<ModalityDTO> findById(@PathVariable("id") Long id) {
+        ModalityDTO obj = _service.findById(id);
         if (obj == null) {
             return ResponseEntity.notFound().build();
         }
@@ -44,10 +43,10 @@ public class ModalityResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Modality> insert(@RequestBody String data) {
-        if (Util.isJSONValid(data)) {
+    public ResponseEntity<ModalityDTO> insert(@RequestBody String data) {
+        if (ResourceUtil.isJSONValid(data)) {
             try {
-                Modality obj = _service.insert(ModalityResource.toModality(new JSONObject(data)));
+                ModalityDTO obj = _service.insert(ModalityResource.toModality(new JSONObject(data)));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -64,19 +63,19 @@ public class ModalityResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Modality> update(@PathVariable("id") Long id, @RequestBody String data) {
-        Modality obj = _service.update(id, ModalityResource.toModality(new JSONObject(data)));
+    public ResponseEntity<ModalityDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
+        ModalityDTO obj = _service.update(id, ModalityResource.toModality(new JSONObject(data)));
         return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Modality> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<ModalityDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    public static Modality toModality(JSONObject jsonObject) {
-        Modality obj = new Modality();
+    public static ModalityDTO toModality(JSONObject jsonObject) {
+        ModalityDTO obj = new ModalityDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
         obj.setName(jsonObject.get("name") == JSONObject.NULL ? null : jsonObject.get("name").toString());
         return obj;

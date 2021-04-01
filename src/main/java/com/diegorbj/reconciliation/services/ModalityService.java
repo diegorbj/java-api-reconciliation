@@ -1,34 +1,82 @@
 package com.diegorbj.reconciliation.services;
 
 import com.diegorbj.reconciliation.domain.Modality;
+import com.diegorbj.reconciliation.services.dto.ModalityDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
-import com.diegorbj.reconciliation.services.utils.Util;
+import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.utils.ServiceUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
-public class ModalityService extends GenericService<Modality> {
+public class ModalityService {
 
-    @Override
-    public Modality insert(Modality obj) {
-        if (!Util.isValidDescription(obj.getName())) {
-            throw new InvalidAttributeException("The modality name can't be empty");
+    @Autowired
+    protected JpaRepository<Modality, Long> _repository;
+
+    public List<ModalityDTO> findAll() {
+        List<Modality> list = _repository.findAll();
+        List<ModalityDTO> newList = new ArrayList<>();
+        for (Modality obj : list) {
+            newList.add(createToDTO(obj));
         }
-        return super.insert(obj);
+        return newList;
     }
 
-    @Override
-    public Modality update(Long id, Modality obj) {
-        if (!Util.isValidDescription(obj.getName())) {
-            throw new InvalidAttributeException("The modality name can not be empty");
-        } else if (id != obj.getId()) {
-            throw new InvalidAttributeException("Inconsistent value for Id");
-        }
-        return super.update(id, obj);
+    public ModalityDTO findById(Long id) {
+        Optional<Modality> obj = _repository.findById(id);
+        return createToDTO(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
-    @Override
-    protected void updateData(Modality from, Modality to) {
+    public ModalityDTO insert(ModalityDTO obj) {
+        if (ServiceUtil.isValidDescription(obj.getName())) {
+            return createToDTO(_repository.save(createFromDTO(obj)));
+        } else {
+            throw new InvalidAttributeException("The card type name can't be empty");
+        }
+    }
+
+    public ModalityDTO update(Long id, ModalityDTO obj) {
+        if (ServiceUtil.isValidDescription(obj.getName())) {
+            if (id == obj.getId()) {
+                ModalityDTO currentState = this.findById(id);
+                updateData(obj, currentState);
+                return createToDTO(_repository.save(createFromDTO(currentState)));
+            } else {
+                throw new InvalidAttributeException("Inconsistent value for Id");
+            }
+        } else {
+            throw new InvalidAttributeException("The card type name can not be empty");
+        }
+    }
+
+    public void delete(Long id) {
+        Optional<Modality> obj = _repository.findById(id);
+        obj.orElseThrow(() -> new ResourceNotFondException(id));
+        _repository.deleteById(id);
+    }
+
+    private void updateData(ModalityDTO from, ModalityDTO to) {
         to.setName(from.getName());
+    }
+
+    public static ModalityDTO createToDTO(Modality obj){
+        ModalityDTO newObj = new ModalityDTO();
+        newObj.setId(obj.getId());
+        newObj.setName(obj.getName());
+        return newObj;
+    }
+
+    public static Modality createFromDTO(ModalityDTO obj){
+        Modality newObj = new Modality();
+        newObj.setId(obj.getId());
+        newObj.setName(obj.getName());
+        return newObj;
     }
 
 }

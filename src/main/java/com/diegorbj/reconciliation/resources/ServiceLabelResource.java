@@ -1,8 +1,7 @@
 package com.diegorbj.reconciliation.resources;
 
-import com.diegorbj.reconciliation.domain.FinancialService;
-import com.diegorbj.reconciliation.domain.ServiceLabel;
-import com.diegorbj.reconciliation.resources.util.Util;
+import com.diegorbj.reconciliation.services.dto.ServiceLabelDTO;
+import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
 import com.diegorbj.reconciliation.services.ServiceLabelService;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import org.apache.log4j.Logger;
@@ -26,8 +25,8 @@ public class ServiceLabelResource {
     private static final Logger logger = Logger.getLogger(CardTypeResource.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<ServiceLabel>> findAll() {
-        List<ServiceLabel> list = _service.findAll();
+    public ResponseEntity<List<ServiceLabelDTO>> findAll() {
+        List<ServiceLabelDTO> list = _service.findAll();
         if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -35,8 +34,8 @@ public class ServiceLabelResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ServiceLabel> findById(@PathVariable("id") Long id) {
-        ServiceLabel obj = _service.findById(id);
+    public ResponseEntity<ServiceLabelDTO> findById(@PathVariable("id") Long id) {
+        ServiceLabelDTO obj = _service.findById(id);
         if (obj == null) {
             return ResponseEntity.notFound().build();
         }
@@ -44,10 +43,10 @@ public class ServiceLabelResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ServiceLabel> insert(@RequestBody String data) {
-        if (Util.isJSONValid(data)) {
+    public ResponseEntity<ServiceLabelDTO> insert(@RequestBody String data) {
+        if (ResourceUtil.isJSONValid(data)) {
             try {
-                ServiceLabel obj = _service.insert(ServiceLabelResource.toServiceLabel(new JSONObject(data)));
+                ServiceLabelDTO obj = _service.insert(ServiceLabelResource.toServiceLabel(new JSONObject(data)));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -64,19 +63,19 @@ public class ServiceLabelResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ServiceLabel> update(@PathVariable("id") Long id, @RequestBody String data) {
-        ServiceLabel obj = _service.update(id, ServiceLabelResource.toServiceLabel(new JSONObject(data)));
+    public ResponseEntity<ServiceLabelDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
+        ServiceLabelDTO obj = _service.update(id, ServiceLabelResource.toServiceLabel(new JSONObject(data)));
         return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<ServiceLabel> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<ServiceLabelDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    public static ServiceLabel toServiceLabel(JSONObject jsonObject) {
-        ServiceLabel obj = new ServiceLabel();
+    public static ServiceLabelDTO toServiceLabel(JSONObject jsonObject) {
+        ServiceLabelDTO obj = new ServiceLabelDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null: Long.parseLong(jsonObject.get("id").toString()));
         obj.setName(jsonObject.get("name") == JSONObject.NULL ? null: jsonObject.get("name").toString());
         return obj;

@@ -1,34 +1,82 @@
 package com.diegorbj.reconciliation.services;
 
 import com.diegorbj.reconciliation.domain.FinancialInstitution;
+import com.diegorbj.reconciliation.services.dto.FinancialInstitutionDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
-import com.diegorbj.reconciliation.services.utils.Util;
+import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.utils.ServiceUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
-public class FinancialInstitutionService extends GenericService<FinancialInstitution> {
+public class FinancialInstitutionService {
 
-    @Override
-    public FinancialInstitution insert(FinancialInstitution obj) {
-        if (!Util.isValidDescription(obj.getName())) {
-            throw new InvalidAttributeException("The financial institution name can't be empty");
+    @Autowired
+    protected JpaRepository<FinancialInstitution, Long> _repository;
+
+    public List<FinancialInstitutionDTO> findAll() {
+        List<FinancialInstitution> list = _repository.findAll();
+        List<FinancialInstitutionDTO> newList = new ArrayList<>();
+        for (FinancialInstitution obj : list) {
+            newList.add(createToDTO(obj));
         }
-        return super.insert(obj);
+        return newList;
     }
 
-    @Override
-    public FinancialInstitution update(Long id, FinancialInstitution obj) {
-        if (!Util.isValidDescription(obj.getName())) {
-            throw new InvalidAttributeException("The financial institution name can not be empty");
-        } else if (id != obj.getId()) {
-            throw new InvalidAttributeException("Inconsistent value for Id");
-        }
-        return super.update(id, obj);
+    public FinancialInstitutionDTO findById(Long id) {
+        Optional<FinancialInstitution> obj = _repository.findById(id);
+        return createToDTO(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
-    @Override
-    protected void updateData(FinancialInstitution from, FinancialInstitution to) {
+    public FinancialInstitutionDTO insert(FinancialInstitutionDTO obj) {
+        if (ServiceUtil.isValidDescription(obj.getName())) {
+            return createToDTO(_repository.save(createFromDTO(obj)));
+        } else {
+            throw new InvalidAttributeException("The card type name can't be empty");
+        }
+    }
+
+    public FinancialInstitutionDTO update(Long id, FinancialInstitutionDTO obj) {
+        if (ServiceUtil.isValidDescription(obj.getName())) {
+            if (id == obj.getId()) {
+                FinancialInstitutionDTO currentState = this.findById(id);
+                updateData(obj, currentState);
+                return createToDTO(_repository.save(createFromDTO(currentState)));
+            } else {
+                throw new InvalidAttributeException("Inconsistent value for Id");
+            }
+        } else {
+            throw new InvalidAttributeException("The card type name can not be empty");
+        }
+    }
+
+    public void delete(Long id) {
+        Optional<FinancialInstitution> obj = _repository.findById(id);
+        obj.orElseThrow(() -> new ResourceNotFondException(id));
+        _repository.deleteById(id);
+    }
+
+    private void updateData(FinancialInstitutionDTO from, FinancialInstitutionDTO to) {
         to.setName(from.getName());
+    }
+
+    public static FinancialInstitutionDTO createToDTO(FinancialInstitution obj){
+        FinancialInstitutionDTO newObj = new FinancialInstitutionDTO();
+        newObj.setId(obj.getId());
+        newObj.setName(obj.getName());
+        return newObj;
+    }
+
+    public static FinancialInstitution createFromDTO(FinancialInstitutionDTO obj){
+        FinancialInstitution newObj = new FinancialInstitution();
+        newObj.setId(obj.getId());
+        newObj.setName(obj.getName());
+        return newObj;
     }
 
 }

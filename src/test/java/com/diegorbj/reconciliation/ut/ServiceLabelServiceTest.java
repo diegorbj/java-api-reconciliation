@@ -1,6 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
-import com.diegorbj.reconciliation.domain.ServiceLabel;
+import com.diegorbj.reconciliation.services.dto.ServiceLabelDTO;
 import com.diegorbj.reconciliation.resources.ServiceLabelResource;
 import com.diegorbj.reconciliation.services.ServiceLabelService;
 import org.json.JSONObject;
@@ -24,7 +24,7 @@ public class ServiceLabelServiceTest {
     @Autowired
     private ServiceLabelService _service;
 
-    private ServiceLabel testObject;
+    private ServiceLabelDTO testObject;
 
     @Test
     @Order(1)
@@ -48,7 +48,7 @@ public class ServiceLabelServiceTest {
     public void shouldReturnServiceLabelUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        ServiceLabel updatedObject = ServiceLabelResource.toServiceLabel(jsonObject);
+        ServiceLabelDTO updatedObject = ServiceLabelResource.toServiceLabel(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);

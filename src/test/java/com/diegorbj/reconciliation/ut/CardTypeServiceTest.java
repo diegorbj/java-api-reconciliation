@@ -1,8 +1,8 @@
 package com.diegorbj.reconciliation.ut;
 
-import com.diegorbj.reconciliation.domain.CardType;
 import com.diegorbj.reconciliation.resources.CardTypeResource;
 import com.diegorbj.reconciliation.services.CardTypeService;
+import com.diegorbj.reconciliation.services.dto.CardTypeDTO;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class CardTypeServiceTest {
     @Autowired
     private CardTypeService _service;
 
-    private CardType testObject;
+    private CardTypeDTO testObject;
 
     @Test
     @Order(1)
@@ -36,7 +36,6 @@ public class CardTypeServiceTest {
     @Order(2)
     public void shouldReturnCardTypeCreatedWithSuccess() {
         JSONObject jsonObject = setObjectToCreate();
-        System.out.println("whatever:: " + jsonObject.toString());
         testObject = _service.insert(CardTypeResource.toCardType(jsonObject));
 
         assertNotNull(testObject);
@@ -48,7 +47,7 @@ public class CardTypeServiceTest {
     public void shouldReturnCardTypeUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
 
-        CardType updatedObject = CardTypeResource.toCardType(jsonObject);
+        CardTypeDTO updatedObject = CardTypeResource.toCardType(jsonObject);
         testObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(testObject);

@@ -1,10 +1,7 @@
 package com.diegorbj.reconciliation.services;
 
-import com.diegorbj.reconciliation.services.exceptions.DatabaseException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
