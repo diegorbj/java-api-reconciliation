@@ -57,7 +57,7 @@ public class SourceTransaction implements Serializable {
     private Modality modality;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "installment_id")
+    @JoinColumn(name = "sourceTransaction_id")
     private Set<Installment> installments = new HashSet<>();
 
     public SourceTransaction(Long id, Instant date, Long uniqueSequentialNumber, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, Merchant merchant, FinancialInstitution financialInstitution, FinancialService financialService, ServiceLabel serviceLabel, CardType cardType, Modality modality) {

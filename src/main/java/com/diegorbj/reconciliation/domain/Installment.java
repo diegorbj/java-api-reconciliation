@@ -1,5 +1,6 @@
 package com.diegorbj.reconciliation.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Installment implements Serializable {
     private Integer number;
     private Double grossAmount;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sourceTransaction_id")
     private SourceTransaction sourceTransaction;

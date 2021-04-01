@@ -39,7 +39,6 @@ public class InstallmentDTO implements Serializable {
         newObj.setId(obj.getId());
         newObj.setNumber(obj.getNumber());
         newObj.setGrossAmount(obj.getGrossAmount());
-        newObj.setSourceTransaction(SourceTransactionDTO.fromDomain(obj.getSourceTransaction()));
         return newObj;
     }
 
