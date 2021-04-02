@@ -77,14 +77,14 @@ public class CardTypeServiceTest {
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
-        map.put("name", "Black");
+        map.put("name", "Gray");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
-        map.put("name", "Platinum");
+        map.put("name", "Red");
         return map;
     }
 

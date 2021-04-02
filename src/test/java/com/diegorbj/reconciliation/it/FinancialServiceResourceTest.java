@@ -49,14 +49,14 @@ class FinancialServiceResourceTest {
     @Order(3)
     public void shouldReturnUpdateFinancialService() throws Exception {
         JSONObject mapToUpdate = setObjectToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/financialservices/1").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/financialservices/3").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapToUpdate.toString())).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
     public void shouldReturnFindByIdFinancialService() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/financialservices/1")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/financialservices/3")).andExpect(status().isOk());
     }
 
     @Test
@@ -68,20 +68,20 @@ class FinancialServiceResourceTest {
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdFinancialService() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/financialservices/1")).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/reconciliation/v1/financialservices/3")).andExpect(status().isNoContent());
     }
 
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Credit Card");
+        map.put("id", JSONObject.NULL);
+        map.put("name", "Prepaid");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Debit Card");
+        map.put("id", 3L);
+        map.put("name", "Prepaid Card");
         return map;
     }
 

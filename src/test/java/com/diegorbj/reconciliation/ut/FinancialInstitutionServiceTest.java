@@ -78,14 +78,14 @@ public class FinancialInstitutionServiceTest {
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
-        map.put("name", "Mint Co.");
+        map.put("name", "ACME Co.");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
-        map.put("name", "PayDay Inc.");
+        map.put("name", "ACME Inc.");
         return map;
     }
 

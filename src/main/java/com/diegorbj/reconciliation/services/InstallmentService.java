@@ -65,7 +65,6 @@ public class InstallmentService {
         //TODO - Some validation
         if (true) {
             InstallmentDTO currentState = this.findByQuota(obj.getSourceTransaction().getId(), obj.getQuota());
-            System.out.println("whatever::" + currentState);
             updateData(obj, currentState);
             return InstallmentDTO.fromDomain(_repository.save(currentState.toDomain()));
         } else {

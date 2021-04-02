@@ -78,14 +78,14 @@ public class ModalityServiceTest {
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
-        map.put("name", "Magnetic");
+        map.put("name", "Fingerprint");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
-        map.put("name", "Chip");
+        map.put("name", "Biometric - Fingerprint");
         return map;
     }
 

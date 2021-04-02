@@ -49,14 +49,14 @@ class ServiceLabelResourceTest {
     @Order(3)
     public void shouldReturnUpdateServiceLabel() throws Exception {
         JSONObject mapToUpdate = setObjectToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/servicelabels/1").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/servicelabels/4").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapToUpdate.toString())).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
     public void shouldReturnFindByIdServiceLabel() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/servicelabels/1")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/servicelabels/4")).andExpect(status().isOk());
     }
 
     @Test
@@ -68,20 +68,20 @@ class ServiceLabelResourceTest {
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdServiceLabel() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/servicelabels/1")).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/reconciliation/v1/servicelabels/4")).andExpect(status().isNoContent());
     }
 
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Visa");
+        map.put("id", JSONObject.NULL);
+        map.put("name", "Dinners");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Master");
+        map.put("id", 4L);
+        map.put("name", "Diners");
         return map;
     }
 

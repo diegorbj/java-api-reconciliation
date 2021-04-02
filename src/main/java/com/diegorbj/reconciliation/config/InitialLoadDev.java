@@ -1,6 +1,5 @@
 package com.diegorbj.reconciliation.config;
 
-import com.diegorbj.reconciliation.domain.Installment;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.*;
 import com.diegorbj.reconciliation.services.dto.*;
@@ -10,11 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
-import java.util.List;
 
 @Configuration
 @Profile("dev")
-public class InitialLoad implements CommandLineRunner {
+public class InitialLoadDev implements CommandLineRunner {
 
     @Autowired
     private CardTypeService _cardTypeService;
@@ -80,8 +78,8 @@ public class InitialLoad implements CommandLineRunner {
         mod3 = _modalityService.insert(mod3);
 
         ServiceLabelDTO sl1 = new ServiceLabelDTO(null, "Visa");
-        ServiceLabelDTO sl2 = new ServiceLabelDTO(null, "Master");
-        ServiceLabelDTO sl3 = new ServiceLabelDTO(null, "Amex");
+        ServiceLabelDTO sl2 = new ServiceLabelDTO(null, "Mastercard");
+        ServiceLabelDTO sl3 = new ServiceLabelDTO(null, "American Express");
 
         sl1 = _serviceLabelService.insert(sl1);
         sl2 = _serviceLabelService.insert(sl2);
@@ -91,22 +89,20 @@ public class InitialLoad implements CommandLineRunner {
         st1 = _sourceTransactionService.insert(st1);
         _installmentService.insert(new InstallmentDTO(null, 1, 100.00, st1));
 
-        SourceTransactionDTO st2 = new SourceTransactionDTO(null, Instant.now(), 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", m1, fi2, fs1, sl1, ct3, mod3);
+        SourceTransactionDTO st2 = new SourceTransactionDTO(null, Instant.now(), 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", m1, fi2, fs1, sl1, ct1, mod3);
         st2 = _sourceTransactionService.insert(st2);
         _installmentService.insert(new InstallmentDTO(null, 1, 75.00, st2));
         _installmentService.insert(new InstallmentDTO(null, 2, 75.00, st2));
 
-        SourceTransactionDTO st3 = new SourceTransactionDTO(null, Instant.now(), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", m3, fi2, fs1, sl1, ct1, mod3);
+        SourceTransactionDTO st3 = new SourceTransactionDTO(null, Instant.now(), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", m3, fi2, fs1, sl1, ct3, mod3);
         st3 = _sourceTransactionService.insert(st3);
         _installmentService.insert(new InstallmentDTO(null, 1, 33.34, st3));
         _installmentService.insert(new InstallmentDTO(null, 2, 33.33, st3));
         _installmentService.insert(new InstallmentDTO(null, 3, 33.33, st3));
 
         st3 = _sourceTransactionService.findById(st3.getId());
-        System.out.println("whatever::" + st3);
         for (InstallmentDTO o : st3.getInstallments()) {
             if (o.getQuota() == 2) {
-                System.out.println("whatever::" + o);
                 o.setGrossAmount(200.00);
                 _installmentService.update(o);
             }

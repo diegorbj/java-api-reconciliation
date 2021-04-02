@@ -78,14 +78,14 @@ public class MerchantServiceTest {
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
-        map.put("name", "Magazine 25th Av.");
+        map.put("name", "Magazine 5th Av.");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
-        map.put("name", "Mini 5th Av.");
+        map.put("name", "Super 5th Av.");
         return map;
     }
 

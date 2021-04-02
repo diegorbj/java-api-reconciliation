@@ -49,14 +49,14 @@ class MerchantResourceTest {
     @Order(3)
     public void shouldReturnUpdateMerchant() throws Exception {
         JSONObject mapToUpdate = setObjectToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/merchants/1").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/merchants/4").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapToUpdate.toString())).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
     public void shouldReturnFindByIdMerchant() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/merchants/1")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/merchants/4")).andExpect(status().isOk());
     }
 
     @Test
@@ -68,20 +68,20 @@ class MerchantResourceTest {
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdMerchant() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/merchants/1")).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/reconciliation/v1/merchants/4")).andExpect(status().isNoContent());
     }
 
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Magazine 25th Av.");
+        map.put("id", JSONObject.NULL);
+        map.put("name", "22 McDonalds St");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Mini 5th Av.");
+        map.put("id", 4L);
+        map.put("name", "222 McDonalds St");
         return map;
     }
 

@@ -49,14 +49,14 @@ class ModalityResourceTest {
     @Order(3)
     public void shouldReturnUpdateModality() throws Exception {
         JSONObject mapToUpdate = setObjectToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/modalities/1").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/modalities/4").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapToUpdate.toString())).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
     public void shouldReturnFindByIdModality() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/modalities/1")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/modalities/4")).andExpect(status().isOk());
     }
 
     @Test
@@ -68,20 +68,20 @@ class ModalityResourceTest {
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdModality() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/modalities/1")).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/reconciliation/v1/modalities/4")).andExpect(status().isNoContent());
     }
 
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Magnetic");
+        map.put("id", JSONObject.NULL);
+        map.put("name", "Face Recognition");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Chip");
+        map.put("id", 4L);
+        map.put("name", "Facial Recognition");
         return map;
     }
 

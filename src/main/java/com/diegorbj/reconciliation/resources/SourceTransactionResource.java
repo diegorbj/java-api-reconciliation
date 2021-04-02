@@ -156,7 +156,7 @@ public class SourceTransactionResource {
     }
 
     @RequestMapping(value = "/{id}/installments/{quota}", method = RequestMethod.DELETE)
-    public ResponseEntity<InstallmentDTO> delete(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
+    public ResponseEntity<InstallmentDTO> deleteInstallment(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
         _childService.delete(id, quota);
         return ResponseEntity.noContent().build();
     }

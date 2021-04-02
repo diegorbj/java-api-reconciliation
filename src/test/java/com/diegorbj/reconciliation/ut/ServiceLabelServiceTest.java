@@ -78,14 +78,14 @@ public class ServiceLabelServiceTest {
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
-        map.put("name", "Visa");
+        map.put("name", "Cirus");
         return map;
     }
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
-        map.put("name", "Master");
+        map.put("name", "Cirrus");
         return map;
     }
 

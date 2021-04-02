@@ -77,8 +77,10 @@ public class SourceTransactionService {
         to.setServiceLabel(from.getServiceLabel());
         to.setCardType(from.getCardType());
         to.setModality(from.getModality());
-        for (InstallmentDTO i : from.getInstallments()) {
-            to.getInstallments().add(i);
+        if (from.getInstallments() != null) {
+            for (InstallmentDTO i : from.getInstallments()) {
+                to.getInstallments().add(i);
+            }
         }
     }
 

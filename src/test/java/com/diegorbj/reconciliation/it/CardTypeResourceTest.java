@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.diegorbj.reconciliation.services.dto.CardTypeDTO;
 import org.json.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -49,14 +50,14 @@ class CardTypeResourceTest {
     @Order(3)
     public void shouldReturnUpdateCardType() throws Exception {
         JSONObject mapToUpdate = setObjectToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/cardtypes/1").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/cardtypes/4").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapToUpdate.toString())).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
     public void shouldReturnFindByIdCardType() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/cardtypes/1")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/cardtypes/4")).andExpect(status().isOk());
     }
 
     @Test
@@ -68,7 +69,7 @@ class CardTypeResourceTest {
     @Test
     @Order(6)
     public void shouldReturnRemoveByIdCardType() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/cardtypes/1")).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/reconciliation/v1/cardtypes/4")).andExpect(status().isNoContent());
     }
 
     private JSONObject setObjectToCreate() {
@@ -80,8 +81,8 @@ class CardTypeResourceTest {
 
     private JSONObject setObjectToUpdate() {
         JSONObject map = new JSONObject();
-        map.put("id", 1L);
-        map.put("name", "Platinum");
+        map.put("id", 4L);
+        map.put("name", "Golden");
         return map;
     }
 
