@@ -100,13 +100,6 @@ public class InitialLoad implements CommandLineRunner {
         _installmentService.insert(new InstallmentDTO(null, 1, 33.34, st3));
         _installmentService.insert(new InstallmentDTO(null, 2, 33.33, st3));
         _installmentService.insert(new InstallmentDTO(null, 3, 33.33, st3));
-
-        List<InstallmentDTO> list = _installmentService.findAll();
-
-        for (InstallmentDTO i : list) {
-            System.out.println(i);
-        }
-
     }
 
 }

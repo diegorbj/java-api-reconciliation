@@ -4,6 +4,7 @@ import com.diegorbj.reconciliation.domain.SourceTransaction;
 import com.diegorbj.reconciliation.repositories.SourceTransactionRepository;
 import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
 import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
+import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,13 +34,27 @@ public class SourceTransactionService {
     }
 
     public SourceTransactionDTO insert(SourceTransactionDTO obj) {
-        return SourceTransactionDTO.fromDomain(_repository.save(obj.toDomain()));
+        //TODO - Some validation
+        if (true) {
+            return SourceTransactionDTO.fromDomain(_repository.save(obj.toDomain()));
+        } else {
+            throw new InvalidAttributeException("Some validation failed");
+        }
     }
 
     public SourceTransactionDTO update(Long id, SourceTransactionDTO obj) {
-        SourceTransactionDTO currentState = this.findById(id);
-        updateData(obj, currentState);
-        return SourceTransactionDTO.fromDomain(_repository.save(currentState.toDomain()));
+        //TODO - Some validation
+        if (true) {
+            if (obj.getId().equals(id)) {
+                SourceTransactionDTO currentState = this.findById(id);
+                updateData(obj, currentState);
+                return SourceTransactionDTO.fromDomain(_repository.save(currentState.toDomain()));
+            } else {
+                throw new InvalidAttributeException("Inconsistent value for Id");
+            }
+        } else {
+            throw new InvalidAttributeException("Some validation failed");
+        }
     }
 
     public void delete(Long id) {

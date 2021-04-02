@@ -109,21 +109,20 @@ public class SourceTransactionDTO implements Serializable {
     public static SourceTransactionDTO fromJSON(JSONObject jsonObject) {
         SourceTransactionDTO obj = new SourceTransactionDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
-        //obj.setDate(jsonObject.get("date") == JSONObject.NULL ? null: jsonObject.get("date").toString());
-        obj.setUniqueSequentialNumber(jsonObject.get("UniqueSequentialNumber") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("UniqueSequentialNumber").toString()));
+        obj.setDate(jsonObject.get("date") == JSONObject.NULL ? null: Instant.parse(jsonObject.get("date").toString()));
+        obj.setUniqueSequentialNumber(jsonObject.get("uniqueSequentialNumber") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("uniqueSequentialNumber").toString()));
         obj.setTransactionId(jsonObject.get("transactionId") == JSONObject.NULL ? null : jsonObject.get("transactionId").toString());
         obj.setAuthorizationCode(jsonObject.get("authorizationCode") == JSONObject.NULL ? null : jsonObject.get("authorizationCode").toString());
-        obj.setTransactionStatus(jsonObject.get("TransactionStatus") == JSONObject.NULL ? null : TransactionStatus.valueOf(Integer.parseInt(jsonObject.get("TransactionStatus").toString())));
-        obj.setNumberOfInstallments(jsonObject.get("NumberOfInstallments") == JSONObject.NULL ? null : Integer.parseInt(jsonObject.get("NumberOfInstallments").toString()));
-        obj.setGrossAmount(jsonObject.get("GrossAmount") == JSONObject.NULL ? null : Double.parseDouble(jsonObject.get("GrossAmount").toString()));
-        obj.setTransactionInformation(jsonObject.get("TransactionInformation") == JSONObject.NULL ? null : jsonObject.get("TransactionInformation").toString());
-        obj.setMerchant(MerchantDTO.fromJSON(jsonObject.get("Merchant").toString()));
-        obj.setFinancialInstitution(FinancialInstitutionDTO.fromJSON(jsonObject.get("FinancialInstitution").toString()));
-        obj.setFinancialService(FinancialServiceDTO.fromJSON(jsonObject.get("FinancialService").toString()));
-        obj.setServiceLabel(ServiceLabelDTO.fromJSON(jsonObject.get("ServiceLabel").toString()));
-        obj.setCardType(CardTypeDTO.fromJSON(jsonObject.get("CardType").toString()));
-        obj.setModality(ModalityDTO.fromJSON(jsonObject.get("Modality").toString()));
-
+        obj.setTransactionStatus(jsonObject.get("transactionStatus") == JSONObject.NULL ? null : TransactionStatus.valueOf(jsonObject.get("transactionStatus").toString()));
+        obj.setNumberOfInstallments(jsonObject.get("numberOfInstallments") == JSONObject.NULL ? null : Integer.parseInt(jsonObject.get("numberOfInstallments").toString()));
+        obj.setGrossAmount(jsonObject.get("grossAmount") == JSONObject.NULL ? null : Double.parseDouble(jsonObject.get("grossAmount").toString()));
+        obj.setTransactionInformation(jsonObject.get("transactionInformation") == JSONObject.NULL ? null : jsonObject.get("transactionInformation").toString());
+        obj.setMerchant(MerchantDTO.fromJSON(jsonObject.get("merchant").toString()));
+        obj.setFinancialInstitution(FinancialInstitutionDTO.fromJSON(jsonObject.get("financialInstitution").toString()));
+        obj.setFinancialService(FinancialServiceDTO.fromJSON(jsonObject.get("financialService").toString()));
+        obj.setServiceLabel(ServiceLabelDTO.fromJSON(jsonObject.get("serviceLabel").toString()));
+        obj.setCardType(CardTypeDTO.fromJSON(jsonObject.get("cardType").toString()));
+        obj.setModality(ModalityDTO.fromJSON(jsonObject.get("modality").toString()));
         return obj;
     }
 

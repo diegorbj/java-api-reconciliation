@@ -20,17 +20,17 @@ public class Installment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer number;
+    private Integer quota;
     private Double grossAmount;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "sourceTransaction_id")
+    @JoinColumn(name = "sourceTransaction")
     private SourceTransaction sourceTransaction;
 
-    public Installment(Long id, Integer number, Double grossAmount, SourceTransaction sourceTransaction) {
+    public Installment(Long id, Integer quota, Double grossAmount, SourceTransaction sourceTransaction) {
         this.id = id;
-        this.number = number;
+        this.quota = quota;
         this.grossAmount = grossAmount;
         this.setSourceTransaction(sourceTransaction);
     }

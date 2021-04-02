@@ -3,6 +3,8 @@ package com.diegorbj.reconciliation.services;
 import com.diegorbj.reconciliation.domain.Installment;
 import com.diegorbj.reconciliation.repositories.InstallmentRepository;
 import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
+import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
+import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class InstallmentService {
     public List<InstallmentDTO> findAll() {
         List<Installment> list = _repository.findAll();
         List<InstallmentDTO> listDTO = new ArrayList<>();
-        for (Installment obj : list){
+        for (Installment obj : list) {
             listDTO.add(InstallmentDTO.fromDomain(obj));
         }
         return listDTO;
@@ -31,14 +33,51 @@ public class InstallmentService {
         return InstallmentDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
-    public InstallmentDTO insert(InstallmentDTO obj) {
-        return InstallmentDTO.fromDomain(_repository.save(obj.toDomain()));
+    public List<InstallmentDTO> findAllInstallments(Long id) {
+        List<Installment> list = _repository.findAllBySourceTransaction_Id(id);
+        List<InstallmentDTO> listDTO = new ArrayList<>();
+        for (Installment obj : list) {
+            listDTO.add(InstallmentDTO.fromDomain(obj));
+        }
+        return listDTO;
     }
 
-    public InstallmentDTO update(Long id, InstallmentDTO obj) {
-        InstallmentDTO currentState = this.findById(id);
-        updateData(obj, currentState);
-        return InstallmentDTO.fromDomain(_repository.save(currentState.toDomain()));
+    public InstallmentDTO findByQuota(Long id, Integer quota) {
+        List<InstallmentDTO> listDTO = this.findAllInstallments(id);
+        for (InstallmentDTO obj : listDTO) {
+            if (obj.getQuota().equals(quota)) {
+                return obj;
+            }
+        }
+        throw new ResourceNotFondException(id + '/' + quota);
+    }
+
+    public InstallmentDTO insert(InstallmentDTO obj) {
+        //TODO - Some validation
+        if (true) {
+            return InstallmentDTO.fromDomain(_repository.save(obj.toDomain()));
+        } else {
+            throw new InvalidAttributeException("Some validation failed");
+        }
+    }
+
+    public InstallmentDTO update(Long id, Integer quota, InstallmentDTO obj) {
+        //TODO - Some validation
+        if (true) {
+            if (obj.getSourceTransaction().getId().equals(id)) {
+                if (obj.getQuota().equals(quota)) {
+                    InstallmentDTO currentState = this.findByQuota(id, quota);
+                    updateData(obj, currentState);
+                    return InstallmentDTO.fromDomain(_repository.save(currentState.toDomain()));
+                } else {
+                    throw new InvalidAttributeException("Inconsistent value for Quota");
+                }
+            } else {
+                throw new InvalidAttributeException("Inconsistent value for Id");
+            }
+        } else {
+            throw new InvalidAttributeException("Some validation failed");
+        }
     }
 
     public void delete(Long id) {
@@ -49,6 +88,7 @@ public class InstallmentService {
 
     private void updateData(InstallmentDTO from, InstallmentDTO to) {
         to.setGrossAmount(from.getGrossAmount());
+        to.setSourceTransaction(from.getSourceTransaction());
     }
 
 }
