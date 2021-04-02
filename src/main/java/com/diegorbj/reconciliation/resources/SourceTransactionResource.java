@@ -136,8 +136,16 @@ public class SourceTransactionResource {
                 SourceTransactionDTO parentObj = new SourceTransactionDTO();
                 parentObj.setId(id);
                 obj.setSourceTransaction(parentObj);
-                obj = _childService.update(id, quota, obj);
-                return ResponseEntity.ok().body(obj);
+                if (obj.getSourceTransaction().getId().equals(id)) {
+                    if (obj.getQuota().equals(quota)) {
+                        obj = _childService.update(obj);
+                        return ResponseEntity.ok().body(obj);
+                    } else {
+                        throw new InvalidAttributeException("Inconsistent value for Quota");
+                    }
+                } else {
+                    throw new InvalidAttributeException("Inconsistent value for Id");
+                }
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
                 return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
@@ -148,8 +156,8 @@ public class SourceTransactionResource {
     }
 
     @RequestMapping(value = "/{id}/installments/{quota}", method = RequestMethod.DELETE)
-    public ResponseEntity<InstallmentDTO> delete(@PathVariable("id") Long id, @PathVariable("quota") Long quota) {
-        _childService.delete(id);
+    public ResponseEntity<InstallmentDTO> delete(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
+        _childService.delete(id, quota);
         return ResponseEntity.noContent().build();
     }
 

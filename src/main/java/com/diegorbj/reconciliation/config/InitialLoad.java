@@ -1,5 +1,6 @@
 package com.diegorbj.reconciliation.config;
 
+import com.diegorbj.reconciliation.domain.Installment;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.*;
 import com.diegorbj.reconciliation.services.dto.*;
@@ -100,6 +101,17 @@ public class InitialLoad implements CommandLineRunner {
         _installmentService.insert(new InstallmentDTO(null, 1, 33.34, st3));
         _installmentService.insert(new InstallmentDTO(null, 2, 33.33, st3));
         _installmentService.insert(new InstallmentDTO(null, 3, 33.33, st3));
+
+        st3 = _sourceTransactionService.findById(st3.getId());
+        System.out.println("whatever::" + st3);
+        for (InstallmentDTO o : st3.getInstallments()) {
+            if (o.getQuota() == 2) {
+                System.out.println("whatever::" + o);
+                o.setGrossAmount(200.00);
+                _installmentService.update(o);
+            }
+        }
+
     }
 
 }

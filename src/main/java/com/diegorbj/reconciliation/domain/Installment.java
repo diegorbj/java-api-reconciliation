@@ -24,15 +24,21 @@ public class Installment implements Serializable {
     private Double grossAmount;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "sourceTransaction")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sourceTransactionId")
     private SourceTransaction sourceTransaction;
 
     public Installment(Long id, Integer quota, Double grossAmount, SourceTransaction sourceTransaction) {
         this.id = id;
         this.quota = quota;
         this.grossAmount = grossAmount;
-        this.setSourceTransaction(sourceTransaction);
+        this.sourceTransaction = sourceTransaction;
+    }
+
+    public Installment(Long id, Integer quota, Double grossAmount) {
+        this.id = id;
+        this.quota = quota;
+        this.grossAmount = grossAmount;
     }
 
 }

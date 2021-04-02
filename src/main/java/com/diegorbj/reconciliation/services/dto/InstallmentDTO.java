@@ -1,6 +1,7 @@
 package com.diegorbj.reconciliation.services.dto;
 
 import com.diegorbj.reconciliation.domain.Installment;
+import com.diegorbj.reconciliation.domain.SourceTransaction;
 import lombok.*;
 import org.json.JSONObject;
 
@@ -13,7 +14,6 @@ import java.io.Serializable;
 public class InstallmentDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     private Long id;
     private Integer quota;
     private Double grossAmount;
@@ -26,12 +26,23 @@ public class InstallmentDTO implements Serializable {
         this.sourceTransaction = sourceTransaction;
     }
 
+    public InstallmentDTO(Long id, Integer quota, Double grossAmount) {
+        this.id = id;
+        this.quota = quota;
+        this.grossAmount = grossAmount;
+    }
+
     public Installment toDomain() {
         Installment newObj = new Installment();
         newObj.setId(this.getId());
         newObj.setQuota(this.getQuota());
         newObj.setGrossAmount(this.getGrossAmount());
-        newObj.setSourceTransaction(this.getSourceTransaction().toDomain());
+        //newObj.setSourceTransaction(this.getSourceTransaction().toDomain());
+        if (this.getSourceTransaction() != null) {
+            SourceTransaction st = new SourceTransaction();
+            st.setId(this.getSourceTransaction().getId());
+            newObj.setSourceTransaction(st);
+        }
         return newObj;
     }
 
@@ -40,6 +51,12 @@ public class InstallmentDTO implements Serializable {
         newObj.setId(obj.getId());
         newObj.setQuota(obj.getQuota());
         newObj.setGrossAmount(obj.getGrossAmount());
+        //newObj.setSourceTransaction(SourceTransactionDTO.fromDomain(obj.getSourceTransaction()));
+        if (obj.getSourceTransaction() != null) {
+            SourceTransactionDTO stDTO = new SourceTransactionDTO();
+            stDTO.setId(obj.getSourceTransaction().getId());
+            newObj.setSourceTransaction(stDTO);
+        }
         return newObj;
     }
 

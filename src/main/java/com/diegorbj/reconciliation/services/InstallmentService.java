@@ -61,34 +61,29 @@ public class InstallmentService {
         }
     }
 
-    public InstallmentDTO update(Long id, Integer quota, InstallmentDTO obj) {
+    public InstallmentDTO update(InstallmentDTO obj) {
         //TODO - Some validation
         if (true) {
-            if (obj.getSourceTransaction().getId().equals(id)) {
-                if (obj.getQuota().equals(quota)) {
-                    InstallmentDTO currentState = this.findByQuota(id, quota);
-                    updateData(obj, currentState);
-                    return InstallmentDTO.fromDomain(_repository.save(currentState.toDomain()));
-                } else {
-                    throw new InvalidAttributeException("Inconsistent value for Quota");
-                }
-            } else {
-                throw new InvalidAttributeException("Inconsistent value for Id");
-            }
+            InstallmentDTO currentState = this.findByQuota(obj.getSourceTransaction().getId(), obj.getQuota());
+            System.out.println("whatever::" + currentState);
+            updateData(obj, currentState);
+            return InstallmentDTO.fromDomain(_repository.save(currentState.toDomain()));
         } else {
             throw new InvalidAttributeException("Some validation failed");
         }
     }
 
-    public void delete(Long id) {
-        Optional<Installment> obj = _repository.findById(id);
-        obj.orElseThrow(() -> new ResourceNotFondException(id));
-        _repository.deleteById(id);
+    public void delete(Long id, Integer quota) {
+        InstallmentDTO obj = this.findByQuota(id, quota);
+        if (obj == null) {
+            throw new ResourceNotFondException(id);
+        }
+        _repository.deleteById(obj.getId());
     }
 
     private void updateData(InstallmentDTO from, InstallmentDTO to) {
         to.setGrossAmount(from.getGrossAmount());
-        to.setSourceTransaction(from.getSourceTransaction());
+        //to.setSourceTransaction(from.getSourceTransaction());
     }
 
 }
