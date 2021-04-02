@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "tb_serviceLabel")
 public class ServiceLabel implements Serializable {
@@ -19,10 +20,12 @@ public class ServiceLabel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @EqualsAndHashCode.Exclude
     private String name;
 
     public ServiceLabel(Long id, String name) {
         this.id = id;
         this.name = name;
     }
+
 }

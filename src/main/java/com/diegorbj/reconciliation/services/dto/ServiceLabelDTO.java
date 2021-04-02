@@ -10,11 +10,14 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class ServiceLabelDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @EqualsAndHashCode.Include
     private Long id;
+    @EqualsAndHashCode.Exclude
     private String name;
 
     public ServiceLabelDTO(Long id, String name) {

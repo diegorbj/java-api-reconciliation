@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "tb_modality")
 public class Modality implements Serializable {
@@ -19,6 +20,7 @@ public class Modality implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @EqualsAndHashCode.Exclude
     private String name;
 
     public Modality(Long id, String name) {

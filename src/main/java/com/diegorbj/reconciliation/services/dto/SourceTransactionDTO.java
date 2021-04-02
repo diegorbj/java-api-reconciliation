@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -54,6 +55,19 @@ public class SourceTransactionDTO implements Serializable {
         this.serviceLabel = serviceLabel;
         this.cardType = cardType;
         this.modality = modality;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SourceTransactionDTO that = (SourceTransactionDTO) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public SourceTransaction toDomain() {
@@ -109,7 +123,7 @@ public class SourceTransactionDTO implements Serializable {
     public static SourceTransactionDTO fromJSON(JSONObject jsonObject) {
         SourceTransactionDTO obj = new SourceTransactionDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
-        obj.setDate(jsonObject.get("date") == JSONObject.NULL ? null: Instant.parse(jsonObject.get("date").toString()));
+        obj.setDate(jsonObject.get("date") == JSONObject.NULL ? null : Instant.parse(jsonObject.get("date").toString()));
         obj.setUniqueSequentialNumber(jsonObject.get("uniqueSequentialNumber") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("uniqueSequentialNumber").toString()));
         obj.setTransactionId(jsonObject.get("transactionId") == JSONObject.NULL ? null : jsonObject.get("transactionId").toString());
         obj.setAuthorizationCode(jsonObject.get("authorizationCode") == JSONObject.NULL ? null : jsonObject.get("authorizationCode").toString());
@@ -125,5 +139,4 @@ public class SourceTransactionDTO implements Serializable {
         obj.setModality(ModalityDTO.fromJSON(jsonObject.get("modality").toString()));
         return obj;
     }
-
 }

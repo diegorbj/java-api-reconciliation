@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "tb_installment")
 public class Installment implements Serializable {
@@ -20,7 +21,9 @@ public class Installment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @EqualsAndHashCode.Exclude
     private Integer quota;
+    @EqualsAndHashCode.Exclude
     private Double grossAmount;
 
     @JsonIgnore

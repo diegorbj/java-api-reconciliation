@@ -5,21 +5,38 @@ import lombok.*;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class ModalityDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @EqualsAndHashCode.Include
     private Long id;
+    @EqualsAndHashCode.Exclude
     private String name;
 
     public ModalityDTO(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ModalityDTO that = (ModalityDTO) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public Modality toDomain() {

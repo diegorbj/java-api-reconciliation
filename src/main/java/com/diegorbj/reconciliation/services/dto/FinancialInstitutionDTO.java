@@ -5,17 +5,20 @@ import lombok.*;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class FinancialInstitutionDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @EqualsAndHashCode.Include
     private Long id;
-
+    @EqualsAndHashCode.Exclude
     private String name;
 
     public FinancialInstitutionDTO(Long id, String name) {

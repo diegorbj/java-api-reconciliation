@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "tb_cardType")
 public class CardType implements Serializable {
@@ -19,7 +20,7 @@ public class CardType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @EqualsAndHashCode.Exclude
     private String name;
 
     public CardType(Long id, String name) {

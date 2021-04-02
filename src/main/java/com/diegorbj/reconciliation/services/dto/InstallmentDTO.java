@@ -6,17 +6,24 @@ import lombok.*;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class InstallmentDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @EqualsAndHashCode.Include
     private Long id;
+    @EqualsAndHashCode.Exclude
     private Integer quota;
+    @EqualsAndHashCode.Exclude
     private Double grossAmount;
+    @EqualsAndHashCode.Exclude
     private SourceTransactionDTO sourceTransaction;
 
     public InstallmentDTO(Long id, Integer quota, Double grossAmount, SourceTransactionDTO sourceTransaction) {
@@ -30,6 +37,19 @@ public class InstallmentDTO implements Serializable {
         this.id = id;
         this.quota = quota;
         this.grossAmount = grossAmount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InstallmentDTO that = (InstallmentDTO) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public Installment toDomain() {
