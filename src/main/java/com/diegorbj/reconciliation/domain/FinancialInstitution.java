@@ -21,7 +21,7 @@ public class FinancialInstitution implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @EqualsAndHashCode.Exclude
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String name;
 
     public FinancialInstitution(Long id, String name) {

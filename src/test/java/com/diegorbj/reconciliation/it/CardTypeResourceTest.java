@@ -75,7 +75,7 @@ class CardTypeResourceTest {
     private JSONObject setObjectToCreate() {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
-        map.put("name", "Black");
+        map.put("name", "Goldden");
         return map;
     }
 

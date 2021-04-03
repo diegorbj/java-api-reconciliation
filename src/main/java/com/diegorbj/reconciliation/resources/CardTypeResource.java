@@ -40,20 +40,15 @@ public class CardTypeResource {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<CardTypeDTO> insert(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
-            try {
-                CardTypeDTO obj = _service.insert(CardTypeDTO.fromJSON(data));
-                URI uri = ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(obj.getId())
-                        .toUri();
-                return ResponseEntity.created(uri).body(obj);
-            } catch (Exception e) {
-                logger.error("JSON fields are not parsable. " + e);
-                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
-            }
+            CardTypeDTO obj = _service.insert(CardTypeDTO.fromJSON(data));
+            URI uri = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(obj.getId())
+                    .toUri();
+            return ResponseEntity.created(uri).body(obj);
         } else {
-            throw new InvalidAttributeException("Not a valid card type");
+            throw new InvalidAttributeException("JSON is not valid");
         }
     }
 

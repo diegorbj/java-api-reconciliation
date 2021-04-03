@@ -35,25 +35,43 @@ public class MerchantService {
         return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
+    public List<MerchantDTO> findByNameIgnoreCase(String name) {
+        List<MerchantDTO> dtoList = _mapper.toDto(_repository.findByNameIgnoreCase(name));
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("Name: '" + name + "'");
+        }
+        return dtoList;
+    }
+
     public MerchantDTO insert(MerchantDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
+            try {
+                this.findByNameIgnoreCase(obj.getName().trim());
+                throw new InvalidAttributeException("The merchant name must be unique");
+            } catch (ResourceNotFondException e) {
+                return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
+            }
         } else {
-            throw new InvalidAttributeException("The card type name can't be empty");
+            throw new InvalidAttributeException("The merchant name can't be empty");
         }
     }
 
     public MerchantDTO update(Long id, MerchantDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
             if (obj.getId().equals(id)) {
-                MerchantDTO currentState = this.findById(id);
-                updateData(obj, currentState);
-                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
+                try {
+                    this.findByNameIgnoreCase(obj.getName());
+                    throw new InvalidAttributeException("The merchant name must be unique");
+                } catch (ResourceNotFondException e) {
+                    MerchantDTO currentState = this.findById(id);
+                    updateData(obj, currentState);
+                    return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
+                }
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
         } else {
-            throw new InvalidAttributeException("The card type name can not be empty");
+            throw new InvalidAttributeException("The merchant name can not be empty");
         }
     }
 

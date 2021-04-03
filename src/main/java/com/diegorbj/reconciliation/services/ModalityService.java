@@ -35,25 +35,43 @@ public class ModalityService {
         return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
+    public List<ModalityDTO> findByNameIgnoreCase(String name) {
+        List<ModalityDTO> dtoList = _mapper.toDto(_repository.findByNameIgnoreCase(name));
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("Name: '" + name + "'");
+        }
+        return dtoList;
+    }
+
     public ModalityDTO insert(ModalityDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
+            try {
+                this.findByNameIgnoreCase(obj.getName().trim());
+                throw new InvalidAttributeException("The modality must be unique");
+            } catch (ResourceNotFondException e) {
+                return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
+            }
         } else {
-            throw new InvalidAttributeException("The card type name can't be empty");
+            throw new InvalidAttributeException("The modality name can't be empty");
         }
     }
 
     public ModalityDTO update(Long id, ModalityDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
             if (obj.getId().equals(id)) {
-                ModalityDTO currentState = this.findById(id);
-                updateData(obj, currentState);
-                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
+                try {
+                    this.findByNameIgnoreCase(obj.getName());
+                    throw new InvalidAttributeException("The modality name must be unique");
+                } catch (ResourceNotFondException e) {
+                    ModalityDTO currentState = this.findById(id);
+                    updateData(obj, currentState);
+                    return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
+                }
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
         } else {
-            throw new InvalidAttributeException("The card type name can not be empty");
+            throw new InvalidAttributeException("The modality name can not be empty");
         }
     }
 

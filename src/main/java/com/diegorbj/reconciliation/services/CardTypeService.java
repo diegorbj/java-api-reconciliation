@@ -1,6 +1,7 @@
 package com.diegorbj.reconciliation.services;
 
 import com.diegorbj.reconciliation.domain.CardType;
+import com.diegorbj.reconciliation.repositories.CardTypeRepository;
 import com.diegorbj.reconciliation.services.dto.CardTypeDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
@@ -8,7 +9,6 @@ import com.diegorbj.reconciliation.services.mappers.CardTypeMapper;
 import com.diegorbj.reconciliation.services.mappers.CardTypeMapperImpl;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class CardTypeService {
 
     @Autowired
-    protected JpaRepository<CardType, Long> _repository;
+    protected CardTypeRepository _repository;
 
     private CardTypeMapper _mapper = new CardTypeMapperImpl() {
     };
@@ -36,9 +36,22 @@ public class CardTypeService {
         return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
+    public List<CardTypeDTO> findByNameIgnoreCase(String name) {
+        List<CardTypeDTO> dtoList = _mapper.toDto(_repository.findByNameIgnoreCase(name));
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("Name: '" + name + "'");
+        }
+        return dtoList;
+    }
+
     public CardTypeDTO insert(CardTypeDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
+            try {
+                this.findByNameIgnoreCase(obj.getName().trim());
+                throw new InvalidAttributeException("The card type name must be unique");
+            } catch (ResourceNotFondException e) {
+                return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
+            }
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -47,9 +60,14 @@ public class CardTypeService {
     public CardTypeDTO update(Long id, CardTypeDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
             if (obj.getId().equals(id)) {
-                CardTypeDTO currentState = this.findById(id);
-                updateData(obj, currentState);
-                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
+                try {
+                    this.findByNameIgnoreCase(obj.getName());
+                    throw new InvalidAttributeException("The card type name must be unique");
+                } catch (ResourceNotFondException e) {
+                    CardTypeDTO currentState = this.findById(id);
+                    updateData(obj, currentState);
+                    return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
+                }
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
