@@ -22,8 +22,10 @@ public class Installment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @EqualsAndHashCode.Exclude
+    @Column(nullable = false)
     private Integer quota;
     @EqualsAndHashCode.Exclude
+    @Column(nullable = false)
     private Double grossAmount;
 
     @JsonIgnore

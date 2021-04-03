@@ -21,6 +21,7 @@ public class Modality implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @EqualsAndHashCode.Exclude
+    @Column(nullable = false, length = 50)
     private String name;
 
     public Modality(Long id, String name) {

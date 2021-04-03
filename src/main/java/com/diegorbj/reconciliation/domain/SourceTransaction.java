@@ -24,13 +24,22 @@ public class SourceTransaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private Instant date;
+    @Column(nullable = true)
     private Long uniqueSequentialNumber;
+    @Column(nullable = true, length = 50)
     private String transactionId;
+    @Column(nullable = true, length = 10)
     private String authorizationCode;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = true)
     private TransactionStatus transactionStatus;
+    @Column(nullable = false)
     private Integer numberOfInstallments;
+    @Column(nullable = false)
     private Double grossAmount;
+    @Column(nullable = true, length = 100)
     private String transactionInformation;
 
     @ManyToOne
