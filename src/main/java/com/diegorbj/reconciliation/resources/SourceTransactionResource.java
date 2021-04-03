@@ -30,9 +30,6 @@ public class SourceTransactionResource {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<SourceTransactionDTO>> findAll() {
         List<SourceTransactionDTO> list = _service.findAll();
-        if (list.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         logger.info(list);
         return ResponseEntity.ok().body(list);
     }
@@ -40,9 +37,6 @@ public class SourceTransactionResource {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<SourceTransactionDTO> findById(@PathVariable("id") Long id) {
         SourceTransactionDTO obj = _service.findById(id);
-        if (obj == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().body(obj);
     }
 
@@ -90,9 +84,6 @@ public class SourceTransactionResource {
     @RequestMapping(value = "/{id}/installments", method = RequestMethod.GET)
     public ResponseEntity<List<InstallmentDTO>> findAllInstallments(@PathVariable("id") Long id) {
         List<InstallmentDTO> list = _childService.findAllInstallments(id);
-        if (list.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         logger.info(list);
         return ResponseEntity.ok().body(list);
     }
@@ -100,9 +91,6 @@ public class SourceTransactionResource {
     @RequestMapping(value = "/{id}/installments/{quota}", method = RequestMethod.GET)
     public ResponseEntity<InstallmentDTO> findInstallmentByQuota(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
         InstallmentDTO obj = _childService.findByQuota(id, quota);
-        if (obj == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().body(obj);
     }
 

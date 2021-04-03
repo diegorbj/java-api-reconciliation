@@ -23,12 +23,16 @@ public class ModalityService {
     private ModalityMapper _mapper = new ModalityMapperImpl();
 
     public List<ModalityDTO> findAll() {
-        return _mapper.toDto(_repository.findAll());
+        List<ModalityDTO> dtoList = _mapper.toDto(_repository.findAll());
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("{All}");
+        }
+        return dtoList;
     }
 
     public ModalityDTO findById(Long id) {
         Optional<Modality> obj = _repository.findById(id);
-        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     public ModalityDTO insert(ModalityDTO obj) {
@@ -55,7 +59,6 @@ public class ModalityService {
 
     public void delete(Long id) {
         Optional<Modality> obj = _repository.findById(id);
-        obj.orElseThrow(() -> new ResourceNotFondException(id));
         _repository.deleteById(id);
     }
 

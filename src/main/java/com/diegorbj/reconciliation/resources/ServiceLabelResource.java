@@ -26,18 +26,12 @@ public class ServiceLabelResource {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ServiceLabelDTO>> findAll() {
         List<ServiceLabelDTO> list = _service.findAll();
-        if (list.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().body(list);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<ServiceLabelDTO> findById(@PathVariable("id") Long id) {
         ServiceLabelDTO obj = _service.findById(id);
-        if (obj == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().body(obj);
     }
 

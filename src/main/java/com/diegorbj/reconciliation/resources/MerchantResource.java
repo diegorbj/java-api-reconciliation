@@ -26,18 +26,12 @@ public class MerchantResource {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<MerchantDTO>> findAll() {
         List<MerchantDTO> list = _service.findAll();
-        if (list.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().body(list);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<MerchantDTO> findById(@PathVariable("id") Long id) {
         MerchantDTO obj = _service.findById(id);
-        if (obj == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().body(obj);
     }
 

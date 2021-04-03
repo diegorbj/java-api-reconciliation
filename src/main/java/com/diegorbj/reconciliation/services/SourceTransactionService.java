@@ -23,12 +23,16 @@ public class SourceTransactionService {
     private SourceTransactionMapper _mapper = new SourceTransactionMapperImpl();
 
     public List<SourceTransactionDTO> findAll() {
-        return _mapper.toDto(_repository.findAll());
+        List<SourceTransactionDTO> dtoList = _mapper.toDto(_repository.findAll());
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("{All}");
+        }
+        return dtoList;
     }
 
     public SourceTransactionDTO findById(Long id) {
         Optional<SourceTransaction> obj = _repository.findById(id);
-        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     public SourceTransactionDTO insert(SourceTransactionDTO obj) {
@@ -57,7 +61,6 @@ public class SourceTransactionService {
 
     public void delete(Long id) {
         Optional<SourceTransaction> obj = _repository.findById(id);
-        obj.orElseThrow(() -> new ResourceNotFondException(id));
         _repository.deleteById(id);
     }
 

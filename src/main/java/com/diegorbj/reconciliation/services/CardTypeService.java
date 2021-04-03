@@ -20,15 +20,20 @@ public class CardTypeService {
     @Autowired
     protected JpaRepository<CardType, Long> _repository;
 
-    private CardTypeMapper _mapper = new CardTypeMapperImpl();
+    private CardTypeMapper _mapper = new CardTypeMapperImpl() {
+    };
 
     public List<CardTypeDTO> findAll() {
-        return _mapper.toDto(_repository.findAll());
+        List<CardTypeDTO> dtoList = _mapper.toDto(_repository.findAll());
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("{All}");
+        }
+        return dtoList;
     }
 
     public CardTypeDTO findById(Long id) {
         Optional<CardType> obj = _repository.findById(id);
-        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     public CardTypeDTO insert(CardTypeDTO obj) {
@@ -55,7 +60,6 @@ public class CardTypeService {
 
     public void delete(Long id) {
         Optional<CardType> obj = _repository.findById(id);
-        obj.orElseThrow(() -> new ResourceNotFondException(id));
         _repository.deleteById(id);
     }
 

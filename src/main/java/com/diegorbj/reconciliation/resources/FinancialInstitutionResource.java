@@ -26,18 +26,12 @@ public class FinancialInstitutionResource {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<FinancialInstitutionDTO>> findAll() {
         List<FinancialInstitutionDTO> list = _service.findAll();
-        if (list.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().body(list);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<FinancialInstitutionDTO> findById(@PathVariable("id") Long id) {
         FinancialInstitutionDTO obj = _service.findById(id);
-        if (obj == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().body(obj);
     }
 

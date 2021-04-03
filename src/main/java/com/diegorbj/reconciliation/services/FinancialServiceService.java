@@ -23,12 +23,16 @@ public class FinancialServiceService {
     private FinancialServiceMapper _mapper = new FinancialServiceMapperImpl();
 
     public List<FinancialServiceDTO> findAll() {
-        return _mapper.toDto(_repository.findAll());
+        List<FinancialServiceDTO> dtoList = _mapper.toDto(_repository.findAll());
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("{All}");
+        }
+        return dtoList;
     }
 
     public FinancialServiceDTO findById(Long id) {
         Optional<FinancialService> obj = _repository.findById(id);
-        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     public FinancialServiceDTO insert(FinancialServiceDTO obj) {
@@ -55,7 +59,6 @@ public class FinancialServiceService {
 
     public void delete(Long id) {
         Optional<FinancialService> obj = _repository.findById(id);
-        obj.orElseThrow(() -> new ResourceNotFondException(id));
         _repository.deleteById(id);
     }
 

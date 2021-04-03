@@ -23,12 +23,16 @@ public class MerchantService {
     private MerchantMapper _mapper = new MerchantMapperImpl();
 
     public List<MerchantDTO> findAll() {
-        return _mapper.toDto(_repository.findAll());
+        List<MerchantDTO> dtoList = _mapper.toDto(_repository.findAll());
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("{All}");
+        }
+        return dtoList;
     }
 
     public MerchantDTO findById(Long id) {
         Optional<Merchant> obj = _repository.findById(id);
-        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     public MerchantDTO insert(MerchantDTO obj) {
@@ -55,7 +59,6 @@ public class MerchantService {
 
     public void delete(Long id) {
         Optional<Merchant> obj = _repository.findById(id);
-        obj.orElseThrow(() -> new ResourceNotFondException(id));
         _repository.deleteById(id);
     }
 

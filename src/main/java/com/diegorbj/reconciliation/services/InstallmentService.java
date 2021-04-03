@@ -23,12 +23,16 @@ public class InstallmentService {
     private InstallmentMapper _mapper = new InstallmentMapperImpl();
 
     public List<InstallmentDTO> findAll() {
-        return _mapper.toDto(_repository.findAll());
+        List<InstallmentDTO> dtoList = _mapper.toDto(_repository.findAll());
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("{All}");
+        }
+        return dtoList;
     }
 
     public InstallmentDTO findById(Long id) {
         Optional<Installment> obj = _repository.findById(id);
-        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     public List<InstallmentDTO> findAllInstallments(Long id) {
@@ -47,7 +51,7 @@ public class InstallmentService {
                 return obj;
             }
         }
-        throw new ResourceNotFondException(id + '/' + quota);
+        throw new ResourceNotFondException("Id: " + id.toString() + "; Quota: " + quota.toString());
     }
 
     public InstallmentDTO insert(InstallmentDTO obj) {
@@ -72,9 +76,6 @@ public class InstallmentService {
 
     public void delete(Long id, Integer quota) {
         InstallmentDTO obj = this.findByQuota(id, quota);
-        if (obj == null) {
-            throw new ResourceNotFondException(id);
-        }
         _repository.deleteById(obj.getId());
     }
 

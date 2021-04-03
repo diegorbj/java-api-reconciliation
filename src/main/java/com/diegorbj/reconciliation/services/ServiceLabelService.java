@@ -23,12 +23,16 @@ public class ServiceLabelService {
     private ServiceLabelMapper _mapper = new ServiceLabelMapperImpl();
 
     public List<ServiceLabelDTO> findAll() {
-        return _mapper.toDto(_repository.findAll());
+        List<ServiceLabelDTO> dtoList = _mapper.toDto(_repository.findAll());
+        if (dtoList.isEmpty()) {
+            throw new ResourceNotFondException("{All}");
+        }
+        return dtoList;
     }
 
     public ServiceLabelDTO findById(Long id) {
         Optional<ServiceLabel> obj = _repository.findById(id);
-        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     public ServiceLabelDTO insert(ServiceLabelDTO obj) {
@@ -55,7 +59,6 @@ public class ServiceLabelService {
 
     public void delete(Long id) {
         Optional<ServiceLabel> obj = _repository.findById(id);
-        obj.orElseThrow(() -> new ResourceNotFondException(id));
         _repository.deleteById(id);
     }
 
