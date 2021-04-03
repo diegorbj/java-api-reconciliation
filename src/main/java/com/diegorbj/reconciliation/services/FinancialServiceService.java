@@ -4,6 +4,8 @@ import com.diegorbj.reconciliation.domain.FinancialService;
 import com.diegorbj.reconciliation.services.dto.FinancialServiceDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.mappers.FinancialServiceMapper;
+import com.diegorbj.reconciliation.services.mappers.FinancialServiceMapperImpl;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,23 +21,25 @@ public class FinancialServiceService {
     @Autowired
     protected JpaRepository<FinancialService, Long> _repository;
 
+    private FinancialServiceMapper _mapper = new FinancialServiceMapperImpl();
+
     public List<FinancialServiceDTO> findAll() {
         List<FinancialService> list = _repository.findAll();
         List<FinancialServiceDTO> listDTO = new ArrayList<>();
         for (FinancialService obj : list) {
-            listDTO.add(FinancialServiceDTO.fromDomain(obj));
+            listDTO.add(_mapper.toDto(obj));
         }
         return listDTO;
     }
 
     public FinancialServiceDTO findById(Long id) {
         Optional<FinancialService> obj = _repository.findById(id);
-        return FinancialServiceDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public FinancialServiceDTO insert(FinancialServiceDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return FinancialServiceDTO.fromDomain(_repository.save(obj.toDomain()));
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +50,7 @@ public class FinancialServiceService {
             if (obj.getId().equals(id)) {
                 FinancialServiceDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return FinancialServiceDTO.fromDomain(_repository.save(currentState.toDomain()));
+                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }

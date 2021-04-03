@@ -39,20 +39,7 @@ public class InstallmentDTO implements Serializable {
         this.grossAmount = grossAmount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InstallmentDTO that = (InstallmentDTO) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public Installment toDomain() {
+    public Installment toEntity() {
         Installment newObj = new Installment();
         newObj.setId(this.getId());
         newObj.setQuota(this.getQuota());
@@ -66,7 +53,7 @@ public class InstallmentDTO implements Serializable {
         return newObj;
     }
 
-    public static InstallmentDTO fromDomain(Installment obj) {
+    public static InstallmentDTO toDto(Installment obj) {
         InstallmentDTO newObj = new InstallmentDTO();
         newObj.setId(obj.getId());
         newObj.setQuota(obj.getQuota());

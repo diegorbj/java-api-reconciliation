@@ -4,6 +4,8 @@ import com.diegorbj.reconciliation.domain.CardType;
 import com.diegorbj.reconciliation.services.dto.CardTypeDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.mappers.CardTypeMapper;
+import com.diegorbj.reconciliation.services.mappers.CardTypeMapperImpl;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,23 +21,25 @@ public class CardTypeService {
     @Autowired
     protected JpaRepository<CardType, Long> _repository;
 
+    private CardTypeMapper _mapper = new CardTypeMapperImpl();
+
     public List<CardTypeDTO> findAll() {
         List<CardType> list = _repository.findAll();
         List<CardTypeDTO> newList = new ArrayList<>();
         for (CardType obj : list) {
-            newList.add(CardTypeDTO.fromDomain(obj));
+            newList.add(_mapper.toDto(obj));
         }
         return newList;
     }
 
     public CardTypeDTO findById(Long id) {
         Optional<CardType> obj = _repository.findById(id);
-        return CardTypeDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public CardTypeDTO insert(CardTypeDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return CardTypeDTO.fromDomain(_repository.save(obj.toDomain()));
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +50,7 @@ public class CardTypeService {
             if (obj.getId().equals(id)) {
                 CardTypeDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return CardTypeDTO.fromDomain(_repository.save(currentState.toDomain()));
+                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }

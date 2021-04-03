@@ -26,32 +26,19 @@ public class ModalityDTO implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ModalityDTO that = (ModalityDTO) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public Modality toDomain() {
-        Modality newObj = new Modality();
-        newObj.setId(this.getId());
-        newObj.setName(this.getName());
-        return newObj;
-    }
-
-    public static ModalityDTO fromDomain(Modality obj) {
-        ModalityDTO newObj = new ModalityDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
+//    public Modality toEntity() {
+//        Modality newObj = new Modality();
+//        newObj.setId(this.getId());
+//        newObj.setName(this.getName());
+//        return newObj;
+//    }
+//
+//    public static ModalityDTO toDto(Modality obj) {
+//        ModalityDTO newObj = new ModalityDTO();
+//        newObj.setId(obj.getId());
+//        newObj.setName(obj.getName());
+//        return newObj;
+//    }
 
     public static ModalityDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));

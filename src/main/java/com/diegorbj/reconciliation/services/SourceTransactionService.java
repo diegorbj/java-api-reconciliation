@@ -23,20 +23,20 @@ public class SourceTransactionService {
         List<SourceTransaction> list = _repository.findAll();
         List<SourceTransactionDTO> listDTO = new ArrayList<>();
         for (SourceTransaction obj : list) {
-            listDTO.add(SourceTransactionDTO.fromDomain(obj));
+            listDTO.add(SourceTransactionDTO.toDto(obj));
         }
         return listDTO;
     }
 
     public SourceTransactionDTO findById(Long id) {
         Optional<SourceTransaction> obj = _repository.findById(id);
-        return SourceTransactionDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return SourceTransactionDTO.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public SourceTransactionDTO insert(SourceTransactionDTO obj) {
         //TODO - Some validation
         if (true) {
-            return SourceTransactionDTO.fromDomain(_repository.save(obj.toDomain()));
+            return SourceTransactionDTO.toDto(_repository.save(obj.toEntity()));
         } else {
             throw new InvalidAttributeException("Some validation failed");
         }
@@ -48,7 +48,7 @@ public class SourceTransactionService {
             if (obj.getId().equals(id)) {
                 SourceTransactionDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return SourceTransactionDTO.fromDomain(_repository.save(currentState.toDomain()));
+                return SourceTransactionDTO.toDto(_repository.save(currentState.toEntity()));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }

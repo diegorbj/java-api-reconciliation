@@ -26,19 +26,19 @@ public class MerchantDTO implements Serializable {
         this.name = name;
     }
 
-    public Merchant toDomain() {
-        Merchant newObj = new Merchant();
-        newObj.setId(this.getId());
-        newObj.setName(this.getName());
-        return newObj;
-    }
-
-    public static MerchantDTO fromDomain(Merchant obj) {
-        MerchantDTO newObj = new MerchantDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
+//    public Merchant toEntity() {
+//        Merchant newObj = new Merchant();
+//        newObj.setId(this.getId());
+//        newObj.setName(this.getName());
+//        return newObj;
+//    }
+//
+//    public static MerchantDTO toDto(Merchant obj) {
+//        MerchantDTO newObj = new MerchantDTO();
+//        newObj.setId(obj.getId());
+//        newObj.setName(obj.getName());
+//        return newObj;
+//    }
 
     public static MerchantDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));

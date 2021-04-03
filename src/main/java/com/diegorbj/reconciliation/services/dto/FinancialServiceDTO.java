@@ -26,19 +26,19 @@ public class FinancialServiceDTO implements Serializable {
         this.name = name;
     }
 
-    public FinancialService toDomain() {
-        FinancialService newObj = new FinancialService();
-        newObj.setId(this.getId());
-        newObj.setName(this.getName());
-        return newObj;
-    }
-
-    public static FinancialServiceDTO fromDomain(FinancialService obj) {
-        FinancialServiceDTO newObj = new FinancialServiceDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
+//    public FinancialService toEntity() {
+//        FinancialService newObj = new FinancialService();
+//        newObj.setId(this.getId());
+//        newObj.setName(this.getName());
+//        return newObj;
+//    }
+//
+//    public static FinancialServiceDTO toDto(FinancialService obj) {
+//        FinancialServiceDTO newObj = new FinancialServiceDTO();
+//        newObj.setId(obj.getId());
+//        newObj.setName(obj.getName());
+//        return newObj;
+//    }
 
     public static FinancialServiceDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));

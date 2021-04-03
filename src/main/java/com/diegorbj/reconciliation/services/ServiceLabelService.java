@@ -5,10 +5,13 @@ import com.diegorbj.reconciliation.repositories.ServiceLabelRepository;
 import com.diegorbj.reconciliation.services.dto.ServiceLabelDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.mappers.ServiceLabelMapper;
+import com.diegorbj.reconciliation.services.mappers.ServiceLabelMapperImpl;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,23 +22,25 @@ public class ServiceLabelService {
     @Autowired
     protected ServiceLabelRepository _repository;
 
+    private ServiceLabelMapper _mapper = new ServiceLabelMapperImpl();
+
     public List<ServiceLabelDTO> findAll() {
         List<ServiceLabel> list = _repository.findAll();
         List<ServiceLabelDTO> listDTO = new ArrayList<>();
         for (ServiceLabel obj : list) {
-            listDTO.add(ServiceLabelDTO.fromDomain(obj));
+            listDTO.add(_mapper.toDto(obj));
         }
         return listDTO;
     }
 
     public ServiceLabelDTO findById(Long id) {
         Optional<ServiceLabel> obj = _repository.findById(id);
-        return ServiceLabelDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public ServiceLabelDTO insert(ServiceLabelDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return ServiceLabelDTO.fromDomain(_repository.save(obj.toDomain()));
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +51,7 @@ public class ServiceLabelService {
             if (obj.getId().equals(id)) {
                 ServiceLabelDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return ServiceLabelDTO.fromDomain(_repository.save(currentState.toDomain()));
+                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }

@@ -23,21 +23,21 @@ public class InstallmentService {
         List<Installment> list = _repository.findAll();
         List<InstallmentDTO> listDTO = new ArrayList<>();
         for (Installment obj : list) {
-            listDTO.add(InstallmentDTO.fromDomain(obj));
+            listDTO.add(InstallmentDTO.toDto(obj));
         }
         return listDTO;
     }
 
     public InstallmentDTO findById(Long id) {
         Optional<Installment> obj = _repository.findById(id);
-        return InstallmentDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return InstallmentDTO.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public List<InstallmentDTO> findAllInstallments(Long id) {
         List<Installment> list = _repository.findAllBySourceTransaction_Id(id);
         List<InstallmentDTO> listDTO = new ArrayList<>();
         for (Installment obj : list) {
-            listDTO.add(InstallmentDTO.fromDomain(obj));
+            listDTO.add(InstallmentDTO.toDto(obj));
         }
         return listDTO;
     }
@@ -55,7 +55,7 @@ public class InstallmentService {
     public InstallmentDTO insert(InstallmentDTO obj) {
         //TODO - Some validation
         if (true) {
-            return InstallmentDTO.fromDomain(_repository.save(obj.toDomain()));
+            return InstallmentDTO.toDto(_repository.save(obj.toEntity()));
         } else {
             throw new InvalidAttributeException("Some validation failed");
         }
@@ -66,7 +66,7 @@ public class InstallmentService {
         if (true) {
             InstallmentDTO currentState = this.findByQuota(obj.getSourceTransaction().getId(), obj.getQuota());
             updateData(obj, currentState);
-            return InstallmentDTO.fromDomain(_repository.save(currentState.toDomain()));
+            return InstallmentDTO.toDto(_repository.save(currentState.toEntity()));
         } else {
             throw new InvalidAttributeException("Some validation failed");
         }

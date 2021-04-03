@@ -25,19 +25,19 @@ public class ServiceLabelDTO implements Serializable {
         this.name = name;
     }
 
-    public ServiceLabel toDomain() {
-        ServiceLabel newObj = new ServiceLabel();
-        newObj.setId(this.getId());
-        newObj.setName(this.getName());
-        return newObj;
-    }
-
-    public static ServiceLabelDTO fromDomain(ServiceLabel obj) {
-        ServiceLabelDTO newObj = new ServiceLabelDTO();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        return newObj;
-    }
+//    public ServiceLabel toEntity() {
+//        ServiceLabel newObj = new ServiceLabel();
+//        newObj.setId(this.getId());
+//        newObj.setName(this.getName());
+//        return newObj;
+//    }
+//
+//    public static ServiceLabelDTO toDto(ServiceLabel obj) {
+//        ServiceLabelDTO newObj = new ServiceLabelDTO();
+//        newObj.setId(obj.getId());
+//        newObj.setName(obj.getName());
+//        return newObj;
+//    }
 
     public static ServiceLabelDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));

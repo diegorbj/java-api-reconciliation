@@ -5,6 +5,8 @@ import com.diegorbj.reconciliation.repositories.ModalityRepository;
 import com.diegorbj.reconciliation.services.dto.ModalityDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.mappers.ModalityMapper;
+import com.diegorbj.reconciliation.services.mappers.ModalityMapperImpl;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,23 +21,25 @@ public class ModalityService {
     @Autowired
     protected ModalityRepository _repository;
 
+    private ModalityMapper _mapper = new ModalityMapperImpl();
+
     public List<ModalityDTO> findAll() {
         List<Modality> list = _repository.findAll();
         List<ModalityDTO> listDTO = new ArrayList<>();
         for (Modality obj : list) {
-            listDTO.add(ModalityDTO.fromDomain(obj));
+            listDTO.add(_mapper.toDto(obj));
         }
         return listDTO;
     }
 
     public ModalityDTO findById(Long id) {
         Optional<Modality> obj = _repository.findById(id);
-        return ModalityDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public ModalityDTO insert(ModalityDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return ModalityDTO.fromDomain(_repository.save(obj.toDomain()));
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +50,7 @@ public class ModalityService {
             if (obj.getId().equals(id)) {
                 ModalityDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return ModalityDTO.fromDomain(_repository.save(currentState.toDomain()));
+                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }

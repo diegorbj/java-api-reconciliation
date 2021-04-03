@@ -5,6 +5,8 @@ import com.diegorbj.reconciliation.repositories.MerchantRepository;
 import com.diegorbj.reconciliation.services.dto.MerchantDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.mappers.MerchantMapper;
+import com.diegorbj.reconciliation.services.mappers.MerchantMapperImpl;
 import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,23 +21,25 @@ public class MerchantService {
     @Autowired
     protected MerchantRepository _repository;
 
+    private MerchantMapper _mapper = new MerchantMapperImpl();
+
     public List<MerchantDTO> findAll() {
         List<Merchant> list = _repository.findAll();
         List<MerchantDTO> listDTO = new ArrayList<>();
         for (Merchant obj : list) {
-            listDTO.add(MerchantDTO.fromDomain(obj));
+            listDTO.add(_mapper.toDto(obj));
         }
         return listDTO;
     }
 
     public MerchantDTO findById(Long id) {
         Optional<Merchant> obj = _repository.findById(id);
-        return MerchantDTO.fromDomain(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public MerchantDTO insert(MerchantDTO obj) {
         if (ServiceUtil.isValidDescription(obj.getName())) {
-            return MerchantDTO.fromDomain(_repository.save(obj.toDomain()));
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
             throw new InvalidAttributeException("The card type name can't be empty");
         }
@@ -46,7 +50,7 @@ public class MerchantService {
             if (obj.getId().equals(id)) {
                 MerchantDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return MerchantDTO.fromDomain(_repository.save(currentState.toDomain()));
+                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }
