@@ -1,11 +1,9 @@
 package com.diegorbj.reconciliation.services.dto;
 
-import com.diegorbj.reconciliation.domain.Modality;
 import lombok.*;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -25,20 +23,6 @@ public class ModalityDTO implements Serializable {
         this.id = id;
         this.name = name;
     }
-
-//    public Modality toEntity() {
-//        Modality newObj = new Modality();
-//        newObj.setId(this.getId());
-//        newObj.setName(this.getName());
-//        return newObj;
-//    }
-//
-//    public static ModalityDTO toDto(Modality obj) {
-//        ModalityDTO newObj = new ModalityDTO();
-//        newObj.setId(obj.getId());
-//        newObj.setName(obj.getName());
-//        return newObj;
-//    }
 
     public static ModalityDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));

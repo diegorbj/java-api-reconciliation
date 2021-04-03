@@ -1,11 +1,6 @@
 package com.diegorbj.reconciliation.services.dto;
 
-import com.diegorbj.reconciliation.domain.FinancialInstitution;
-import com.diegorbj.reconciliation.domain.FinancialService;
-import com.diegorbj.reconciliation.domain.Installment;
-import com.diegorbj.reconciliation.domain.SourceTransaction;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
-import com.diegorbj.reconciliation.services.mappers.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.json.JSONObject;
@@ -71,66 +66,6 @@ public class SourceTransactionDTO implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    public SourceTransaction toEntity() {
-        MerchantMapper _merchantMapper = new MerchantMapperImpl();
-        FinancialInstitutionMapper _financialInstitutionMapper = new FinancialInstitutionMapperImpl();
-        FinancialServiceMapper _financialServiceMapper = new FinancialServiceMapperImpl();
-        ServiceLabelMapper _serviceLabelMapper = new ServiceLabelMapperImpl();
-        CardTypeMapper _cardTypeMapper = new CardTypeMapperImpl();
-        ModalityMapper _modalityMapper = new ModalityMapperImpl();
-
-        SourceTransaction newObj = new SourceTransaction();
-        newObj.setId(this.getId());
-        newObj.setDate(this.getDate());
-        newObj.setUniqueSequentialNumber(this.getUniqueSequentialNumber());
-        newObj.setTransactionId(this.getTransactionId());
-        newObj.setAuthorizationCode(this.getAuthorizationCode());
-        newObj.setTransactionStatus(this.getTransactionStatus());
-        newObj.setNumberOfInstallments(this.getNumberOfInstallments());
-        newObj.setGrossAmount(this.getGrossAmount());
-        newObj.setTransactionInformation(this.getTransactionInformation());
-        newObj.setMerchant(_merchantMapper.toEntity(this.getMerchant()));
-        newObj.setFinancialInstitution(_financialInstitutionMapper.toEntity(this.getFinancialInstitution()));
-        newObj.setFinancialService(_financialServiceMapper.toEntity(this.getFinancialService()));
-        newObj.setServiceLabel(_serviceLabelMapper.toEntity(this.getServiceLabel()));
-        newObj.setCardType(_cardTypeMapper.toEntity(this.getCardType()));
-        newObj.setModality(_modalityMapper.toEntity(this.getModality()));
-        for (InstallmentDTO o : this.getInstallments()) {
-            newObj.getInstallments().add(o.toEntity());
-        }
-        return newObj;
-    }
-
-    public static SourceTransactionDTO toDto(SourceTransaction obj) {
-        MerchantMapper _merchantMapper = new MerchantMapperImpl();
-        FinancialInstitutionMapper _financialInstitutionMapper = new FinancialInstitutionMapperImpl();
-        FinancialServiceMapper _financialServiceMapper = new FinancialServiceMapperImpl();
-        ServiceLabelMapper _serviceLabelMapper = new ServiceLabelMapperImpl();
-        CardTypeMapper _cardTypeMapper = new CardTypeMapperImpl();
-        ModalityMapper _modalityMapper = new ModalityMapperImpl();
-
-        SourceTransactionDTO newObj = new SourceTransactionDTO();
-        newObj.setId(obj.getId());
-        newObj.setDate(obj.getDate());
-        newObj.setUniqueSequentialNumber(obj.getUniqueSequentialNumber());
-        newObj.setTransactionId(obj.getTransactionId());
-        newObj.setAuthorizationCode(obj.getAuthorizationCode());
-        newObj.setTransactionStatus(obj.getTransactionStatus());
-        newObj.setNumberOfInstallments(obj.getNumberOfInstallments());
-        newObj.setGrossAmount(obj.getGrossAmount());
-        newObj.setTransactionInformation(obj.getTransactionInformation());
-        newObj.setMerchant(_merchantMapper.toDto(obj.getMerchant()));
-        newObj.setFinancialInstitution(_financialInstitutionMapper.toDto(obj.getFinancialInstitution()));
-        newObj.setFinancialService(_financialServiceMapper.toDto(obj.getFinancialService()));
-        newObj.setServiceLabel(_serviceLabelMapper.toDto(obj.getServiceLabel()));
-        newObj.setCardType(_cardTypeMapper.toDto(obj.getCardType()));
-        newObj.setModality(_modalityMapper.toDto(obj.getModality()));
-        for (Installment o : obj.getInstallments()) {
-            newObj.getInstallments().add(InstallmentDTO.toDto(o));
-        }
-        return newObj;
     }
 
     public static SourceTransactionDTO fromJSON(String jsonString) {

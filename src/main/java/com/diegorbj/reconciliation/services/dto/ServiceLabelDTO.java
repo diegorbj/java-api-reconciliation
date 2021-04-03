@@ -1,6 +1,5 @@
 package com.diegorbj.reconciliation.services.dto;
 
-import com.diegorbj.reconciliation.domain.ServiceLabel;
 import lombok.*;
 import org.json.JSONObject;
 
@@ -24,20 +23,6 @@ public class ServiceLabelDTO implements Serializable {
         this.id = id;
         this.name = name;
     }
-
-//    public ServiceLabel toEntity() {
-//        ServiceLabel newObj = new ServiceLabel();
-//        newObj.setId(this.getId());
-//        newObj.setName(this.getName());
-//        return newObj;
-//    }
-//
-//    public static ServiceLabelDTO toDto(ServiceLabel obj) {
-//        ServiceLabelDTO newObj = new ServiceLabelDTO();
-//        newObj.setId(obj.getId());
-//        newObj.setName(obj.getName());
-//        return newObj;
-//    }
 
     public static ServiceLabelDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));

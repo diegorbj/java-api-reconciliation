@@ -9,12 +9,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ServiceLabelMapper {
 
-    ServiceLabelDTO toDto(ServiceLabel obj);
+    ServiceLabelDTO toDto(ServiceLabel entity);
 
-    ServiceLabel toEntity(ServiceLabelDTO obj);
+    ServiceLabel toEntity(ServiceLabelDTO dto);
 
-    List<ServiceLabelDTO> toDto(List<ServiceLabel> list);
-
-    List<ServiceLabel> toEntity(List<ServiceLabelDTO> list);
+    List<ServiceLabelDTO> toDto(List<ServiceLabel> entityList);
 
 }

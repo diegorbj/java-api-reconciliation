@@ -10,12 +10,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FinancialInstitutionMapper {
 
-    FinancialInstitutionDTO toDto(FinancialInstitution obj);
+    FinancialInstitutionDTO toDto(FinancialInstitution entity);
 
-    FinancialInstitution toEntity(FinancialInstitutionDTO obj);
+    FinancialInstitution toEntity(FinancialInstitutionDTO dto);
 
-    List<FinancialInstitutionDTO> toDto(List<FinancialInstitution> list);
-
-    List<FinancialInstitution> toEntity(List<FinancialInstitutionDTO> list);
+    List<FinancialInstitutionDTO> toDto(List<FinancialInstitution> entityList);
 
 }

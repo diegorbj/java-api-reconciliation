@@ -75,7 +75,6 @@ class SourceTransactionServiceTest {
     @Order(4)
     public void shouldReturnSourceTransactionUpdatedWithSuccess() {
         JSONObject jsonObject = setObjectToUpdate();
-        System.out.println("whatever::" + jsonObject.toString());
         SourceTransactionDTO updatedObject = SourceTransactionDTO.fromJSON(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 

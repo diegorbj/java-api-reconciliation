@@ -24,20 +24,6 @@ public class CardTypeDTO implements Serializable {
         this.name = name;
     }
 
-//    public CardType toEntity() {
-//        CardType newObj = new CardType();
-//        newObj.setId(this.getId());
-//        newObj.setName(this.getName());
-//        return newObj;
-//    }
-//
-//    public static CardTypeDTO toDto(CardType obj) {
-//        CardTypeDTO newObj = new CardTypeDTO();
-//        newObj.setId(obj.getId());
-//        newObj.setName(obj.getName());
-//        return newObj;
-//    }
-
     public static CardTypeDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));
     }

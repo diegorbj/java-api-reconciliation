@@ -1,11 +1,9 @@
 package com.diegorbj.reconciliation.services.dto;
 
-import com.diegorbj.reconciliation.domain.FinancialService;
 import lombok.*;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -25,20 +23,6 @@ public class FinancialServiceDTO implements Serializable {
         this.id = id;
         this.name = name;
     }
-
-//    public FinancialService toEntity() {
-//        FinancialService newObj = new FinancialService();
-//        newObj.setId(this.getId());
-//        newObj.setName(this.getName());
-//        return newObj;
-//    }
-//
-//    public static FinancialServiceDTO toDto(FinancialService obj) {
-//        FinancialServiceDTO newObj = new FinancialServiceDTO();
-//        newObj.setId(obj.getId());
-//        newObj.setName(obj.getName());
-//        return newObj;
-//    }
 
     public static FinancialServiceDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));

@@ -9,12 +9,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FinancialServiceMapper {
 
-    FinancialServiceDTO toDto(FinancialService obj);
+    FinancialServiceDTO toDto(FinancialService entity);
 
-    FinancialService toEntity(FinancialServiceDTO obj);
+    FinancialService toEntity(FinancialServiceDTO dto);
 
-    List<FinancialServiceDTO> toDto(List<FinancialService> list);
-
-    List<FinancialService> toEntity(List<FinancialServiceDTO> list);
+    List<FinancialServiceDTO> toDto(List<FinancialService> entityList);
 
 }

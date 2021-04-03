@@ -9,12 +9,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MerchantMapper {
 
-    MerchantDTO toDto(Merchant obj);
+    MerchantDTO toDto(Merchant entity);
 
-    Merchant toEntity(MerchantDTO obj);
+    Merchant toEntity(MerchantDTO dto);
 
-    List<MerchantDTO> toDto(List<Merchant> list);
-
-    List<Merchant> toEntity(List<MerchantDTO> list);
+    List<MerchantDTO> toDto(List<Merchant> entityList);
 
 }

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +23,7 @@ public class CardTypeService {
     private CardTypeMapper _mapper = new CardTypeMapperImpl();
 
     public List<CardTypeDTO> findAll() {
-        List<CardType> list = _repository.findAll();
-        List<CardTypeDTO> newList = new ArrayList<>();
-        for (CardType obj : list) {
-            newList.add(_mapper.toDto(obj));
-        }
-        return newList;
+        return _mapper.toDto(_repository.findAll());
     }
 
     public CardTypeDTO findById(Long id) {

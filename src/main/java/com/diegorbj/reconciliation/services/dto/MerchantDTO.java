@@ -1,11 +1,9 @@
 package com.diegorbj.reconciliation.services.dto;
 
-import com.diegorbj.reconciliation.domain.Merchant;
 import lombok.*;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -25,20 +23,6 @@ public class MerchantDTO implements Serializable {
         this.id = id;
         this.name = name;
     }
-
-//    public Merchant toEntity() {
-//        Merchant newObj = new Merchant();
-//        newObj.setId(this.getId());
-//        newObj.setName(this.getName());
-//        return newObj;
-//    }
-//
-//    public static MerchantDTO toDto(Merchant obj) {
-//        MerchantDTO newObj = new MerchantDTO();
-//        newObj.setId(obj.getId());
-//        newObj.setName(obj.getName());
-//        return newObj;
-//    }
 
     public static MerchantDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));

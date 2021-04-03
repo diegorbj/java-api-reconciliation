@@ -11,8 +11,6 @@ import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.Provider;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +23,7 @@ public class ServiceLabelService {
     private ServiceLabelMapper _mapper = new ServiceLabelMapperImpl();
 
     public List<ServiceLabelDTO> findAll() {
-        List<ServiceLabel> list = _repository.findAll();
-        List<ServiceLabelDTO> listDTO = new ArrayList<>();
-        for (ServiceLabel obj : list) {
-            listDTO.add(_mapper.toDto(obj));
-        }
-        return listDTO;
+        return _mapper.toDto(_repository.findAll());
     }
 
     public ServiceLabelDTO findById(Long id) {

@@ -9,12 +9,10 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CardTypeMapper {
 
-    CardTypeDTO toDto(CardType obj);
+    CardTypeDTO toDto(CardType entity);
 
-    CardType toEntity(CardTypeDTO obj);
+    CardType toEntity(CardTypeDTO dto);
 
-    List<CardTypeDTO> toDto(List<CardType> list);
-
-    List<CardType> toEntity(List<CardTypeDTO> list);
+    List<CardTypeDTO> toDto(List<CardType> entityList);
 
 }

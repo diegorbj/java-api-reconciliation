@@ -11,7 +11,6 @@ import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +23,7 @@ public class MerchantService {
     private MerchantMapper _mapper = new MerchantMapperImpl();
 
     public List<MerchantDTO> findAll() {
-        List<Merchant> list = _repository.findAll();
-        List<MerchantDTO> listDTO = new ArrayList<>();
-        for (Merchant obj : list) {
-            listDTO.add(_mapper.toDto(obj));
-        }
-        return listDTO;
+        return _mapper.toDto(_repository.findAll());
     }
 
     public MerchantDTO findById(Long id) {

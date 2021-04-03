@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +23,7 @@ public class FinancialServiceService {
     private FinancialServiceMapper _mapper = new FinancialServiceMapperImpl();
 
     public List<FinancialServiceDTO> findAll() {
-        List<FinancialService> list = _repository.findAll();
-        List<FinancialServiceDTO> listDTO = new ArrayList<>();
-        for (FinancialService obj : list) {
-            listDTO.add(_mapper.toDto(obj));
-        }
-        return listDTO;
+        return _mapper.toDto(_repository.findAll());
     }
 
     public FinancialServiceDTO findById(Long id) {

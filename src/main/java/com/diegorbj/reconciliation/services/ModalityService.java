@@ -11,7 +11,6 @@ import com.diegorbj.reconciliation.services.utils.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,12 +23,7 @@ public class ModalityService {
     private ModalityMapper _mapper = new ModalityMapperImpl();
 
     public List<ModalityDTO> findAll() {
-        List<Modality> list = _repository.findAll();
-        List<ModalityDTO> listDTO = new ArrayList<>();
-        for (Modality obj : list) {
-            listDTO.add(_mapper.toDto(obj));
-        }
-        return listDTO;
+        return _mapper.toDto(_repository.findAll());
     }
 
     public ModalityDTO findById(Long id) {

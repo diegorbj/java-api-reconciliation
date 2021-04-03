@@ -6,10 +6,11 @@ import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
 import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapper;
+import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,24 +20,21 @@ public class SourceTransactionService {
     @Autowired
     protected SourceTransactionRepository _repository;
 
+    private SourceTransactionMapper _mapper = new SourceTransactionMapperImpl();
+
     public List<SourceTransactionDTO> findAll() {
-        List<SourceTransaction> list = _repository.findAll();
-        List<SourceTransactionDTO> listDTO = new ArrayList<>();
-        for (SourceTransaction obj : list) {
-            listDTO.add(SourceTransactionDTO.toDto(obj));
-        }
-        return listDTO;
+        return _mapper.toDto(_repository.findAll());
     }
 
     public SourceTransactionDTO findById(Long id) {
         Optional<SourceTransaction> obj = _repository.findById(id);
-        return SourceTransactionDTO.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public SourceTransactionDTO insert(SourceTransactionDTO obj) {
         //TODO - Some validation
         if (true) {
-            return SourceTransactionDTO.toDto(_repository.save(obj.toEntity()));
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
             throw new InvalidAttributeException("Some validation failed");
         }
@@ -48,7 +46,7 @@ public class SourceTransactionService {
             if (obj.getId().equals(id)) {
                 SourceTransactionDTO currentState = this.findById(id);
                 updateData(obj, currentState);
-                return SourceTransactionDTO.toDto(_repository.save(currentState.toEntity()));
+                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
                 throw new InvalidAttributeException("Inconsistent value for Id");
             }

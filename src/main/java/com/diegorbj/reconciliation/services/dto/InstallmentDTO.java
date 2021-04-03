@@ -1,12 +1,9 @@
 package com.diegorbj.reconciliation.services.dto;
 
-import com.diegorbj.reconciliation.domain.Installment;
-import com.diegorbj.reconciliation.domain.SourceTransaction;
 import lombok.*;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -37,34 +34,6 @@ public class InstallmentDTO implements Serializable {
         this.id = id;
         this.quota = quota;
         this.grossAmount = grossAmount;
-    }
-
-    public Installment toEntity() {
-        Installment newObj = new Installment();
-        newObj.setId(this.getId());
-        newObj.setQuota(this.getQuota());
-        newObj.setGrossAmount(this.getGrossAmount());
-        //newObj.setSourceTransaction(this.getSourceTransaction().toDomain());
-        if (this.getSourceTransaction() != null) {
-            SourceTransaction st = new SourceTransaction();
-            st.setId(this.getSourceTransaction().getId());
-            newObj.setSourceTransaction(st);
-        }
-        return newObj;
-    }
-
-    public static InstallmentDTO toDto(Installment obj) {
-        InstallmentDTO newObj = new InstallmentDTO();
-        newObj.setId(obj.getId());
-        newObj.setQuota(obj.getQuota());
-        newObj.setGrossAmount(obj.getGrossAmount());
-        //newObj.setSourceTransaction(SourceTransactionDTO.fromDomain(obj.getSourceTransaction()));
-        if (obj.getSourceTransaction() != null) {
-            SourceTransactionDTO stDTO = new SourceTransactionDTO();
-            stDTO.setId(obj.getSourceTransaction().getId());
-            newObj.setSourceTransaction(stDTO);
-        }
-        return newObj;
     }
 
     public static InstallmentDTO fromJSON(String jsonString) {

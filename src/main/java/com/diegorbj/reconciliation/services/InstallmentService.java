@@ -3,9 +3,10 @@ package com.diegorbj.reconciliation.services;
 import com.diegorbj.reconciliation.domain.Installment;
 import com.diegorbj.reconciliation.repositories.InstallmentRepository;
 import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
-import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.mappers.InstallmentMapper;
+import com.diegorbj.reconciliation.services.mappers.InstallmentMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,25 +20,22 @@ public class InstallmentService {
     @Autowired
     protected InstallmentRepository _repository;
 
+    private InstallmentMapper _mapper = new InstallmentMapperImpl();
+
     public List<InstallmentDTO> findAll() {
-        List<Installment> list = _repository.findAll();
-        List<InstallmentDTO> listDTO = new ArrayList<>();
-        for (Installment obj : list) {
-            listDTO.add(InstallmentDTO.toDto(obj));
-        }
-        return listDTO;
+        return _mapper.toDto(_repository.findAll());
     }
 
     public InstallmentDTO findById(Long id) {
         Optional<Installment> obj = _repository.findById(id);
-        return InstallmentDTO.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException(id)));
     }
 
     public List<InstallmentDTO> findAllInstallments(Long id) {
         List<Installment> list = _repository.findAllBySourceTransaction_Id(id);
         List<InstallmentDTO> listDTO = new ArrayList<>();
         for (Installment obj : list) {
-            listDTO.add(InstallmentDTO.toDto(obj));
+            listDTO.add(_mapper.toDto(obj));
         }
         return listDTO;
     }
@@ -55,7 +53,7 @@ public class InstallmentService {
     public InstallmentDTO insert(InstallmentDTO obj) {
         //TODO - Some validation
         if (true) {
-            return InstallmentDTO.toDto(_repository.save(obj.toEntity()));
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
             throw new InvalidAttributeException("Some validation failed");
         }
@@ -66,7 +64,7 @@ public class InstallmentService {
         if (true) {
             InstallmentDTO currentState = this.findByQuota(obj.getSourceTransaction().getId(), obj.getQuota());
             updateData(obj, currentState);
-            return InstallmentDTO.toDto(_repository.save(currentState.toEntity()));
+            return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
         } else {
             throw new InvalidAttributeException("Some validation failed");
         }
