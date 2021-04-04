@@ -5,7 +5,7 @@
           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="Reconciliation">
+    <persistence-unit name="reconciliation">
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://DESKTOP-4F03PJR\\SQLEXPRESS:61180;database=reconciliation;encrypt=false;trustServerCertificate=false;loginTimeout=30;" />
             <property name="javax.persistence.jdbc.user" value="desenv" />
