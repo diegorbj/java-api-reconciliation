@@ -1,5 +1,6 @@
 package com.diegorbj.reconciliation.it;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
 class SourceTransactionResourceTest {
 
     @Autowired
@@ -102,7 +103,7 @@ class SourceTransactionResourceTest {
         this.mockMvc.perform(delete("/reconciliation/v1/sourcetransactions/4")).andExpect(status().isNoContent());
     }
 
-    private JSONObject setObjectToCreate() {
+    private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         JSONObject mapAux = new JSONObject();
 
@@ -116,33 +117,33 @@ class SourceTransactionResourceTest {
         map.put("grossAmount", 100.0);
         map.put("transactionInformation", "123456******3456");
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Mini 5th Av.");
 
         map.put("merchant", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 1);
         mapAux.put("name", "Mint Co.");
         map.put("financialInstitution", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Debit Card");
         map.put("financialService", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Master");
         map.put("serviceLabel", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Platinum");
         map.put("cardType", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Chip");
         map.put("modality", mapAux);
@@ -152,7 +153,7 @@ class SourceTransactionResourceTest {
         return map;
     }
 
-    private JSONObject setObjectToUpdate() {
+    private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         JSONObject mapAux = new JSONObject();
 
@@ -166,33 +167,33 @@ class SourceTransactionResourceTest {
         map.put("grossAmount", 100.0);
         map.put("transactionInformation", "123456******3456");
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Mini 5th Av.");
 
         map.put("merchant", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 1);
         mapAux.put("name", "Mint Co.");
         map.put("financialInstitution", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Debit Card");
         map.put("financialService", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Master");
         map.put("serviceLabel", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Platinum");
         map.put("cardType", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Chip");
         map.put("modality", mapAux);
@@ -202,7 +203,7 @@ class SourceTransactionResourceTest {
         return map;
     }
 
-    private JSONObject setObjectChildToCreate() {
+    private JSONObject setObjectChildToCreate() throws JSONException {
         JSONObject map = new JSONObject();
 
         map.put("id", JSONObject.NULL);
@@ -213,7 +214,7 @@ class SourceTransactionResourceTest {
         return map;
     }
 
-    private JSONObject setObjectChildToUpdate() {
+    private JSONObject setObjectChildToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("quota", 1);

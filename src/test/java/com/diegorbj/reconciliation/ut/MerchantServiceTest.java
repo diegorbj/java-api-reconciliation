@@ -2,6 +2,7 @@ package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.services.dto.MerchantDTO;
 import com.diegorbj.reconciliation.services.MerchantService;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class MerchantServiceTest {
 
     @Test
     @Order(2)
-    public void shouldReturnMerchantCreatedWithSuccess() {
+    public void shouldReturnMerchantCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
 
         testObject = _service.insert(MerchantDTO.fromJSON(jsonObject));
@@ -44,7 +45,7 @@ public class MerchantServiceTest {
 
     @Test
     @Order(3)
-    public void shouldReturnMerchantUpdatedWithSuccess() {
+    public void shouldReturnMerchantUpdatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToUpdate();
 
         MerchantDTO updatedObject = MerchantDTO.fromJSON(jsonObject);
@@ -75,14 +76,14 @@ public class MerchantServiceTest {
         _service.delete(testObject.getId());
     }
 
-    private JSONObject setObjectToCreate() {
+    private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("name", "Magazine 5th Av.");
         return map;
     }
 
-    private JSONObject setObjectToUpdate() {
+    private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
         map.put("name", "Super 5th Av.");

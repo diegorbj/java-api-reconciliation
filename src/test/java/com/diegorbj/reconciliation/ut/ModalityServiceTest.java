@@ -2,6 +2,7 @@ package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.services.dto.ModalityDTO;
 import com.diegorbj.reconciliation.services.ModalityService;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ModalityServiceTest {
 
     @Test
     @Order(2)
-    public void shouldReturnModalityCreatedWithSuccess() {
+    public void shouldReturnModalityCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
 
         testObject = _service.insert(ModalityDTO.fromJSON(jsonObject));
@@ -44,7 +45,7 @@ public class ModalityServiceTest {
 
     @Test
     @Order(3)
-    public void shouldReturnModalityUpdatedWithSuccess() {
+    public void shouldReturnModalityUpdatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToUpdate();
 
         ModalityDTO updatedObject = ModalityDTO.fromJSON(jsonObject);
@@ -75,14 +76,14 @@ public class ModalityServiceTest {
         _service.delete(testObject.getId());
     }
 
-    private JSONObject setObjectToCreate() {
+    private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("name", "Fingerprint");
         return map;
     }
 
-    private JSONObject setObjectToUpdate() {
+    private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
         map.put("name", "Biometric - Fingerprint");

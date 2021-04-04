@@ -2,6 +2,7 @@ package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.services.dto.ServiceLabelDTO;
 import com.diegorbj.reconciliation.services.ServiceLabelService;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ServiceLabelServiceTest {
 
     @Test
     @Order(2)
-    public void shouldReturnServiceLabelCreatedWithSuccess() {
+    public void shouldReturnServiceLabelCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
 
         testObject = _service.insert(ServiceLabelDTO.fromJSON(jsonObject));
@@ -44,7 +45,7 @@ public class ServiceLabelServiceTest {
 
     @Test
     @Order(3)
-    public void shouldReturnServiceLabelUpdatedWithSuccess() {
+    public void shouldReturnServiceLabelUpdatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToUpdate();
 
         ServiceLabelDTO updatedObject = ServiceLabelDTO.fromJSON(jsonObject);
@@ -75,14 +76,14 @@ public class ServiceLabelServiceTest {
         _service.delete(testObject.getId());
     }
 
-    private JSONObject setObjectToCreate() {
+    private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("name", "Cirus");
         return map;
     }
 
-    private JSONObject setObjectToUpdate() {
+    private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
         map.put("name", "Cirrus");

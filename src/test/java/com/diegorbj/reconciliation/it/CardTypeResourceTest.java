@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.diegorbj.reconciliation.services.dto.CardTypeDTO;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -72,14 +73,14 @@ class CardTypeResourceTest {
         this.mockMvc.perform(delete("/reconciliation/v1/cardtypes/4")).andExpect(status().isNoContent());
     }
 
-    private JSONObject setObjectToCreate() {
+    private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("name", "Goldden");
         return map;
     }
 
-    private JSONObject setObjectToUpdate() {
+    private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", 4L);
         map.put("name", "Golden");

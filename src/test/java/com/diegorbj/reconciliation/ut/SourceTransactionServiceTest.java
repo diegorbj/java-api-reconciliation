@@ -4,6 +4,10 @@ import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.InstallmentService;
 import com.diegorbj.reconciliation.services.dto.*;
 import com.diegorbj.reconciliation.services.SourceTransactionService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +52,7 @@ class SourceTransactionServiceTest {
 
     @Test
     @Order(3)
-    public void shouldReturnSourceTransactionCreatedWithSuccess() {
+    public void shouldReturnSourceTransactionCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
 
         testObject = _service.insert(SourceTransactionDTO.fromJSON(jsonObject));
@@ -73,7 +77,7 @@ class SourceTransactionServiceTest {
 
     @Test
     @Order(4)
-    public void shouldReturnSourceTransactionUpdatedWithSuccess() {
+    public void shouldReturnSourceTransactionUpdatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToUpdate();
         SourceTransactionDTO updatedObject = SourceTransactionDTO.fromJSON(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
@@ -112,7 +116,7 @@ class SourceTransactionServiceTest {
 
     @Test
     @Order(7)
-    public void shouldReturnInstallmentCreatedWithSuccess() {
+    public void shouldReturnInstallmentCreatedWithSuccess() throws JSONException, JsonProcessingException {
         JSONObject jsonObject = setObjectChildToCreate();
 
         testChildObject = _childService.insert(InstallmentDTO.fromJSON(jsonObject));
@@ -126,7 +130,7 @@ class SourceTransactionServiceTest {
 
     @Test
     @Order(8)
-    public void shouldReturnInstallmentUpdatedWithSuccess() {
+    public void shouldReturnInstallmentUpdatedWithSuccess() throws JSONException, JsonProcessingException {
         JSONObject jsonObject = setObjectChildToUpdate();
 
         InstallmentDTO updatedObject = InstallmentDTO.fromJSON(jsonObject);
@@ -165,7 +169,7 @@ class SourceTransactionServiceTest {
         _service.delete(testObject.getId());
     }
 
-    private JSONObject setObjectToCreate() {
+    private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         JSONObject mapAux = new JSONObject();
 
@@ -179,33 +183,33 @@ class SourceTransactionServiceTest {
         map.put("grossAmount", 100.0);
         map.put("transactionInformation", "123456******3456");
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Mini 5th Av.");
 
         map.put("merchant", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 1);
         mapAux.put("name", "Mint Co.");
         map.put("financialInstitution", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Debit Card");
         map.put("financialService", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Master");
         map.put("serviceLabel", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Platinum");
         map.put("cardType", mapAux);
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Chip");
         map.put("modality", mapAux);
@@ -215,7 +219,7 @@ class SourceTransactionServiceTest {
         return map;
     }
 
-    private JSONObject setObjectToUpdate() {
+    private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         JSONObject mapAux = new JSONObject();
 
@@ -229,32 +233,32 @@ class SourceTransactionServiceTest {
         map.put("grossAmount", 100.0);
         map.put("transactionInformation", "123456******3456");
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Mini 5th Av.");
         map.put("merchant", mapAux.toString());
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 1);
         mapAux.put("name", "Mint Co.");
         map.put("financialInstitution", mapAux.toString());
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Debit Card");
         map.put("financialService", mapAux.toString());
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Master");
         map.put("serviceLabel", mapAux.toString());
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Platinum");
         map.put("cardType", mapAux.toString());
 
-        mapAux.clear();
+        mapAux = new JSONObject();
         mapAux.put("id", 2);
         mapAux.put("name", "Chip");
         map.put("modality", mapAux.toString());
@@ -264,23 +268,26 @@ class SourceTransactionServiceTest {
         return map;
     }
 
-    private JSONObject setObjectChildToCreate() {
+    private JSONObject setObjectChildToCreate() throws JSONException, JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
         JSONObject map = new JSONObject();
 
         map.put("id", JSONObject.NULL);
         map.put("quota", 1);
         map.put("grossAmount", 95.0);
-        map.put("sourceTransaction", new JSONObject(testObject));
+        map.put("sourceTransaction", mapper.writeValueAsString(testObject));
 
         return map;
     }
 
-    private JSONObject setObjectChildToUpdate() {
+    private JSONObject setObjectChildToUpdate() throws JSONException, JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("quota", 1);
         map.put("grossAmount", 100.0);
-        map.put("sourceTransaction", new JSONObject(testObject));
+        map.put("sourceTransaction", mapper.writeValueAsString(testObject));
         return map;
     }
 

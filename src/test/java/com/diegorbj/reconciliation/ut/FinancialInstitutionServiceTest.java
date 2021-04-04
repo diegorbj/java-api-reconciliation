@@ -2,6 +2,7 @@ package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.services.dto.FinancialInstitutionDTO;
 import com.diegorbj.reconciliation.services.FinancialInstitutionService;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class FinancialInstitutionServiceTest {
 
     @Test
     @Order(2)
-    public void shouldReturnFinancialInstitutionCreatedWithSuccess() {
+    public void shouldReturnFinancialInstitutionCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
 
         testObject = _service.insert(FinancialInstitutionDTO.fromJSON(jsonObject));
@@ -44,7 +45,7 @@ public class FinancialInstitutionServiceTest {
 
     @Test
     @Order(3)
-    public void shouldReturnFinancialInstitutionUpdatedWithSuccess() {
+    public void shouldReturnFinancialInstitutionUpdatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToUpdate();
 
         FinancialInstitutionDTO updatedObject = FinancialInstitutionDTO.fromJSON(jsonObject);
@@ -75,14 +76,14 @@ public class FinancialInstitutionServiceTest {
         _service.delete(testObject.getId());
     }
 
-    private JSONObject setObjectToCreate() {
+    private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("name", "ACME Co.");
         return map;
     }
 
-    private JSONObject setObjectToUpdate() {
+    private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
         map.put("name", "ACME Inc.");

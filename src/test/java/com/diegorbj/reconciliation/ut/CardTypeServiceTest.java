@@ -2,6 +2,7 @@ package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.services.CardTypeService;
 import com.diegorbj.reconciliation.services.dto.CardTypeDTO;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class CardTypeServiceTest {
 
     @Test
     @Order(2)
-    public void shouldReturnCardTypeCreatedWithSuccess() {
+    public void shouldReturnCardTypeCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
         testObject = _service.insert(CardTypeDTO.fromJSON(jsonObject));
 
@@ -43,7 +44,7 @@ public class CardTypeServiceTest {
 
     @Test
     @Order(3)
-    public void shouldReturnCardTypeUpdatedWithSuccess() {
+    public void shouldReturnCardTypeUpdatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToUpdate();
 
         CardTypeDTO updatedObject = CardTypeDTO.fromJSON(jsonObject);
@@ -74,14 +75,14 @@ public class CardTypeServiceTest {
         _service.delete(testObject.getId());
     }
 
-    private JSONObject setObjectToCreate() {
+    private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("name", "Gray");
         return map;
     }
 
-    private JSONObject setObjectToUpdate() {
+    private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
         map.put("name", "Red");
