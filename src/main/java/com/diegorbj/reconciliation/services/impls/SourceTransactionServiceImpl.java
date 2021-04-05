@@ -13,6 +13,7 @@ import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +41,18 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
     }
 
     @Override
-    public List<SourceTransactionDTO> getWithFilter(SourceTransactionFilterParam params){
+    public List<SourceTransactionDTO> getWithFilter(SourceTransactionFilterParam params) {
         return _mapper.toDto(_repository.getWithFilter(params));
+    }
+
+    @Override
+    public List<SourceTransactionDTO> getByCardTypes(Collection<Long> cardTypeIds) {
+        return _mapper.toDto(_repository.getByCardTypes(cardTypeIds));
+    }
+
+    @Override
+    public List<SourceTransactionDTO> getByGrossAmountRange(Double grossAmountFrom, Double grossAmountTo) {
+        return _mapper.toDto(_repository.getByGrossAmountRange(grossAmountFrom, grossAmountTo));
     }
 
     @Override
