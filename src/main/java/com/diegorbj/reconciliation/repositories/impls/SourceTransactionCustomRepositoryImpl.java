@@ -38,14 +38,14 @@ public class SourceTransactionCustomRepositoryImpl implements SourceTransactionC
             predicates.add(criteriaBuilder.lessThanOrEqualTo(sourceTransaction.get("numberOfInstallments"), params.getNumberOfInstallmentsTo()));
         }
         if (params.getGrossAmountFrom() != null) {
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(sourceTransaction.get("grossAmount"), params.getNumberOfInstallmentsFrom()));
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(sourceTransaction.get("grossAmount"), params.getGrossAmountFrom()));
         }
         if (params.getGrossAmountTo() != null) {
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(sourceTransaction.get("grossAmount"), params.getNumberOfInstallmentsTo()));
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(sourceTransaction.get("grossAmount"), params.getGrossAmountTo()));
         }
 
         if (!predicates.isEmpty()) {
-            query.where(predicates.stream().toArray(Predicate[]::new));
+            query.where(predicates.toArray(new Predicate[0]));
         }
 
         TypedQuery<SourceTransaction> queryResult = this._entityManager.createQuery(query);
