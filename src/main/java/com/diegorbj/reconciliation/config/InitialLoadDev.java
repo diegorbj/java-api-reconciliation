@@ -109,14 +109,6 @@ public class InitialLoadDev implements CommandLineRunner {
             }
         }
 
-        SourceTransactionFilterParam params = new SourceTransactionFilterParam();
-        params.setGrossAmountFrom(100.00);
-        params.setGrossAmountTo(130.00);
-        System.out.println("whatever::");
-        for (SourceTransactionDTO dto : _sourceTransactionService.getWithFilter(params)){
-            System.out.println("whatever::" + dto);
-        }
-
     }
 
 }
