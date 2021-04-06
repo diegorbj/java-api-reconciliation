@@ -1,5 +1,8 @@
 package com.diegorbj.reconciliation.domain.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum TransactionStatus {
     PENDING(0),
     APPROVED(1),
@@ -12,9 +15,9 @@ public enum TransactionStatus {
         this.code = code;
     }
 
-    public static TransactionStatus valueOf(int code) {
+    public static TransactionStatus value(int code) {
         for (TransactionStatus s : values()) {
-            if (s.code == code) {
+            if (s.getCode() == code) {
                 return s;
             }
         }
