@@ -40,7 +40,7 @@ class SourceTransactionResourceTest {
     @Order(2)
     public void shouldReturnInsertSourceTransactions() throws Exception {
         JSONObject mapToCreate = setObjectToCreate();
-        this.mockMvc.perform(post("/reconciliation/v1/sourcetransactions").contentType(MediaType.APPLICATION_JSON)
+        this.mockMvc.perform(put("/reconciliation/v1/sourcetransactions").contentType(MediaType.APPLICATION_JSON)
                 .content(mapToCreate.toString())).andExpect(status().isCreated());
     }
 
@@ -68,7 +68,7 @@ class SourceTransactionResourceTest {
     @Order(6)
     public void shouldReturnInsertInstallments() throws Exception {
         JSONObject mapToCreate = setObjectChildToCreate();
-        this.mockMvc.perform(post("/reconciliation/v1/sourcetransactions/4/installments").contentType(MediaType.APPLICATION_JSON)
+        this.mockMvc.perform(put("/reconciliation/v1/sourcetransactions/4/installments").contentType(MediaType.APPLICATION_JSON)
                 .content(mapToCreate.toString())).andExpect(status().isCreated());
     }
 
@@ -115,7 +115,7 @@ class SourceTransactionResourceTest {
         map.put("authorizationCode", "987D54");
         map.put("transactionStatus", "APPROVED");
         map.put("numberOfInstallments", 1);
-        map.put("grossAmount", 100.0);
+        map.put("grossAmount", 250.0);
         map.put("transactionInformation", "123456******3456");
 
         mapAux = new JSONObject();
@@ -166,7 +166,7 @@ class SourceTransactionResourceTest {
         map.put("authorizationCode", "987D54");
         map.put("transactionStatus", "APPROVED");
         map.put("numberOfInstallments", 1);
-        map.put("grossAmount", 100.0);
+        map.put("grossAmount", 250.0);
         map.put("transactionInformation", "123456******3456");
 
         mapAux = new JSONObject();
@@ -221,7 +221,7 @@ class SourceTransactionResourceTest {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
         map.put("quota", 1);
-        map.put("grossAmount", 100.0);
+        map.put("grossAmount", 250.0);
         map.put("sourceTransaction", JSONObject.NULL);
         return map;
     }

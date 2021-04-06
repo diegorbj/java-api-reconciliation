@@ -8,6 +8,7 @@ import com.diegorbj.reconciliation.services.SourceTransactionService;
 import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
 import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
+import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
 import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapper;
 import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapperImpl;
@@ -57,15 +58,17 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
     }
 
     @Override
-    public SourceTransactionDTO insert(SourceTransactionDTO obj) {
+    public SourceTransactionDTO save(SourceTransactionDTO obj) {
         SourceTransactionFilterParam key = SourceTransactionFilterParamFactory.create(_mapper.toEntity(obj));
         List<SourceTransaction> list = _repository.getWithFilter(key);
         if (list.isEmpty()) {
-            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
+            SourceTransaction st = _repository.save(_mapper.toEntity(obj));
+            return _mapper.toDto(st);
         } else {
             if ((long) list.size() == 1L) {
-                obj.setId(list.get(0).getId());
-                return this.update(obj.getId(), obj);
+                SourceTransactionDTO currentState = _mapper.toDto(list.get(0));
+                updateData(obj, currentState);
+                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
                 throw new InvalidAttributeException("Unexpected error.");
             }
@@ -73,18 +76,24 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
     }
 
     @Override
-    public SourceTransactionDTO update(Long id, SourceTransactionDTO obj) {
-        //TODO - Some validation
-        if (true) {
-            if (obj.getId().equals(id)) {
-                SourceTransactionDTO currentState = this.findById(id);
-                updateData(obj, currentState);
-                return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
-            } else {
-                throw new InvalidAttributeException("Inconsistent value for Id");
-            }
+    public SourceTransactionDTO insert(SourceTransactionDTO obj) {
+        SourceTransactionFilterParam key = SourceTransactionFilterParamFactory.create(_mapper.toEntity(obj));
+        List<SourceTransaction> list = _repository.getWithFilter(key);
+        if (list.isEmpty()) {
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
-            throw new InvalidAttributeException("Some validation failed");
+            throw new ResourceAlreadyExistsException("");
+        }
+    }
+
+    @Override
+    public SourceTransactionDTO update(Long id, SourceTransactionDTO obj) {
+        if (obj.getId().equals(id)) {
+            SourceTransactionDTO currentState = this.findById(id);
+            updateData(obj, currentState);
+            return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
+        } else {
+            throw new InvalidAttributeException("Inconsistent value for Id");
         }
     }
 

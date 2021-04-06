@@ -2,6 +2,7 @@ package com.diegorbj.reconciliation.resources.exceptions;
 
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.DatabaseException;
+import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,6 +20,14 @@ public class ResourceExceptionHandler {
     @ExceptionHandler(ResourceNotFondException.class)
     public ResponseEntity<StandardError> resourceNotFound(ResourceNotFondException e, HttpServletRequest request) {
         String error = "Resource not found";
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<StandardError> alreadyExists(ResourceAlreadyExistsException e, HttpServletRequest request) {
+        String error = "Resource already exists";
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);

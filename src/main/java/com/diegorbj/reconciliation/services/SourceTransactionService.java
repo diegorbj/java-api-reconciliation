@@ -17,6 +17,8 @@ public interface SourceTransactionService {
 
     List<SourceTransactionDTO> getByGrossAmountRange(Double grossAmountFrom, Double grossAmountTo);
 
+    SourceTransactionDTO save(SourceTransactionDTO obj);
+
     SourceTransactionDTO insert(SourceTransactionDTO obj);
 
     SourceTransactionDTO update(Long id, SourceTransactionDTO obj);

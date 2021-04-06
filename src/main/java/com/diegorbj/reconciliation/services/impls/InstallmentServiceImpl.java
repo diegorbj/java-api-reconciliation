@@ -4,14 +4,13 @@ import com.diegorbj.reconciliation.domain.Installment;
 import com.diegorbj.reconciliation.repositories.InstallmentRepository;
 import com.diegorbj.reconciliation.services.InstallmentService;
 import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
-import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
+import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
 import com.diegorbj.reconciliation.services.mappers.InstallmentMapper;
 import com.diegorbj.reconciliation.services.mappers.InstallmentMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,55 +40,51 @@ public class InstallmentServiceImpl implements InstallmentService {
     @Override
     public List<InstallmentDTO> findAllInstallments(Long id) {
         List<Installment> list = _repository.findAllBySourceTransaction_Id(id);
-        List<InstallmentDTO> listDTO = new ArrayList<>();
-        for (Installment obj : list) {
-            listDTO.add(_mapper.toDto(obj));
-        }
-        return listDTO;
+        return _mapper.toDto(list);
     }
 
     @Override
-    public InstallmentDTO findByQuota(Long id, Integer quota) {
-        List<InstallmentDTO> listDTO = this.findAllInstallments(id);
-        for (InstallmentDTO obj : listDTO) {
-            if (obj.getQuota().equals(quota)) {
-                return obj;
-            }
+    public InstallmentDTO getBySourceTransactionIdAndQuota(Long id, Integer quota) {
+        Optional<Installment> obj = _repository.getBySourceTransactionIdAndQuota(id, quota);
+        return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString() + "; Quota: " + quota.toString())));
+    }
+
+    @Override
+    public InstallmentDTO save(InstallmentDTO obj) {
+        try {
+            InstallmentDTO currentState = this.getBySourceTransactionIdAndQuota(obj.getSourceTransaction().getId(), obj.getQuota());
+            updateData(obj, currentState);
+            return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
+        } catch (ResourceNotFondException e) {
+            return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         }
-        throw new ResourceNotFondException("Id: " + id.toString() + "; Quota: " + quota.toString());
     }
 
     @Override
     public InstallmentDTO insert(InstallmentDTO obj) {
-        //TODO - Some validation
-        if (true) {
+        try {
+            this.getBySourceTransactionIdAndQuota(obj.getSourceTransaction().getId(), obj.getQuota());
+            throw new ResourceAlreadyExistsException("Id: " + obj.getSourceTransaction().getId().toString() + "; Quota: " + obj.getQuota().toString());
+        } catch (ResourceNotFondException e) {
             return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
-        } else {
-            throw new InvalidAttributeException("Some validation failed");
         }
     }
 
     @Override
     public InstallmentDTO update(InstallmentDTO obj) {
-        //TODO - Some validation
-        if (true) {
-            InstallmentDTO currentState = this.findByQuota(obj.getSourceTransaction().getId(), obj.getQuota());
-            updateData(obj, currentState);
-            return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
-        } else {
-            throw new InvalidAttributeException("Some validation failed");
-        }
+        InstallmentDTO currentState = this.getBySourceTransactionIdAndQuota(obj.getSourceTransaction().getId(), obj.getQuota());
+        updateData(obj, currentState);
+        return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
     }
 
     @Override
     public void delete(Long id, Integer quota) {
-        InstallmentDTO obj = this.findByQuota(id, quota);
+        InstallmentDTO obj = this.getBySourceTransactionIdAndQuota(id, quota);
         _repository.deleteById(obj.getId());
     }
 
     private void updateData(InstallmentDTO from, InstallmentDTO to) {
         to.setGrossAmount(from.getGrossAmount());
-        //to.setSourceTransaction(from.getSourceTransaction());
     }
 
 }

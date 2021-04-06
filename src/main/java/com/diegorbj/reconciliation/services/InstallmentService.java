@@ -11,7 +11,9 @@ public interface InstallmentService {
 
     List<InstallmentDTO> findAllInstallments(Long id);
 
-    InstallmentDTO findByQuota(Long id, Integer quota);
+    InstallmentDTO getBySourceTransactionIdAndQuota(Long id, Integer quota);
+
+    InstallmentDTO save(InstallmentDTO obj);
 
     InstallmentDTO insert(InstallmentDTO obj);
 

@@ -40,11 +40,11 @@ public class SourceTransactionResource {
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<SourceTransactionDTO> insert(@RequestBody String data) {
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<SourceTransactionDTO> save(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                SourceTransactionDTO obj = _service.insert(SourceTransactionDTO.fromJSON(data));
+                SourceTransactionDTO obj = _service.save(SourceTransactionDTO.fromJSON(data));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -90,17 +90,17 @@ public class SourceTransactionResource {
 
     @RequestMapping(value = "/{id}/installments/{quota}", method = RequestMethod.GET)
     public ResponseEntity<InstallmentDTO> findInstallmentByQuota(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
-        InstallmentDTO obj = _childService.findByQuota(id, quota);
+        InstallmentDTO obj = _childService.getBySourceTransactionIdAndQuota(id, quota);
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(value = "/{id}/installments", method = RequestMethod.POST)
-    public ResponseEntity<InstallmentDTO> insertInstallment(@PathVariable("id") Long id, @RequestBody String data) {
+    @RequestMapping(value = "/{id}/installments", method = RequestMethod.PUT)
+    public ResponseEntity<InstallmentDTO> saveInstallment(@PathVariable("id") Long id, @RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
                 InstallmentDTO obj = InstallmentDTO.fromJSON(data);
                 obj.setSourceTransaction(_service.findById(id));
-                obj = _childService.insert(obj);
+                obj = _childService.save(obj);
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{quota}")
@@ -121,18 +121,12 @@ public class SourceTransactionResource {
         if (ResourceUtil.isJSONValid(data)) {
             try {
                 InstallmentDTO obj = InstallmentDTO.fromJSON(data);
-                SourceTransactionDTO parentObj = new SourceTransactionDTO();
-                parentObj.setId(id);
-                obj.setSourceTransaction(parentObj);
-                if (obj.getSourceTransaction().getId().equals(id)) {
-                    if (obj.getQuota().equals(quota)) {
-                        obj = _childService.update(obj);
-                        return ResponseEntity.ok().body(obj);
-                    } else {
-                        throw new InvalidAttributeException("Inconsistent value for Quota");
-                    }
+                obj.setSourceTransaction(_service.findById(id));
+                if (obj.getQuota().equals(quota)) {
+                    obj = _childService.update(obj);
+                    return ResponseEntity.ok().body(obj);
                 } else {
-                    throw new InvalidAttributeException("Inconsistent value for Id");
+                    throw new InvalidAttributeException("Inconsistent value for Quota");
                 }
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);

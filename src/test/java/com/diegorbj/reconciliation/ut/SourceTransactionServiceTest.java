@@ -120,7 +120,7 @@ class SourceTransactionServiceTest {
     public void shouldReturnInstallmentCreatedWithSuccess() throws JSONException, JsonProcessingException {
         JSONObject jsonObject = setObjectChildToCreate();
 
-        testChildObject = _childService.insert(InstallmentDTO.fromJSON(jsonObject));
+        testChildObject = _childService.save(InstallmentDTO.fromJSON(jsonObject));
 
         assertNotNull(testChildObject);
         assertNotNull(testChildObject.getId());
@@ -155,7 +155,7 @@ class SourceTransactionServiceTest {
     @Test
     @Order(10)
     public void shouldReturnNotNullInstallmentFindById() {
-        assertNotNull(_childService.findByQuota(testObject.getId(), testChildObject.getQuota()));
+        assertNotNull(_childService.getBySourceTransactionIdAndQuota(testObject.getId(), testChildObject.getQuota()));
     }
 
     @Test
