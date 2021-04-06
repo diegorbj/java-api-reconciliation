@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum FinancialInstitutionCode {
-    GFORCE("GS"),
-    CODEONE("03"),
-    RX("05");
+    GFORCE("GF"),
+    CODEONE("C1"),
+    RX("RX");
 
     public final String code;
 
