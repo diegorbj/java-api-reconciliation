@@ -2,14 +2,12 @@ package com.diegorbj.reconciliation.repositories.criterias.params;
 
 import com.diegorbj.reconciliation.domain.*;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.Instant;
 
-@Getter
-@Setter
-public class SourceTransactionFilterParam {
+@Data
+public abstract class SourceTransactionFilterParam {
     private Instant dateFrom;
     private Instant dateTo;
     private Long uniqueSequentialNumber;
