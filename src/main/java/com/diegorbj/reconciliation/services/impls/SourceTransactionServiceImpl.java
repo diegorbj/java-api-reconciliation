@@ -3,7 +3,6 @@ package com.diegorbj.reconciliation.services.impls;
 import com.diegorbj.reconciliation.domain.SourceTransaction;
 import com.diegorbj.reconciliation.repositories.SourceTransactionRepository;
 import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParam;
-import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParamFactory;
 import com.diegorbj.reconciliation.services.SourceTransactionService;
 import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
 import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
@@ -58,17 +57,11 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
 
     @Override
     public SourceTransactionDTO insert(SourceTransactionDTO obj) {
-        SourceTransactionFilterParam key = SourceTransactionFilterParamFactory.create(_mapper.toEntity(obj));
-        List<SourceTransaction> list = _repository.getWithFilter(key);
-        if (list.isEmpty()) {
+        //TODO - Some validation
+        if (true) {
             return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
-            if ((long) list.size() == 1L) {
-                obj.setId(list.get(0).getId());
-                return this.update(obj.getId(), obj);
-            } else {
-                throw new InvalidAttributeException("Unexpected error.");
-            }
+            throw new InvalidAttributeException("Some validation failed");
         }
     }
 
