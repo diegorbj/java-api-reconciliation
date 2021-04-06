@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
@@ -75,14 +76,16 @@ class FinancialInstitutionResourceTest {
     private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
-        map.put("name", "XPTO Co.");
+        map.put("name", "RX ltd.");
+        map.put("code", FinancialInstitutionCode.RX);
         return map;
     }
 
     private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", 3L);
-        map.put("name", "XPTO Co. Ltd.");
+        map.put("name", "RX ltd. Co.");
+        map.put("code", FinancialInstitutionCode.RX);
         return map;
     }
 

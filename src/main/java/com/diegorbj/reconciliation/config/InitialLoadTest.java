@@ -1,5 +1,6 @@
 package com.diegorbj.reconciliation.config;
 
+import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.*;
 import com.diegorbj.reconciliation.services.dto.*;
@@ -49,8 +50,8 @@ public class InitialLoadTest implements CommandLineRunner {
         ct2 = _cardTypeService.insert(ct2);
         ct3 = _cardTypeService.insert(ct3);
 
-        FinancialInstitutionDTO fi1 = new FinancialInstitutionDTO(null, "Mint Co.");
-        FinancialInstitutionDTO fi2 = new FinancialInstitutionDTO(null, "PayDay Inc.");
+        FinancialInstitutionDTO fi1 = new FinancialInstitutionDTO(null, "G-Force Co.", FinancialInstitutionCode.GFORCE);
+        FinancialInstitutionDTO fi2 = new FinancialInstitutionDTO(null, "Code One Inc.", FinancialInstitutionCode.CODEONE);
 
         fi1 = _financialInstitutionService.insert(fi1);
         fi2 = _financialInstitutionService.insert(fi2);

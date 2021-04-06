@@ -1,5 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
+import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import com.diegorbj.reconciliation.services.dto.FinancialInstitutionDTO;
 import com.diegorbj.reconciliation.services.FinancialInstitutionService;
 import org.json.JSONException;
@@ -36,7 +37,6 @@ public class FinancialInstitutionServiceTest {
     @Order(2)
     public void shouldReturnFinancialInstitutionCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
-
         testObject = _service.insert(FinancialInstitutionDTO.fromJSON(jsonObject));
 
         assertNotNull(testObject);
@@ -79,14 +79,16 @@ public class FinancialInstitutionServiceTest {
     private JSONObject setObjectToCreate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", JSONObject.NULL);
-        map.put("name", "ACME Co.");
+        map.put("name", "RX ltd.");
+        map.put("code", FinancialInstitutionCode.RX);
         return map;
     }
 
     private JSONObject setObjectToUpdate() throws JSONException {
         JSONObject map = new JSONObject();
         map.put("id", testObject.getId());
-        map.put("name", "ACME Inc.");
+        map.put("name", "RX ltd. Co.");
+        map.put("code", FinancialInstitutionCode.RX);
         return map;
     }
 

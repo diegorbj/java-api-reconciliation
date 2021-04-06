@@ -1,5 +1,6 @@
 package com.diegorbj.reconciliation.it;
 
+import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
@@ -125,7 +126,8 @@ class SourceTransactionResourceTest {
 
         mapAux = new JSONObject();
         mapAux.put("id", 1);
-        mapAux.put("name", "Mint Co.");
+        mapAux.put("name", "G-Force Co.");
+        mapAux.put("code", FinancialInstitutionCode.GFORCE);
         map.put("financialInstitution", mapAux);
 
         mapAux = new JSONObject();
@@ -175,7 +177,8 @@ class SourceTransactionResourceTest {
 
         mapAux = new JSONObject();
         mapAux.put("id", 1);
-        mapAux.put("name", "Mint Co.");
+        mapAux.put("name", "G-Force Co.");
+        mapAux.put("code", FinancialInstitutionCode.GFORCE);
         map.put("financialInstitution", mapAux);
 
         mapAux = new JSONObject();

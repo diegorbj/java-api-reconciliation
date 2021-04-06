@@ -1,5 +1,6 @@
 package com.diegorbj.reconciliation.ut;
 
+import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.InstallmentService;
 import com.diegorbj.reconciliation.services.dto.*;
@@ -191,7 +192,8 @@ class SourceTransactionServiceTest {
 
         mapAux = new JSONObject();
         mapAux.put("id", 1);
-        mapAux.put("name", "Mint Co.");
+        mapAux.put("name", "G-Force Co.");
+        mapAux.put("code", FinancialInstitutionCode.GFORCE);
         map.put("financialInstitution", mapAux);
 
         mapAux = new JSONObject();
@@ -240,7 +242,8 @@ class SourceTransactionServiceTest {
 
         mapAux = new JSONObject();
         mapAux.put("id", 1);
-        mapAux.put("name", "Mint Co.");
+        mapAux.put("name", "G-Force Co.");
+        mapAux.put("code", FinancialInstitutionCode.GFORCE);
         map.put("financialInstitution", mapAux.toString());
 
         mapAux = new JSONObject();
