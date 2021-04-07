@@ -7,9 +7,12 @@ import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransacti
 import com.diegorbj.reconciliation.services.SourceTransactionService;
 import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
 import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParamDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
+import com.diegorbj.reconciliation.services.mappers.SourceTransactionFilterParamMapper;
+import com.diegorbj.reconciliation.services.mappers.SourceTransactionFilterParamMapperImpl;
 import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapper;
 import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,8 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
 
     private SourceTransactionMapper _mapper = new SourceTransactionMapperImpl();
 
+    private SourceTransactionFilterParamMapper _mapperParams = new SourceTransactionFilterParamMapperImpl();
+
     @Override
     public List<SourceTransactionDTO> findAll() {
         List<SourceTransactionDTO> dtoList = _mapper.toDto(_repository.findAll());
@@ -43,8 +48,8 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
     }
 
     @Override
-    public List<SourceTransactionDTO> getWithFilter(SourceTransactionFilterParam params) {
-        return _mapper.toDto(_repository.getWithFilter(params));
+    public List<SourceTransactionDTO> getWithFilter(SourceTransactionFilterParamDTO params) {
+        return _mapper.toDto(_repository.getWithFilter(_mapperParams.toEntity(params)));
     }
 
     @Override

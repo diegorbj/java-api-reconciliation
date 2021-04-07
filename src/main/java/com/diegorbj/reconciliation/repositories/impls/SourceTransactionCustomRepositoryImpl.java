@@ -28,8 +28,44 @@ public class SourceTransactionCustomRepositoryImpl implements SourceTransactionC
         Root<SourceTransaction> sourceTransaction = query.from(SourceTransaction.class);
         List<Predicate> predicates = new ArrayList<>();
 
+        if (params.getFinancialInstitution() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("financialInstitution"), params.getFinancialInstitution()));
+        }
+        if (params.getMerchant() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("merchant"), params.getMerchant()));
+        }
+        if (params.getDateFrom() != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(sourceTransaction.get("date"), params.getDateFrom()));
+        }
+        if (params.getDateTo() != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(sourceTransaction.get("date"), params.getDateTo()));
+        }
         if (params.getUniqueSequentialNumber() != null) {
             predicates.add(criteriaBuilder.equal(sourceTransaction.get("uniqueSequentialNumber"), params.getUniqueSequentialNumber()));
+        }
+        if (params.getAuthorizationCode() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("authorizationCode"), params.getAuthorizationCode()));
+        }
+        if (params.getTransactionId() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("uniqueSequentialNumber"), params.getUniqueSequentialNumber()));
+        }
+        if (params.getTransactionStatus() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("transactionStatus"), params.getTransactionStatus()));
+        }
+        if (params.getTransactionInformation() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("transactionInformation"), params.getTransactionInformation()));
+        }
+        if (params.getCardType() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("cardType"), params.getCardType()));
+        }
+        if (params.getModality() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("modality"), params.getModality()));
+        }
+        if (params.getServiceLabel() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("serviceLabel"), params.getServiceLabel()));
+        }
+        if (params.getFinancialService() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("financialService"), params.getFinancialService()));
         }
         if (params.getNumberOfInstallmentsFrom() != null) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(sourceTransaction.get("numberOfInstallments"), params.getNumberOfInstallmentsFrom()));

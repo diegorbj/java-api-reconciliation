@@ -4,12 +4,15 @@ import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.*;
 import com.diegorbj.reconciliation.services.dto.*;
+import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionSearchParamDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import java.time.Instant;
+import java.util.List;
 
 @Configuration
 @Profile("dev")
@@ -86,16 +89,16 @@ public class InitialLoadDev implements CommandLineRunner {
         sl2 = _serviceLabelService.insert(sl2);
         sl3 = _serviceLabelService.insert(sl3);
 
-        SourceTransactionDTO st1 = new SourceTransactionDTO(null, Instant.now(), 123456L, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
+        SourceTransactionDTO st1 = new SourceTransactionDTO(null, Instant.parse("2021-04-04T00:00:00.00Z"), 123456L, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
         st1 = _sourceTransactionService.save(st1);
         _installmentService.save(new InstallmentDTO(null, 1, 130.00, st1));
 
-        SourceTransactionDTO st2 = new SourceTransactionDTO(null, Instant.now(), 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", m1, fi2, fs1, sl1, ct1, mod3);
+        SourceTransactionDTO st2 = new SourceTransactionDTO(null, Instant.parse("2021-04-05T00:00:00.00Z"), 789456L, "", "4687F3", TransactionStatus.CANCELED, 2, 150.00, "123456******3457", m1, fi2, fs1, sl1, ct1, mod3);
         st2 = _sourceTransactionService.save(st2);
         _installmentService.save(new InstallmentDTO(null, 1, 75.00, st2));
         _installmentService.save(new InstallmentDTO(null, 2, 75.00, st2));
 
-        SourceTransactionDTO st3 = new SourceTransactionDTO(null, Instant.now(), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", m3, fi2, fs1, sl1, ct3, mod3);
+        SourceTransactionDTO st3 = new SourceTransactionDTO(null, Instant.parse("2021-04-06T00:00:00.00Z"), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3458", m3, fi2, fs1, sl1, ct3, mod3);
         st3 = _sourceTransactionService.save(st3);
         _installmentService.save(new InstallmentDTO(null, 1, 33.34, st3));
         _installmentService.save(new InstallmentDTO(null, 2, 200.00, st3));
@@ -109,6 +112,28 @@ public class InitialLoadDev implements CommandLineRunner {
             }
         }
 
+        SourceTransactionFilterParamDTO params = new SourceTransactionSearchParamDTO();
+        params.setDateFrom(Instant.parse("2021-04-05T00:00:00.00Z"));
+        params.setDateTo(Instant.parse("2021-04-06T00:00:00.00Z"));
+        params.setUniqueSequentialNumber(789456L);
+        params.setTransactionId("");
+        params.setAuthorizationCode("4687F3");
+        params.setTransactionStatus(TransactionStatus.APPROVED);
+        params.setNumberOfInstallmentsFrom(2);
+        params.setNumberOfInstallmentsTo(3);
+        params.setGrossAmountFrom(120.00);
+        params.setGrossAmountTo(160.00);
+        params.setTransactionInformation("123456******3458");
+        params.setMerchant(m1);
+        params.setFinancialInstitution(fi2);
+        params.setFinancialService(fs2);
+        params.setServiceLabel(sl2);
+        params.setCardType(ct3);
+        params.setModality(mod3);
+        List<SourceTransactionDTO> list = _sourceTransactionService.getWithFilter(params);
+        for (SourceTransactionDTO st : list){
+            System.out.println(st);
+        }
     }
 
 }
