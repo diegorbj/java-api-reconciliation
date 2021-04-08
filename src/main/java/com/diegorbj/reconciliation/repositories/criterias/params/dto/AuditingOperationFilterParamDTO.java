@@ -1,4 +1,4 @@
-package com.diegorbj.reconciliation.repositories.criterias.params;
+package com.diegorbj.reconciliation.repositories.criterias.params.dto;
 
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.dto.*;

@@ -1,7 +1,7 @@
 package com.diegorbj.reconciliation.services;
 
 import com.diegorbj.reconciliation.services.dto.AuditingOperationDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditingOperationFilterParamDTO;
 
 import java.util.Collection;
 import java.util.List;

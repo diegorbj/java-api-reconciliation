@@ -2,12 +2,12 @@ package com.diegorbj.reconciliation.services.impls;
 
 import com.diegorbj.reconciliation.domain.AuditingOperation;
 import com.diegorbj.reconciliation.repositories.AuditingOperationRepository;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationFilterParam;
 import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamFactory;
 import com.diegorbj.reconciliation.services.AuditingOperationService;
 import com.diegorbj.reconciliation.services.dto.AuditingInstallmentDTO;
 import com.diegorbj.reconciliation.services.dto.AuditingOperationDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditingOperationFilterParamDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;

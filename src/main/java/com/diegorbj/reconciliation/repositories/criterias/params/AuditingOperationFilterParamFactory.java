@@ -2,6 +2,10 @@ package com.diegorbj.reconciliation.repositories.criterias.params;
 
 import com.diegorbj.reconciliation.domain.AuditingOperation;
 import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.keys.AuditingOperationKeyCodeOne;
+import com.diegorbj.reconciliation.repositories.criterias.params.keys.AuditingOperationKeyGForce;
+import com.diegorbj.reconciliation.repositories.criterias.params.keys.AuditingOperationKeyRX;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 
 public class AuditingOperationFilterParamFactory {

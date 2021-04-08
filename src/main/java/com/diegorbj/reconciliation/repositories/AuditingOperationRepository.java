@@ -1,7 +1,7 @@
 package com.diegorbj.reconciliation.repositories;
 
 import com.diegorbj.reconciliation.domain.AuditingOperation;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationFilterParam;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

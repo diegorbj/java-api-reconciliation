@@ -2,7 +2,7 @@ package com.diegorbj.reconciliation.repositories.impls;
 
 import com.diegorbj.reconciliation.domain.*;
 import com.diegorbj.reconciliation.repositories.AuditingOperationCustomRepository;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationFilterParam;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

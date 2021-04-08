@@ -1,6 +1,7 @@
-package com.diegorbj.reconciliation.repositories.criterias.params;
+package com.diegorbj.reconciliation.repositories.criterias.params.keys;
 
 import com.diegorbj.reconciliation.domain.AuditingOperation;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationFilterParam;
 
 public class AuditingOperationKeyRX extends AuditingOperationFilterParam {
 

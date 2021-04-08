@@ -1,4 +1,4 @@
-package com.diegorbj.reconciliation.repositories.criterias.params;
+package com.diegorbj.reconciliation.repositories.criterias.params.domain;
 
 public class AuditingOperationSearchParam extends AuditingOperationFilterParam {
 

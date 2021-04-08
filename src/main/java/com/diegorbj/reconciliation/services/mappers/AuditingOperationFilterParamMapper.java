@@ -1,9 +1,9 @@
 package com.diegorbj.reconciliation.services.mappers;
 
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParam;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationSearchParam;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationSearchParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationSearchParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditingOperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditingOperationSearchParamDTO;
 import org.mapstruct.Mapper;
 
 import java.util.ArrayList;
