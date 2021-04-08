@@ -34,10 +34,10 @@ public class InitialLoadTest implements CommandLineRunner {
     private ServiceLabelService _serviceLabelService;
 
     @Autowired
-    private SourceTransactionService _sourceTransactionService;
+    private AuditingOperationService _auditingOperationService;
 
     @Autowired
-    private InstallmentService _installmentService;
+    private AuditingInstallmentService _auditingInstallmentService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -86,26 +86,26 @@ public class InitialLoadTest implements CommandLineRunner {
         sl2 = _serviceLabelService.insert(sl2);
         sl3 = _serviceLabelService.insert(sl3);
 
-        SourceTransactionDTO st1 = new SourceTransactionDTO(null, Instant.now(), 123456L, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
-        st1 = _sourceTransactionService.save(st1);
-        _installmentService.save(new InstallmentDTO(null, 1, 130.00, st1));
+        AuditingOperationDTO ao1 = new AuditingOperationDTO(null, Instant.now(), 123456L, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
+        ao1 = _auditingOperationService.save(ao1);
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 130.00, ao1));
 
-        SourceTransactionDTO st2 = new SourceTransactionDTO(null, Instant.now(), 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", m1, fi2, fs1, sl1, ct1, mod3);
-        st2 = _sourceTransactionService.save(st2);
-        _installmentService.save(new InstallmentDTO(null, 1, 75.00, st2));
-        _installmentService.save(new InstallmentDTO(null, 2, 75.00, st2));
+        AuditingOperationDTO ao2 = new AuditingOperationDTO(null, Instant.now(), 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", m1, fi2, fs1, sl1, ct1, mod3);
+        ao2 = _auditingOperationService.save(ao2);
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 75.00, ao2));
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 75.00, ao2));
 
-        SourceTransactionDTO st3 = new SourceTransactionDTO(null, Instant.now(), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", m3, fi2, fs1, sl1, ct3, mod3);
-        st3 = _sourceTransactionService.save(st3);
-        _installmentService.save(new InstallmentDTO(null, 1, 33.34, st3));
-        _installmentService.save(new InstallmentDTO(null, 2, 200.00, st3));
-        _installmentService.save(new InstallmentDTO(null, 3, 33.33, st3));
+        AuditingOperationDTO ao3 = new AuditingOperationDTO(null, Instant.now(), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", m3, fi2, fs1, sl1, ct3, mod3);
+        ao3 = _auditingOperationService.save(ao3);
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 33.34, ao3));
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 200.00, ao3));
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 3, 33.33, ao3));
 
-        st3 = _sourceTransactionService.findById(st3.getId());
-        for (InstallmentDTO o : st3.getInstallments()) {
+        ao3 = _auditingOperationService.findById(ao3.getId());
+        for (AuditingInstallmentDTO o : ao3.getInstallments()) {
             if (o.getQuota() == 2) {
                 o.setGrossAmount(33.33);
-                _installmentService.update(o);
+                _auditingInstallmentService.update(o);
             }
         }
 

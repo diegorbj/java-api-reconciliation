@@ -2,9 +2,9 @@ package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
-import com.diegorbj.reconciliation.services.InstallmentService;
+import com.diegorbj.reconciliation.services.AuditingInstallmentService;
 import com.diegorbj.reconciliation.services.dto.*;
-import com.diegorbj.reconciliation.services.SourceTransactionService;
+import com.diegorbj.reconciliation.services.AuditingOperationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -27,21 +27,21 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
-class SourceTransactionServiceTest {
+class AuditingOperationServiceTest {
 
     @Autowired
-    private SourceTransactionService _service;
+    private AuditingOperationService _service;
 
     @Autowired
-    private InstallmentService _childService;
+    private AuditingInstallmentService _childService;
 
-    private SourceTransactionDTO testObject;
+    private AuditingOperationDTO testObject;
 
-    private InstallmentDTO testChildObject;
+    private AuditingInstallmentDTO testChildObject;
 
     @Test
     @Order(1)
-    public void shouldReturnNotNullSourceTransactionService() {
+    public void shouldReturnNotNullAuditingOperationService() {
         assertNotNull(_service);
     }
 
@@ -53,10 +53,10 @@ class SourceTransactionServiceTest {
 
     @Test
     @Order(3)
-    public void shouldReturnSourceTransactionCreatedWithSuccess() throws JSONException {
+    public void shouldReturnAuditingOperationCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(SourceTransactionDTO.fromJSON(jsonObject));
+        testObject = _service.insert(AuditingOperationDTO.fromJSON(jsonObject));
 
         assertNotNull(testObject);
         assertNotNull(testObject.getId());
@@ -78,9 +78,9 @@ class SourceTransactionServiceTest {
 
     @Test
     @Order(4)
-    public void shouldReturnSourceTransactionUpdatedWithSuccess() throws JSONException {
+    public void shouldReturnAuditingOperationUpdatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToUpdate();
-        SourceTransactionDTO updatedObject = SourceTransactionDTO.fromJSON(jsonObject);
+        AuditingOperationDTO updatedObject = AuditingOperationDTO.fromJSON(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);
@@ -105,13 +105,13 @@ class SourceTransactionServiceTest {
 
     @Test
     @Order(5)
-    public void shouldReturnNotNullSourceTransactionFindAll() {
+    public void shouldReturnNotNullAuditingOperationFindAll() {
         assertNotNull(_service.findAll());
     }
 
     @Test
     @Order(6)
-    public void shouldReturnNotNullSourceTransactionFindById() {
+    public void shouldReturnNotNullAuditingOperationFindById() {
         assertNotNull(_service.findById(testObject.getId()));
     }
 
@@ -120,13 +120,13 @@ class SourceTransactionServiceTest {
     public void shouldReturnInstallmentCreatedWithSuccess() throws JSONException, JsonProcessingException {
         JSONObject jsonObject = setObjectChildToCreate();
 
-        testChildObject = _childService.save(InstallmentDTO.fromJSON(jsonObject));
+        testChildObject = _childService.save(AuditingInstallmentDTO.fromJSON(jsonObject));
 
         assertNotNull(testChildObject);
         assertNotNull(testChildObject.getId());
         assertEquals(testChildObject.getQuota(), Integer.parseInt(jsonObject.get("quota").toString()));
         assertEquals(testChildObject.getGrossAmount(), Double.parseDouble(jsonObject.get("grossAmount").toString()));
-        assertEquals(testChildObject.getSourceTransaction(), SourceTransactionDTO.fromJSON(jsonObject.get("sourceTransaction").toString()));
+        assertEquals(testChildObject.getAuditingOperation(), AuditingOperationDTO.fromJSON(jsonObject.get("operation").toString()));
     }
 
     @Test
@@ -134,14 +134,14 @@ class SourceTransactionServiceTest {
     public void shouldReturnInstallmentUpdatedWithSuccess() throws JSONException, JsonProcessingException {
         JSONObject jsonObject = setObjectChildToUpdate();
 
-        InstallmentDTO updatedObject = InstallmentDTO.fromJSON(jsonObject);
+        AuditingInstallmentDTO updatedObject = AuditingInstallmentDTO.fromJSON(jsonObject);
         updatedObject = _childService.update(updatedObject);
 
         assertNotNull(updatedObject);
         assertNotNull(updatedObject.getId());
         assertEquals(updatedObject.getQuota(), jsonObject.get("quota"));
         assertEquals(updatedObject.getGrossAmount(), jsonObject.get("grossAmount"));
-        assertEquals(updatedObject.getSourceTransaction().getId(), SourceTransactionDTO.fromJSON(jsonObject.get("sourceTransaction").toString()).getId());
+        assertEquals(updatedObject.getAuditingOperation().getId(), AuditingOperationDTO.fromJSON(jsonObject.get("operation").toString()).getId());
 
         testChildObject = updatedObject;
     }
@@ -155,7 +155,7 @@ class SourceTransactionServiceTest {
     @Test
     @Order(10)
     public void shouldReturnNotNullInstallmentFindById() {
-        assertNotNull(_childService.getBySourceTransactionIdAndQuota(testObject.getId(), testChildObject.getQuota()));
+        assertNotNull(_childService.getByAuditingOperationIdAndQuota(testObject.getId(), testChildObject.getQuota()));
     }
 
     @Test
@@ -166,7 +166,7 @@ class SourceTransactionServiceTest {
 
     @Test
     @Order(12)
-    public void shouldReturnSourceTransactionDeletedWithSuccess() {
+    public void shouldReturnAuditingOperationDeletedWithSuccess() {
         _service.delete(testObject.getId());
     }
 
@@ -278,7 +278,7 @@ class SourceTransactionServiceTest {
         map.put("id", JSONObject.NULL);
         map.put("quota", 1);
         map.put("grossAmount", 95.0);
-        map.put("sourceTransaction", mapper.writeValueAsString(testObject));
+        map.put("operation", mapper.writeValueAsString(testObject));
 
         return map;
     }
@@ -290,7 +290,7 @@ class SourceTransactionServiceTest {
         map.put("id", JSONObject.NULL);
         map.put("quota", 1);
         map.put("grossAmount", 100.0);
-        map.put("sourceTransaction", mapper.writeValueAsString(testObject));
+        map.put("operation", mapper.writeValueAsString(testObject));
         return map;
     }
 

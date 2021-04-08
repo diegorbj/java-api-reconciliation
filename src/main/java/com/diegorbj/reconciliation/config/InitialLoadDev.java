@@ -4,8 +4,8 @@ import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.*;
 import com.diegorbj.reconciliation.services.dto.*;
-import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParamDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionSearchParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationSearchParamDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -37,10 +37,10 @@ public class InitialLoadDev implements CommandLineRunner {
     private ServiceLabelService _serviceLabelService;
 
     @Autowired
-    private SourceTransactionService _sourceTransactionService;
+    private AuditingOperationService _auditingOperationService;
 
     @Autowired
-    private InstallmentService _installmentService;
+    private AuditingInstallmentService _auditingInstallmentService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -89,30 +89,30 @@ public class InitialLoadDev implements CommandLineRunner {
         sl2 = _serviceLabelService.insert(sl2);
         sl3 = _serviceLabelService.insert(sl3);
 
-        SourceTransactionDTO st1 = new SourceTransactionDTO(null, Instant.parse("2021-04-04T00:00:00.00Z"), 123456L, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
-        st1 = _sourceTransactionService.save(st1);
-        _installmentService.save(new InstallmentDTO(null, 1, 130.00, st1));
+        AuditingOperationDTO st1 = new AuditingOperationDTO(null, Instant.parse("2021-04-04T00:00:00.00Z"), 123456L, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
+        st1 = _auditingOperationService.save(st1);
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 130.00, st1));
 
-        SourceTransactionDTO st2 = new SourceTransactionDTO(null, Instant.parse("2021-04-05T00:00:00.00Z"), 789456L, "", "4687F3", TransactionStatus.CANCELED, 2, 150.00, "123456******3457", m1, fi2, fs1, sl1, ct1, mod3);
-        st2 = _sourceTransactionService.save(st2);
-        _installmentService.save(new InstallmentDTO(null, 1, 75.00, st2));
-        _installmentService.save(new InstallmentDTO(null, 2, 75.00, st2));
+        AuditingOperationDTO st2 = new AuditingOperationDTO(null, Instant.parse("2021-04-05T00:00:00.00Z"), 789456L, "", "4687F3", TransactionStatus.CANCELED, 2, 150.00, "123456******3457", m1, fi2, fs1, sl1, ct1, mod3);
+        st2 = _auditingOperationService.save(st2);
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 75.00, st2));
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 75.00, st2));
 
-        SourceTransactionDTO st3 = new SourceTransactionDTO(null, Instant.parse("2021-04-06T00:00:00.00Z"), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3458", m3, fi2, fs1, sl1, ct3, mod3);
-        st3 = _sourceTransactionService.save(st3);
-        _installmentService.save(new InstallmentDTO(null, 1, 33.34, st3));
-        _installmentService.save(new InstallmentDTO(null, 2, 200.00, st3));
-        _installmentService.save(new InstallmentDTO(null, 3, 33.33, st3));
+        AuditingOperationDTO st3 = new AuditingOperationDTO(null, Instant.parse("2021-04-06T00:00:00.00Z"), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3458", m3, fi2, fs1, sl1, ct3, mod3);
+        st3 = _auditingOperationService.save(st3);
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 33.34, st3));
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 200.00, st3));
+        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 3, 33.33, st3));
 
-        st3 = _sourceTransactionService.findById(st3.getId());
-        for (InstallmentDTO o : st3.getInstallments()) {
+        st3 = _auditingOperationService.findById(st3.getId());
+        for (AuditingInstallmentDTO o : st3.getInstallments()) {
             if (o.getQuota() == 2) {
                 o.setGrossAmount(33.33);
-                _installmentService.update(o);
+                _auditingInstallmentService.update(o);
             }
         }
 
-        SourceTransactionFilterParamDTO params = new SourceTransactionSearchParamDTO();
+        AuditingOperationFilterParamDTO params = new AuditingOperationSearchParamDTO();
         params.setDateFrom(Instant.parse("2021-04-05T00:00:00.00Z"));
         params.setDateTo(Instant.parse("2021-04-06T00:00:00.00Z"));
         params.setUniqueSequentialNumber(789456L);
@@ -130,8 +130,8 @@ public class InitialLoadDev implements CommandLineRunner {
         params.setServiceLabel(sl2);
         params.setCardType(ct3);
         params.setModality(mod3);
-        List<SourceTransactionDTO> list = _sourceTransactionService.getWithFilter(params);
-        for (SourceTransactionDTO st : list){
+        List<AuditingOperationDTO> list = _auditingOperationService.getWithFilter(params);
+        for (AuditingOperationDTO st : list){
             System.out.println(st);
         }
     }

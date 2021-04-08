@@ -12,8 +12,8 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_installment")
-public class Installment implements Serializable {
+@Table(name = "tb_auditingInstallment")
+public class AuditingInstallment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,17 +30,17 @@ public class Installment implements Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sourceTransactionId")
-    private SourceTransaction sourceTransaction;
+    @JoinColumn(name = "auditing_operation_id")
+    private AuditingOperation operation;
 
-    public Installment(Long id, Integer quota, Double grossAmount, SourceTransaction sourceTransaction) {
+    public AuditingInstallment(Long id, Integer quota, Double grossAmount, AuditingOperation operation) {
         this.id = id;
         this.quota = quota;
         this.grossAmount = grossAmount;
-        this.sourceTransaction = sourceTransaction;
+        this.operation = operation;
     }
 
-    public Installment(Long id, Integer quota, Double grossAmount) {
+    public AuditingInstallment(Long id, Integer quota, Double grossAmount) {
         this.id = id;
         this.quota = quota;
         this.grossAmount = grossAmount;

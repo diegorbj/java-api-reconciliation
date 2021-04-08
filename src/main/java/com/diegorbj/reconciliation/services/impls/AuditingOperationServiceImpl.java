@@ -1,20 +1,18 @@
 package com.diegorbj.reconciliation.services.impls;
 
-import com.diegorbj.reconciliation.domain.SourceTransaction;
-import com.diegorbj.reconciliation.repositories.SourceTransactionRepository;
-import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParam;
-import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParamFactory;
-import com.diegorbj.reconciliation.services.SourceTransactionService;
-import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
-import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParamDTO;
+import com.diegorbj.reconciliation.domain.AuditingOperation;
+import com.diegorbj.reconciliation.repositories.AuditingOperationRepository;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamFactory;
+import com.diegorbj.reconciliation.services.AuditingOperationService;
+import com.diegorbj.reconciliation.services.dto.AuditingInstallmentDTO;
+import com.diegorbj.reconciliation.services.dto.AuditingOperationDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
-import com.diegorbj.reconciliation.services.mappers.SourceTransactionFilterParamMapper;
-import com.diegorbj.reconciliation.services.mappers.SourceTransactionFilterParamMapperImpl;
-import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapper;
-import com.diegorbj.reconciliation.services.mappers.SourceTransactionMapperImpl;
+import com.diegorbj.reconciliation.services.mappers.AuditingOperationFilterParamMapper;
+import com.diegorbj.reconciliation.services.mappers.AuditingOperationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +21,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SourceTransactionServiceImpl implements SourceTransactionService {
+public class AuditingOperationServiceImpl implements AuditingOperationService {
 
     @Autowired
-    protected SourceTransactionRepository _repository;
+    protected AuditingOperationRepository _repository;
 
     @Autowired
-    private SourceTransactionMapper _mapper;
+    private AuditingOperationMapper _mapper;
 
     @Autowired
-    private SourceTransactionFilterParamMapper _mapperParams;
+    private AuditingOperationFilterParamMapper _mapperParams;
 
     @Override
-    public List<SourceTransactionDTO> findAll() {
-        List<SourceTransactionDTO> dtoList = _mapper.toDto(_repository.findAll());
+    public List<AuditingOperationDTO> findAll() {
+        List<AuditingOperationDTO> dtoList = _mapper.toDto(_repository.findAll());
         if (dtoList.isEmpty()) {
             throw new ResourceNotFondException("{All}");
         }
@@ -44,36 +42,36 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
     }
 
     @Override
-    public SourceTransactionDTO findById(Long id) {
-        Optional<SourceTransaction> obj = _repository.findById(id);
+    public AuditingOperationDTO findById(Long id) {
+        Optional<AuditingOperation> obj = _repository.findById(id);
         return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     @Override
-    public List<SourceTransactionDTO> getWithFilter(SourceTransactionFilterParamDTO params) {
+    public List<AuditingOperationDTO> getWithFilter(AuditingOperationFilterParamDTO params) {
         return _mapper.toDto(_repository.getWithFilter(_mapperParams.toEntity(params)));
     }
 
     @Override
-    public List<SourceTransactionDTO> getByCardTypes(Collection<Long> cardTypeIds) {
+    public List<AuditingOperationDTO> getByCardTypes(Collection<Long> cardTypeIds) {
         return _mapper.toDto(_repository.getByCardTypes(cardTypeIds));
     }
 
     @Override
-    public List<SourceTransactionDTO> getByGrossAmountRange(Double grossAmountFrom, Double grossAmountTo) {
+    public List<AuditingOperationDTO> getByGrossAmountRange(Double grossAmountFrom, Double grossAmountTo) {
         return _mapper.toDto(_repository.getByGrossAmountRange(grossAmountFrom, grossAmountTo));
     }
 
     @Override
-    public SourceTransactionDTO save(SourceTransactionDTO obj) {
-        SourceTransactionFilterParam key = SourceTransactionFilterParamFactory.create(_mapper.toEntity(obj));
-        List<SourceTransaction> list = _repository.getWithFilter(key);
+    public AuditingOperationDTO save(AuditingOperationDTO obj) {
+        AuditingOperationFilterParam key = AuditingOperationFilterParamFactory.create(_mapper.toEntity(obj));
+        List<AuditingOperation> list = _repository.getWithFilter(key);
         if (list.isEmpty()) {
-            SourceTransaction st = _repository.save(_mapper.toEntity(obj));
+            AuditingOperation st = _repository.save(_mapper.toEntity(obj));
             return _mapper.toDto(st);
         } else {
             if ((long) list.size() == 1L) {
-                SourceTransactionDTO currentState = _mapper.toDto(list.get(0));
+                AuditingOperationDTO currentState = _mapper.toDto(list.get(0));
                 updateData(obj, currentState);
                 return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
@@ -83,9 +81,9 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
     }
 
     @Override
-    public SourceTransactionDTO insert(SourceTransactionDTO obj) {
-        SourceTransactionFilterParam key = SourceTransactionFilterParamFactory.create(_mapper.toEntity(obj));
-        List<SourceTransaction> list = _repository.getWithFilter(key);
+    public AuditingOperationDTO insert(AuditingOperationDTO obj) {
+        AuditingOperationFilterParam key = AuditingOperationFilterParamFactory.create(_mapper.toEntity(obj));
+        List<AuditingOperation> list = _repository.getWithFilter(key);
         if (list.isEmpty()) {
             return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
@@ -94,9 +92,9 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
     }
 
     @Override
-    public SourceTransactionDTO update(Long id, SourceTransactionDTO obj) {
+    public AuditingOperationDTO update(Long id, AuditingOperationDTO obj) {
         if (obj.getId().equals(id)) {
-            SourceTransactionDTO currentState = this.findById(id);
+            AuditingOperationDTO currentState = this.findById(id);
             updateData(obj, currentState);
             return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
         } else {
@@ -106,11 +104,11 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
 
     @Override
     public void delete(Long id) {
-        Optional<SourceTransaction> obj = _repository.findById(id);
+        Optional<AuditingOperation> obj = _repository.findById(id);
         _repository.deleteById(id);
     }
 
-    protected void updateData(SourceTransactionDTO from, SourceTransactionDTO to) {
+    protected void updateData(AuditingOperationDTO from, AuditingOperationDTO to) {
         to.setDate(from.getDate());
         to.setUniqueSequentialNumber(from.getUniqueSequentialNumber());
         to.setTransactionId(from.getTransactionId());
@@ -125,7 +123,7 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
         to.setCardType(from.getCardType());
         to.setModality(from.getModality());
         if (from.getInstallments() != null) {
-            for (InstallmentDTO i : from.getInstallments()) {
+            for (AuditingInstallmentDTO i : from.getInstallments()) {
                 to.getInstallments().add(i);
             }
         }

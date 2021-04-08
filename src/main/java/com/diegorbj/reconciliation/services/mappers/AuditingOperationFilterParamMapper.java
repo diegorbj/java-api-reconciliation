@@ -1,37 +1,37 @@
 package com.diegorbj.reconciliation.services.mappers;
 
-import com.diegorbj.reconciliation.domain.Installment;
-import com.diegorbj.reconciliation.domain.SourceTransaction;
-import com.diegorbj.reconciliation.services.dto.InstallmentDTO;
-import com.diegorbj.reconciliation.services.dto.SourceTransactionDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationSearchParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationSearchParamDTO;
 import org.mapstruct.Mapper;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
-public abstract class SourceTransactionMapper {
+public abstract class AuditingOperationFilterParamMapper {
 
-    public SourceTransactionDTO toDto(SourceTransaction entity) {
+    public AuditingOperationFilterParamDTO toDto(AuditingOperationFilterParam entity) {
         MerchantMapper _merchantMapper = new MerchantMapperImpl();
         FinancialInstitutionMapper _financialInstitutionMapper = new FinancialInstitutionMapperImpl();
         FinancialServiceMapper _financialServiceMapper = new FinancialServiceMapperImpl();
         ServiceLabelMapper _serviceLabelMapper = new ServiceLabelMapperImpl();
         CardTypeMapper _cardTypeMapper = new CardTypeMapperImpl();
         ModalityMapper _modalityMapper = new ModalityMapperImpl();
-        InstallmentMapper _installmentMapper = new InstallmentMapperImpl();
+        AuditingInstallmentMapper _auditingInstallmentMapper = new AuditingInstallmentMapperImpl();
 
-        SourceTransactionDTO newObj = new SourceTransactionDTO();
-        newObj.setId(entity.getId());
-        newObj.setDate(entity.getDate());
+        AuditingOperationFilterParamDTO newObj = new AuditingOperationSearchParamDTO();
+        newObj.setDateFrom(entity.getDateFrom());
+        newObj.setDateTo(entity.getDateTo());
         newObj.setUniqueSequentialNumber(entity.getUniqueSequentialNumber());
         newObj.setTransactionId(entity.getTransactionId());
         newObj.setAuthorizationCode(entity.getAuthorizationCode());
         newObj.setTransactionStatus(entity.getTransactionStatus());
-        newObj.setNumberOfInstallments(entity.getNumberOfInstallments());
-        newObj.setGrossAmount(entity.getGrossAmount());
+        newObj.setNumberOfInstallmentsFrom(entity.getNumberOfInstallmentsFrom());
+        newObj.setNumberOfInstallmentsTo(entity.getNumberOfInstallmentsTo());
+        newObj.setGrossAmountFrom(entity.getGrossAmountFrom());
+        newObj.setGrossAmountTo(entity.getGrossAmountTo());
         newObj.setTransactionInformation(entity.getTransactionInformation());
         newObj.setMerchant(_merchantMapper.toDto(entity.getMerchant()));
         newObj.setFinancialInstitution(_financialInstitutionMapper.toDto(entity.getFinancialInstitution()));
@@ -39,29 +39,30 @@ public abstract class SourceTransactionMapper {
         newObj.setServiceLabel(_serviceLabelMapper.toDto(entity.getServiceLabel()));
         newObj.setCardType(_cardTypeMapper.toDto(entity.getCardType()));
         newObj.setModality(_modalityMapper.toDto(entity.getModality()));
-        newObj.setInstallments(_installmentMapper.toDto((Set<Installment>) entity.getInstallments()));
 
         return newObj;
     }
 
-    public SourceTransaction toEntity(SourceTransactionDTO dto) {
+    public AuditingOperationFilterParam toEntity(AuditingOperationFilterParamDTO dto) {
         MerchantMapper _merchantMapper = new MerchantMapperImpl();
         FinancialInstitutionMapper _financialInstitutionMapper = new FinancialInstitutionMapperImpl();
         FinancialServiceMapper _financialServiceMapper = new FinancialServiceMapperImpl();
         ServiceLabelMapper _serviceLabelMapper = new ServiceLabelMapperImpl();
         CardTypeMapper _cardTypeMapper = new CardTypeMapperImpl();
         ModalityMapper _modalityMapper = new ModalityMapperImpl();
-        InstallmentMapper _installmentMapper = new InstallmentMapperImpl();
+        AuditingInstallmentMapper _auditingInstallmentMapper = new AuditingInstallmentMapperImpl();
 
-        SourceTransaction entity = new SourceTransaction();
-        entity.setId(dto.getId());
-        entity.setDate(dto.getDate());
+        AuditingOperationFilterParam entity = new AuditingOperationSearchParam();
+        entity.setDateFrom(dto.getDateFrom());
+        entity.setDateTo(dto.getDateTo());
         entity.setUniqueSequentialNumber(dto.getUniqueSequentialNumber());
         entity.setTransactionId(dto.getTransactionId());
         entity.setAuthorizationCode(dto.getAuthorizationCode());
         entity.setTransactionStatus(dto.getTransactionStatus());
-        entity.setNumberOfInstallments(dto.getNumberOfInstallments());
-        entity.setGrossAmount(dto.getGrossAmount());
+        entity.setNumberOfInstallmentsFrom(dto.getNumberOfInstallmentsFrom());
+        entity.setNumberOfInstallmentsTo(dto.getNumberOfInstallmentsTo());
+        entity.setGrossAmountFrom(dto.getGrossAmountFrom());
+        entity.setGrossAmountTo(dto.getGrossAmountTo());
         entity.setTransactionInformation(dto.getTransactionInformation());
         entity.setMerchant(_merchantMapper.toEntity(dto.getMerchant()));
         entity.setFinancialInstitution(_financialInstitutionMapper.toEntity(dto.getFinancialInstitution()));
@@ -69,14 +70,13 @@ public abstract class SourceTransactionMapper {
         entity.setServiceLabel(_serviceLabelMapper.toEntity(dto.getServiceLabel()));
         entity.setCardType(_cardTypeMapper.toEntity(dto.getCardType()));
         entity.setModality(_modalityMapper.toEntity(dto.getModality()));
-        entity.setInstallments(_installmentMapper.toEntity((HashSet<InstallmentDTO>) dto.getInstallments()));
 
         return entity;
     }
 
-    public List<SourceTransactionDTO> toDto(List<SourceTransaction> entityList) {
-        List<SourceTransactionDTO> dtoList = new ArrayList<>();
-        for (SourceTransaction entity : entityList) {
+    public List<AuditingOperationFilterParamDTO> toDto(List<AuditingOperationFilterParam> entityList) {
+        List<AuditingOperationFilterParamDTO> dtoList = new ArrayList<>();
+        for (AuditingOperationFilterParam entity : entityList) {
             dtoList.add(this.toDto(entity));
         }
         return dtoList;

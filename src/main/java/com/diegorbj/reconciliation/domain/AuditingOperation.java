@@ -16,8 +16,8 @@ import java.util.Set;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_sourceTransaction")
-public class SourceTransaction implements Serializable {
+@Table(name = "tb_auditingOperation")
+public class AuditingOperation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -67,10 +67,10 @@ public class SourceTransaction implements Serializable {
     private Modality modality;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "sourceTransactionId")
-    private Set<Installment> installments = new HashSet<>();
+    @JoinColumn(name = "auditing_operation_id")
+    private Set<AuditingInstallment> auditingInstallments = new HashSet<>();
 
-    public SourceTransaction(Long id, Instant date, Long uniqueSequentialNumber, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, Merchant merchant, FinancialInstitution financialInstitution, FinancialService financialService, ServiceLabel serviceLabel, CardType cardType, Modality modality) {
+    public AuditingOperation(Long id, Instant date, Long uniqueSequentialNumber, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, Merchant merchant, FinancialInstitution financialInstitution, FinancialService financialService, ServiceLabel serviceLabel, CardType cardType, Modality modality) {
         this.id = id;
         this.date = date;
         this.uniqueSequentialNumber = uniqueSequentialNumber;
@@ -92,7 +92,7 @@ public class SourceTransaction implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SourceTransaction that = (SourceTransaction) o;
+        AuditingOperation that = (AuditingOperation) o;
         return Objects.equals(id, that.id);
     }
 

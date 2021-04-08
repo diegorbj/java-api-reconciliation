@@ -1,8 +1,8 @@
 package com.diegorbj.reconciliation.repositories.impls;
 
 import com.diegorbj.reconciliation.domain.*;
-import com.diegorbj.reconciliation.repositories.SourceTransactionCustomRepository;
-import com.diegorbj.reconciliation.repositories.criterias.params.SourceTransactionFilterParam;
+import com.diegorbj.reconciliation.repositories.AuditingOperationCustomRepository;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParam;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,16 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class SourceTransactionCustomRepositoryImpl implements SourceTransactionCustomRepository {
+public class AuditingOperationCustomRepositoryImpl implements AuditingOperationCustomRepository {
 
     @PersistenceContext//(unitName="reconciliation")
     private EntityManager _entityManager;
 
     @Override
-    public List<SourceTransaction> getWithFilter(SourceTransactionFilterParam params) {
+    public List<AuditingOperation> getWithFilter(AuditingOperationFilterParam params) {
         CriteriaBuilder criteriaBuilder = _entityManager.getCriteriaBuilder();
-        CriteriaQuery<SourceTransaction> query = criteriaBuilder.createQuery(SourceTransaction.class);
-        Root<SourceTransaction> sourceTransaction = query.from(SourceTransaction.class);
+        CriteriaQuery<AuditingOperation> query = criteriaBuilder.createQuery(AuditingOperation.class);
+        Root<AuditingOperation> sourceTransaction = query.from(AuditingOperation.class);
         List<Predicate> predicates = new ArrayList<>();
 
         if (params.getFinancialInstitution() != null) {
@@ -84,7 +84,7 @@ public class SourceTransactionCustomRepositoryImpl implements SourceTransactionC
             query.where(predicates.toArray(new Predicate[0]));
         }
 
-        TypedQuery<SourceTransaction> queryResult = this._entityManager.createQuery(query);
+        TypedQuery<AuditingOperation> queryResult = this._entityManager.createQuery(query);
 
         return queryResult.getResultList();
     }

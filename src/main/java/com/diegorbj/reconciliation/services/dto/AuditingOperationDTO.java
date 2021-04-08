@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
-public class SourceTransactionDTO implements Serializable {
+public class AuditingOperationDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,9 +35,9 @@ public class SourceTransactionDTO implements Serializable {
     private ServiceLabelDTO serviceLabel;
     private CardTypeDTO cardType;
     private ModalityDTO modality;
-    private Set<InstallmentDTO> installments = new HashSet<>();
+    private Set<AuditingInstallmentDTO> installments = new HashSet<>();
 
-    public SourceTransactionDTO(Long id, Instant date, Long uniqueSequentialNumber, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, MerchantDTO merchant, FinancialInstitutionDTO financialInstitution, FinancialServiceDTO financialService, ServiceLabelDTO serviceLabel, CardTypeDTO cardType, ModalityDTO modality) {
+    public AuditingOperationDTO(Long id, Instant date, Long uniqueSequentialNumber, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, MerchantDTO merchant, FinancialInstitutionDTO financialInstitution, FinancialServiceDTO financialService, ServiceLabelDTO serviceLabel, CardTypeDTO cardType, ModalityDTO modality) {
         this.id = id;
         this.date = date;
         this.uniqueSequentialNumber = uniqueSequentialNumber;
@@ -59,7 +59,7 @@ public class SourceTransactionDTO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SourceTransactionDTO that = (SourceTransactionDTO) o;
+        AuditingOperationDTO that = (AuditingOperationDTO) o;
         return Objects.equals(id, that.id);
     }
 
@@ -68,12 +68,12 @@ public class SourceTransactionDTO implements Serializable {
         return Objects.hash(id);
     }
 
-    public static SourceTransactionDTO fromJSON(String jsonString) {
+    public static AuditingOperationDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));
     }
 
-    public static SourceTransactionDTO fromJSON(JSONObject jsonObject) {
-        SourceTransactionDTO obj = new SourceTransactionDTO();
+    public static AuditingOperationDTO fromJSON(JSONObject jsonObject) {
+        AuditingOperationDTO obj = new AuditingOperationDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
         obj.setDate(jsonObject.get("date") == JSONObject.NULL ? null : Instant.parse(jsonObject.get("date").toString()));
         obj.setUniqueSequentialNumber(jsonObject.get("uniqueSequentialNumber") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("uniqueSequentialNumber").toString()));

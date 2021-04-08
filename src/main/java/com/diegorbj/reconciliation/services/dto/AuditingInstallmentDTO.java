@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class InstallmentDTO implements Serializable {
+public class AuditingInstallmentDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,31 +21,31 @@ public class InstallmentDTO implements Serializable {
     @EqualsAndHashCode.Exclude
     private Double grossAmount;
     @EqualsAndHashCode.Exclude
-    private SourceTransactionDTO sourceTransaction;
+    private AuditingOperationDTO auditingOperation;
 
-    public InstallmentDTO(Long id, Integer quota, Double grossAmount, SourceTransactionDTO sourceTransaction) {
+    public AuditingInstallmentDTO(Long id, Integer quota, Double grossAmount, AuditingOperationDTO auditingOperation) {
         this.id = id;
         this.quota = quota;
         this.grossAmount = grossAmount;
-        this.sourceTransaction = sourceTransaction;
+        this.auditingOperation = auditingOperation;
     }
 
-    public InstallmentDTO(Long id, Integer quota, Double grossAmount) {
+    public AuditingInstallmentDTO(Long id, Integer quota, Double grossAmount) {
         this.id = id;
         this.quota = quota;
         this.grossAmount = grossAmount;
     }
 
-    public static InstallmentDTO fromJSON(String jsonString) {
+    public static AuditingInstallmentDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));
     }
 
-    public static InstallmentDTO fromJSON(JSONObject jsonObject) {
-        InstallmentDTO obj = new InstallmentDTO();
+    public static AuditingInstallmentDTO fromJSON(JSONObject jsonObject) {
+        AuditingInstallmentDTO obj = new AuditingInstallmentDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
         obj.setQuota(jsonObject.get("quota") == JSONObject.NULL ? null : Integer.parseInt(jsonObject.get("quota").toString()));
         obj.setGrossAmount(jsonObject.get("grossAmount") == JSONObject.NULL ? null : Double.parseDouble(jsonObject.get("grossAmount").toString()));
-        obj.setSourceTransaction(jsonObject.get("sourceTransaction") == JSONObject.NULL ? null : SourceTransactionDTO.fromJSON(jsonObject.get("sourceTransaction").toString()));
+        obj.setAuditingOperation(jsonObject.get("operation") == JSONObject.NULL ? null : AuditingOperationDTO.fromJSON(jsonObject.get("operation").toString()));
         return obj;
     }
 
