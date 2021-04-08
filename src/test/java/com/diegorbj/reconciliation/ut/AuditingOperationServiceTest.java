@@ -61,7 +61,8 @@ class AuditingOperationServiceTest {
         assertNotNull(testObject);
         assertNotNull(testObject.getId());
         assertEquals(testObject.getDate(), Instant.parse(jsonObject.get("date").toString()));
-        assertEquals(testObject.getUniqueSequentialNumber(), Long.parseLong(jsonObject.get("uniqueSequentialNumber").toString()));
+        assertEquals(testObject.getAuthorizationId(), Long.parseLong(jsonObject.get("authorizationId").toString()));
+        assertNull(testObject.getPointOfSaleId());
         assertEquals(testObject.getTransactionId(), jsonObject.get("transactionId").toString());
         assertEquals(testObject.getAuthorizationCode(), jsonObject.get("authorizationCode").toString());
         assertEquals(testObject.getTransactionStatus(), TransactionStatus.valueOf(jsonObject.get("transactionStatus").toString()));
@@ -86,8 +87,9 @@ class AuditingOperationServiceTest {
         assertNotNull(updatedObject);
         assertNotNull(updatedObject.getId());
         assertEquals(updatedObject.getDate(), Instant.parse(jsonObject.get("date").toString()));
-        assertEquals(updatedObject.getUniqueSequentialNumber(), Long.parseLong(jsonObject.get("uniqueSequentialNumber").toString()));
+        assertEquals(updatedObject.getAuthorizationId(), Long.parseLong(jsonObject.get("authorizationId").toString()));
         assertEquals(updatedObject.getTransactionId(), jsonObject.get("transactionId").toString());
+        assertNull(updatedObject.getPointOfSaleId());
         assertEquals(updatedObject.getAuthorizationCode(), jsonObject.get("authorizationCode").toString());
         assertEquals(updatedObject.getTransactionStatus(), TransactionStatus.valueOf(jsonObject.get("transactionStatus").toString()));
         assertEquals(updatedObject.getNumberOfInstallments(), Integer.parseInt(jsonObject.get("numberOfInstallments").toString()));
@@ -176,7 +178,8 @@ class AuditingOperationServiceTest {
 
         map.put("id", JSONObject.NULL);
         map.put("date", "2021-04-02T00:47:15Z");
-        map.put("uniqueSequentialNumber", 1212);
+        map.put("authorizationId", 1212);
+        map.put("pointOfSaleId", JSONObject.NULL);
         map.put("transactionId", "");
         map.put("authorizationCode", "987D54");
         map.put("transactionStatus", "APPROVED");
@@ -227,7 +230,8 @@ class AuditingOperationServiceTest {
 
         map.put("id", testObject.getId());
         map.put("date", "2021-04-02T00:47:15Z");
-        map.put("uniqueSequentialNumber", 1212);
+        map.put("authorizationId", 1212);
+        map.put("pointOfSaleId", JSONObject.NULL);
         map.put("transactionId", "");
         map.put("authorizationCode", "987D54");
         map.put("transactionStatus", "APPROVED");

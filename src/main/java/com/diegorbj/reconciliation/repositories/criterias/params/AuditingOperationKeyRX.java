@@ -8,7 +8,7 @@ public class AuditingOperationKeyRX extends AuditingOperationFilterParam {
         this.setFinancialInstitution(auditingOperation.getFinancialInstitution());
         this.setDateFrom(auditingOperation.getDate());
         this.setDateTo(auditingOperation.getDate());
-        this.setUniqueSequentialNumber(auditingOperation.getUniqueSequentialNumber());
+        this.setAuthorizationId(auditingOperation.getAuthorizationId());
     }
 
 }

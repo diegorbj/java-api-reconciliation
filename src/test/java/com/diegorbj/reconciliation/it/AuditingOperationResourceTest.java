@@ -110,7 +110,8 @@ class AuditingOperationResourceTest {
 
         map.put("id", JSONObject.NULL);
         map.put("date", "2021-04-02T00:47:15Z");
-        map.put("uniqueSequentialNumber", 1212);
+        map.put("authorizationId", 1212);
+        map.put("pointOfSaleId", JSONObject.NULL);
         map.put("transactionId", "");
         map.put("authorizationCode", "987D54");
         map.put("transactionStatus", "APPROVED");
@@ -161,7 +162,8 @@ class AuditingOperationResourceTest {
 
         map.put("id", 4L);
         map.put("date", "2021-04-02T00:47:15Z");
-        map.put("uniqueSequentialNumber", 1212);
+        map.put("authorizationId", 1212);
+        map.put("pointOfSaleId", JSONObject.NULL);
         map.put("transactionId", "");
         map.put("authorizationCode", "987D54");
         map.put("transactionStatus", "APPROVED");

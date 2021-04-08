@@ -9,7 +9,7 @@ public class AuditingOperationKeyCodeOne extends AuditingOperationFilterParam {
         this.setDateFrom(auditingOperation.getDate());
         this.setDateTo(auditingOperation.getDate());
         this.setMerchant(auditingOperation.getMerchant());
-        this.setUniqueSequentialNumber(auditingOperation.getUniqueSequentialNumber());
+        this.setPointOfSaleId(auditingOperation.getPointOfSaleId());
         this.setAuthorizationCode(auditingOperation.getAuthorizationCode());
     }
 

@@ -27,7 +27,9 @@ public class AuditingOperation implements Serializable {
     @Column(nullable = false)
     private Instant date;
     @Column(nullable = true)
-    private Long uniqueSequentialNumber;
+    private Long authorizationId;
+    @Column(nullable = true)
+    private Long pointOfSaleId;
     @Column(nullable = true, length = 50)
     private String transactionId;
     @Column(nullable = true, length = 10)
@@ -70,10 +72,11 @@ public class AuditingOperation implements Serializable {
     @JoinColumn(name = "auditing_operation_id")
     private Set<AuditingInstallment> auditingInstallments = new HashSet<>();
 
-    public AuditingOperation(Long id, Instant date, Long uniqueSequentialNumber, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, Merchant merchant, FinancialInstitution financialInstitution, FinancialService financialService, ServiceLabel serviceLabel, CardType cardType, Modality modality) {
+    public AuditingOperation(Long id, Instant date, Long authorizationId, Long pointOfSaleId, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, Merchant merchant, FinancialInstitution financialInstitution, FinancialService financialService, ServiceLabel serviceLabel, CardType cardType, Modality modality) {
         this.id = id;
         this.date = date;
-        this.uniqueSequentialNumber = uniqueSequentialNumber;
+        this.authorizationId = authorizationId;
+        this.pointOfSaleId = pointOfSaleId;
         this.transactionId = transactionId;
         this.authorizationCode = authorizationCode;
         this.transactionStatus = transactionStatus;

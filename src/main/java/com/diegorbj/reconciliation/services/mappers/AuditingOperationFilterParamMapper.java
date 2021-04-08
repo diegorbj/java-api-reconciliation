@@ -24,7 +24,7 @@ public abstract class AuditingOperationFilterParamMapper {
         AuditingOperationFilterParamDTO newObj = new AuditingOperationSearchParamDTO();
         newObj.setDateFrom(entity.getDateFrom());
         newObj.setDateTo(entity.getDateTo());
-        newObj.setUniqueSequentialNumber(entity.getUniqueSequentialNumber());
+        newObj.setAuthorizationId(entity.getAuthorizationId());
         newObj.setTransactionId(entity.getTransactionId());
         newObj.setAuthorizationCode(entity.getAuthorizationCode());
         newObj.setTransactionStatus(entity.getTransactionStatus());
@@ -55,7 +55,7 @@ public abstract class AuditingOperationFilterParamMapper {
         AuditingOperationFilterParam entity = new AuditingOperationSearchParam();
         entity.setDateFrom(dto.getDateFrom());
         entity.setDateTo(dto.getDateTo());
-        entity.setUniqueSequentialNumber(dto.getUniqueSequentialNumber());
+        entity.setAuthorizationId(dto.getAuthorizationId());
         entity.setTransactionId(dto.getTransactionId());
         entity.setAuthorizationCode(dto.getAuthorizationCode());
         entity.setTransactionStatus(dto.getTransactionStatus());

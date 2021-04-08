@@ -40,14 +40,17 @@ public class AuditingOperationCustomRepositoryImpl implements AuditingOperationC
         if (params.getDateTo() != null) {
             predicates.add(criteriaBuilder.lessThanOrEqualTo(sourceTransaction.get("date"), params.getDateTo()));
         }
-        if (params.getUniqueSequentialNumber() != null) {
-            predicates.add(criteriaBuilder.equal(sourceTransaction.get("uniqueSequentialNumber"), params.getUniqueSequentialNumber()));
+        if (params.getAuthorizationId() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("authorizationId"), params.getAuthorizationId()));
+        }
+        if (params.getPointOfSaleId() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("pointOfSaleId"), params.getPointOfSaleId()));
         }
         if (params.getAuthorizationCode() != null) {
             predicates.add(criteriaBuilder.equal(sourceTransaction.get("authorizationCode"), params.getAuthorizationCode()));
         }
         if (params.getTransactionId() != null) {
-            predicates.add(criteriaBuilder.equal(sourceTransaction.get("uniqueSequentialNumber"), params.getUniqueSequentialNumber()));
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("transactionId"), params.getTransactionId()));
         }
         if (params.getTransactionStatus() != null) {
             predicates.add(criteriaBuilder.equal(sourceTransaction.get("transactionStatus"), params.getTransactionStatus()));

@@ -86,16 +86,16 @@ public class InitialLoadTest implements CommandLineRunner {
         sl2 = _serviceLabelService.insert(sl2);
         sl3 = _serviceLabelService.insert(sl3);
 
-        AuditingOperationDTO ao1 = new AuditingOperationDTO(null, Instant.now(), 123456L, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
+        AuditingOperationDTO ao1 = new AuditingOperationDTO(null, Instant.now(), 123456L, null, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
         ao1 = _auditingOperationService.save(ao1);
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 130.00, ao1));
 
-        AuditingOperationDTO ao2 = new AuditingOperationDTO(null, Instant.now(), 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", m1, fi2, fs1, sl1, ct1, mod3);
+        AuditingOperationDTO ao2 = new AuditingOperationDTO(null, Instant.now(), null, 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", m1, fi2, fs1, sl1, ct1, mod3);
         ao2 = _auditingOperationService.save(ao2);
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 75.00, ao2));
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 75.00, ao2));
 
-        AuditingOperationDTO ao3 = new AuditingOperationDTO(null, Instant.now(), 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", m3, fi2, fs1, sl1, ct3, mod3);
+        AuditingOperationDTO ao3 = new AuditingOperationDTO(null, Instant.now(), null, 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", m3, fi2, fs1, sl1, ct3, mod3);
         ao3 = _auditingOperationService.save(ao3);
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 33.34, ao3));
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 200.00, ao3));

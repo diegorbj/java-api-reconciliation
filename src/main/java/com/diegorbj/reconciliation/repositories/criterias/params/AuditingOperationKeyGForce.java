@@ -9,7 +9,7 @@ public class AuditingOperationKeyGForce extends AuditingOperationFilterParam {
         this.setDateFrom(auditingOperation.getDate());
         this.setDateTo(auditingOperation.getDate());
         this.setMerchant(auditingOperation.getMerchant());
-        this.setUniqueSequentialNumber(auditingOperation.getUniqueSequentialNumber());
+        this.setAuthorizationId(auditingOperation.getAuthorizationId());
         this.setAuthorizationCode(auditingOperation.getAuthorizationCode());
     }
 

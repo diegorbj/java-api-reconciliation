@@ -10,7 +10,8 @@ import java.time.Instant;
 public abstract class AuditingOperationFilterParam {
     private Instant dateFrom;
     private Instant dateTo;
-    private Long uniqueSequentialNumber;
+    private Long authorizationId;
+    private Long pointOfSaleId;
     private String transactionId;
     private String authorizationCode;
     private TransactionStatus transactionStatus;

@@ -26,7 +26,7 @@ public abstract class AuditingOperationMapper {
         AuditingOperationDTO newObj = new AuditingOperationDTO();
         newObj.setId(entity.getId());
         newObj.setDate(entity.getDate());
-        newObj.setUniqueSequentialNumber(entity.getUniqueSequentialNumber());
+        newObj.setAuthorizationId(entity.getAuthorizationId());
         newObj.setTransactionId(entity.getTransactionId());
         newObj.setAuthorizationCode(entity.getAuthorizationCode());
         newObj.setTransactionStatus(entity.getTransactionStatus());
@@ -56,7 +56,7 @@ public abstract class AuditingOperationMapper {
         AuditingOperation entity = new AuditingOperation();
         entity.setId(dto.getId());
         entity.setDate(dto.getDate());
-        entity.setUniqueSequentialNumber(dto.getUniqueSequentialNumber());
+        entity.setAuthorizationId(dto.getAuthorizationId());
         entity.setTransactionId(dto.getTransactionId());
         entity.setAuthorizationCode(dto.getAuthorizationCode());
         entity.setTransactionStatus(dto.getTransactionStatus());
