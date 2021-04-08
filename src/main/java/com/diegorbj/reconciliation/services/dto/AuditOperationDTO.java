@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.json.JSONObject;
 
-import javax.persistence.Column;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -16,7 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
-public class AuditingOperationDTO implements Serializable {
+public class AuditOperationDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,9 +37,9 @@ public class AuditingOperationDTO implements Serializable {
     private ServiceLabelDTO serviceLabel;
     private CardTypeDTO cardType;
     private ModalityDTO modality;
-    private Set<AuditingInstallmentDTO> installments = new HashSet<>();
+    private Set<AuditInstallmentDTO> installments = new HashSet<>();
 
-    public AuditingOperationDTO(Long id, Instant date, Long authorizationId, Long pointOfSaleId, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, String rebateInformation, MerchantDTO merchant, FinancialInstitutionDTO financialInstitution, FinancialServiceDTO financialService, ServiceLabelDTO serviceLabel, CardTypeDTO cardType, ModalityDTO modality) {
+    public AuditOperationDTO(Long id, Instant date, Long authorizationId, Long pointOfSaleId, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, String rebateInformation, MerchantDTO merchant, FinancialInstitutionDTO financialInstitution, FinancialServiceDTO financialService, ServiceLabelDTO serviceLabel, CardTypeDTO cardType, ModalityDTO modality) {
         this.id = id;
         this.date = date;
         this.authorizationId = authorizationId;
@@ -64,7 +63,7 @@ public class AuditingOperationDTO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuditingOperationDTO that = (AuditingOperationDTO) o;
+        AuditOperationDTO that = (AuditOperationDTO) o;
         return Objects.equals(id, that.id);
     }
 
@@ -73,12 +72,12 @@ public class AuditingOperationDTO implements Serializable {
         return Objects.hash(id);
     }
 
-    public static AuditingOperationDTO fromJSON(String jsonString) {
+    public static AuditOperationDTO fromJSON(String jsonString) {
         return fromJSON(new JSONObject(jsonString));
     }
 
-    public static AuditingOperationDTO fromJSON(JSONObject jsonObject) {
-        AuditingOperationDTO obj = new AuditingOperationDTO();
+    public static AuditOperationDTO fromJSON(JSONObject jsonObject) {
+        AuditOperationDTO obj = new AuditOperationDTO();
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
         obj.setDate(jsonObject.get("date") == JSONObject.NULL ? null : Instant.parse(jsonObject.get("date").toString()));
         obj.setAuthorizationId(jsonObject.get("authorizationId") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("authorizationId").toString()));

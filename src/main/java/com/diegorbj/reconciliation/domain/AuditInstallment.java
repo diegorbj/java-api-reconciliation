@@ -10,15 +10,15 @@ import javax.persistence.*;;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "tb_auditing_installment")
-public class AuditingInstallment extends Installment {
+@Table(name = "tb_audit_installment")
+public class AuditInstallment extends Installment {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "auditing_operation_id")
-    private AuditingOperation operation;
+    @JoinColumn(name = "audit_operation_id")
+    private AuditOperation operation;
 
-    public AuditingInstallment(Long id, Integer quota, Double grossAmount, AuditingOperation operation) {
+    public AuditInstallment(Long id, Integer quota, Double grossAmount, AuditOperation operation) {
         super(id,quota,grossAmount);
         this.operation = operation;
     }

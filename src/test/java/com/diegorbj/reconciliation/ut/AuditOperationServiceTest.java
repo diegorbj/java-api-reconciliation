@@ -2,9 +2,9 @@ package com.diegorbj.reconciliation.ut;
 
 import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
-import com.diegorbj.reconciliation.services.AuditingInstallmentService;
+import com.diegorbj.reconciliation.services.AuditInstallmentService;
 import com.diegorbj.reconciliation.services.dto.*;
-import com.diegorbj.reconciliation.services.AuditingOperationService;
+import com.diegorbj.reconciliation.services.AuditOperationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -27,17 +27,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
-class AuditingOperationServiceTest {
+class AuditOperationServiceTest {
 
     @Autowired
-    private AuditingOperationService _service;
+    private AuditOperationService _service;
 
     @Autowired
-    private AuditingInstallmentService _childService;
+    private AuditInstallmentService _childService;
 
-    private AuditingOperationDTO testObject;
+    private AuditOperationDTO testObject;
 
-    private AuditingInstallmentDTO testChildObject;
+    private AuditInstallmentDTO testChildObject;
 
     @Test
     @Order(1)
@@ -56,7 +56,7 @@ class AuditingOperationServiceTest {
     public void shouldReturnAuditingOperationCreatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToCreate();
 
-        testObject = _service.insert(AuditingOperationDTO.fromJSON(jsonObject));
+        testObject = _service.insert(AuditOperationDTO.fromJSON(jsonObject));
 
         assertNotNull(testObject);
         assertNotNull(testObject.getId());
@@ -81,7 +81,7 @@ class AuditingOperationServiceTest {
     @Order(4)
     public void shouldReturnAuditingOperationUpdatedWithSuccess() throws JSONException {
         JSONObject jsonObject = setObjectToUpdate();
-        AuditingOperationDTO updatedObject = AuditingOperationDTO.fromJSON(jsonObject);
+        AuditOperationDTO updatedObject = AuditOperationDTO.fromJSON(jsonObject);
         updatedObject = _service.update(testObject.getId(), updatedObject);
 
         assertNotNull(updatedObject);
@@ -123,13 +123,13 @@ class AuditingOperationServiceTest {
     public void shouldReturnInstallmentCreatedWithSuccess() throws JSONException, JsonProcessingException {
         JSONObject jsonObject = setObjectChildToCreate();
 
-        testChildObject = _childService.save(AuditingInstallmentDTO.fromJSON(jsonObject));
+        testChildObject = _childService.save(AuditInstallmentDTO.fromJSON(jsonObject));
 
         assertNotNull(testChildObject);
         assertNotNull(testChildObject.getId());
         assertEquals(testChildObject.getQuota(), Integer.parseInt(jsonObject.get("quota").toString()));
         assertEquals(testChildObject.getGrossAmount(), Double.parseDouble(jsonObject.get("grossAmount").toString()));
-        assertEquals(testChildObject.getAuditingOperation(), AuditingOperationDTO.fromJSON(jsonObject.get("operation").toString()));
+        assertEquals(testChildObject.getAuditingOperation(), AuditOperationDTO.fromJSON(jsonObject.get("operation").toString()));
     }
 
     @Test
@@ -137,14 +137,14 @@ class AuditingOperationServiceTest {
     public void shouldReturnInstallmentUpdatedWithSuccess() throws JSONException, JsonProcessingException {
         JSONObject jsonObject = setObjectChildToUpdate();
 
-        AuditingInstallmentDTO updatedObject = AuditingInstallmentDTO.fromJSON(jsonObject);
+        AuditInstallmentDTO updatedObject = AuditInstallmentDTO.fromJSON(jsonObject);
         updatedObject = _childService.update(updatedObject);
 
         assertNotNull(updatedObject);
         assertNotNull(updatedObject.getId());
         assertEquals(updatedObject.getQuota(), jsonObject.get("quota"));
         assertEquals(updatedObject.getGrossAmount(), jsonObject.get("grossAmount"));
-        assertEquals(updatedObject.getAuditingOperation().getId(), AuditingOperationDTO.fromJSON(jsonObject.get("operation").toString()).getId());
+        assertEquals(updatedObject.getAuditingOperation().getId(), AuditOperationDTO.fromJSON(jsonObject.get("operation").toString()).getId());
 
         testChildObject = updatedObject;
     }

@@ -1,13 +1,13 @@
-package com.diegorbj.reconciliation.repositories.criterias.params.domain;
+package com.diegorbj.reconciliation.repositories.criterias.params.dto;
 
-import com.diegorbj.reconciliation.domain.*;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
+import com.diegorbj.reconciliation.services.dto.*;
 import lombok.Data;
 
 import java.time.Instant;
 
 @Data
-public abstract class AuditingOperationFilterParam {
+public abstract class AuditOperationFilterParamDTO {
     private Instant dateFrom;
     private Instant dateTo;
     private Long authorizationId;
@@ -21,10 +21,10 @@ public abstract class AuditingOperationFilterParam {
     private Double grossAmountTo;
     private String transactionInformation;
     private String rebateInformation;
-    private Merchant merchant;
-    private FinancialInstitution financialInstitution;
-    private FinancialService financialService;
-    private ServiceLabel serviceLabel;
-    private CardType cardType;
-    private Modality modality;
+    private MerchantDTO merchant;
+    private FinancialInstitutionDTO financialInstitution;
+    private FinancialServiceDTO financialService;
+    private ServiceLabelDTO serviceLabel;
+    private CardTypeDTO cardType;
+    private ModalityDTO modality;
 }

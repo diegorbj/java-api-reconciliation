@@ -1,8 +1,8 @@
 package com.diegorbj.reconciliation.resources;
 
 import com.diegorbj.reconciliation.resources.utils.ResourceUtil;
-import com.diegorbj.reconciliation.services.AuditingInstallmentService;
-import com.diegorbj.reconciliation.services.AuditingOperationService;
+import com.diegorbj.reconciliation.services.AuditInstallmentService;
+import com.diegorbj.reconciliation.services.AuditOperationService;
 import com.diegorbj.reconciliation.services.dto.*;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import org.apache.log4j.Logger;
@@ -16,35 +16,35 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reconciliation/v1/auditing/operations")
-public class AuditingOperationResource {
+@RequestMapping("/reconciliation/v1/operations/audits")
+public class AuditOperationResource {
 
     @Autowired
-    private AuditingOperationService _service;
+    private AuditOperationService _service;
 
     @Autowired
-    private AuditingInstallmentService _childService;
+    private AuditInstallmentService _childService;
 
-    private static final Logger logger = Logger.getLogger(AuditingOperationResource.class);
+    private static final Logger logger = Logger.getLogger(AuditOperationResource.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<AuditingOperationDTO>> findAll() {
-        List<AuditingOperationDTO> list = _service.findAll();
+    public ResponseEntity<List<AuditOperationDTO>> findAll() {
+        List<AuditOperationDTO> list = _service.findAll();
         logger.info(list);
         return ResponseEntity.ok().body(list);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<AuditingOperationDTO> findById(@PathVariable("id") Long id) {
-        AuditingOperationDTO obj = _service.findById(id);
+    public ResponseEntity<AuditOperationDTO> findById(@PathVariable("id") Long id) {
+        AuditOperationDTO obj = _service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<AuditingOperationDTO> save(@RequestBody String data) {
+    public ResponseEntity<AuditOperationDTO> save(@RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                AuditingOperationDTO obj = _service.save(AuditingOperationDTO.fromJSON(data));
+                AuditOperationDTO obj = _service.save(AuditOperationDTO.fromJSON(data));
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
@@ -61,10 +61,10 @@ public class AuditingOperationResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<AuditingOperationDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
+    public ResponseEntity<AuditOperationDTO> update(@PathVariable("id") Long id, @RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                AuditingOperationDTO obj = _service.update(id, AuditingOperationDTO.fromJSON(data));
+                AuditOperationDTO obj = _service.update(id, AuditOperationDTO.fromJSON(data));
                 return ResponseEntity.ok().body(obj);
             } catch (Exception e) {
                 logger.error("JSON fields are not parsable. " + e);
@@ -76,29 +76,29 @@ public class AuditingOperationResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<AuditingOperationDTO> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<AuditOperationDTO> delete(@PathVariable("id") Long id) {
         _service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/{id}/installments", method = RequestMethod.GET)
-    public ResponseEntity<List<AuditingInstallmentDTO>> findAllInstallments(@PathVariable("id") Long id) {
-        List<AuditingInstallmentDTO> list = _childService.findAllInstallments(id);
+    public ResponseEntity<List<AuditInstallmentDTO>> findAllInstallments(@PathVariable("id") Long id) {
+        List<AuditInstallmentDTO> list = _childService.findAllInstallments(id);
         logger.info(list);
         return ResponseEntity.ok().body(list);
     }
 
     @RequestMapping(value = "/{id}/installments/{quota}", method = RequestMethod.GET)
-    public ResponseEntity<AuditingInstallmentDTO> findInstallmentByQuota(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
-        AuditingInstallmentDTO obj = _childService.getByAuditingOperationIdAndQuota(id, quota);
+    public ResponseEntity<AuditInstallmentDTO> findInstallmentByQuota(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
+        AuditInstallmentDTO obj = _childService.getByAuditingOperationIdAndQuota(id, quota);
         return ResponseEntity.ok().body(obj);
     }
 
     @RequestMapping(value = "/{id}/installments", method = RequestMethod.PUT)
-    public ResponseEntity<AuditingInstallmentDTO> saveInstallment(@PathVariable("id") Long id, @RequestBody String data) {
+    public ResponseEntity<AuditInstallmentDTO> saveInstallment(@PathVariable("id") Long id, @RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                AuditingInstallmentDTO obj = AuditingInstallmentDTO.fromJSON(data);
+                AuditInstallmentDTO obj = AuditInstallmentDTO.fromJSON(data);
                 obj.setAuditingOperation(_service.findById(id));
                 obj = _childService.save(obj);
                 URI uri = ServletUriComponentsBuilder
@@ -117,10 +117,10 @@ public class AuditingOperationResource {
     }
 
     @RequestMapping(value = "/{id}/installments/{quota}", method = RequestMethod.PUT)
-    public ResponseEntity<AuditingInstallmentDTO> updateInstallment(@PathVariable("id") Long id, @PathVariable("quota") Integer quota, @RequestBody String data) {
+    public ResponseEntity<AuditInstallmentDTO> updateInstallment(@PathVariable("id") Long id, @PathVariable("quota") Integer quota, @RequestBody String data) {
         if (ResourceUtil.isJSONValid(data)) {
             try {
-                AuditingInstallmentDTO obj = AuditingInstallmentDTO.fromJSON(data);
+                AuditInstallmentDTO obj = AuditInstallmentDTO.fromJSON(data);
                 obj.setAuditingOperation(_service.findById(id));
                 if (obj.getQuota().equals(quota)) {
                     obj = _childService.update(obj);
@@ -138,7 +138,7 @@ public class AuditingOperationResource {
     }
 
     @RequestMapping(value = "/{id}/installments/{quota}", method = RequestMethod.DELETE)
-    public ResponseEntity<AuditingInstallmentDTO> deleteInstallment(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
+    public ResponseEntity<AuditInstallmentDTO> deleteInstallment(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
         _childService.delete(id, quota);
         return ResponseEntity.noContent().build();
     }

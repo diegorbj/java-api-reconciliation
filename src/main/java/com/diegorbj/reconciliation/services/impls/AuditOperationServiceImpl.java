@@ -1,18 +1,18 @@
 package com.diegorbj.reconciliation.services.impls;
 
-import com.diegorbj.reconciliation.domain.AuditingOperation;
-import com.diegorbj.reconciliation.repositories.AuditingOperationRepository;
-import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationFilterParam;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditingOperationFilterParamFactory;
-import com.diegorbj.reconciliation.services.AuditingOperationService;
-import com.diegorbj.reconciliation.services.dto.AuditingInstallmentDTO;
-import com.diegorbj.reconciliation.services.dto.AuditingOperationDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditingOperationFilterParamDTO;
+import com.diegorbj.reconciliation.domain.AuditOperation;
+import com.diegorbj.reconciliation.repositories.AuditOperationRepository;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.AuditOperationFilterParamFactory;
+import com.diegorbj.reconciliation.services.AuditOperationService;
+import com.diegorbj.reconciliation.services.dto.AuditInstallmentDTO;
+import com.diegorbj.reconciliation.services.dto.AuditOperationDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditOperationFilterParamDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
-import com.diegorbj.reconciliation.services.mappers.AuditingOperationFilterParamMapper;
-import com.diegorbj.reconciliation.services.mappers.AuditingOperationMapper;
+import com.diegorbj.reconciliation.services.mappers.AuditOperationFilterParamMapper;
+import com.diegorbj.reconciliation.services.mappers.AuditOperationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,20 +21,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuditingOperationServiceImpl implements AuditingOperationService {
+public class AuditOperationServiceImpl implements AuditOperationService {
 
     @Autowired
-    protected AuditingOperationRepository _repository;
+    protected AuditOperationRepository _repository;
 
     @Autowired
-    private AuditingOperationMapper _mapper;
+    private AuditOperationMapper _mapper;
 
     @Autowired
-    private AuditingOperationFilterParamMapper _mapperParams;
+    private AuditOperationFilterParamMapper _mapperParams;
 
     @Override
-    public List<AuditingOperationDTO> findAll() {
-        List<AuditingOperationDTO> dtoList = _mapper.toDto(_repository.findAll());
+    public List<AuditOperationDTO> findAll() {
+        List<AuditOperationDTO> dtoList = _mapper.toDto(_repository.findAll());
         if (dtoList.isEmpty()) {
             throw new ResourceNotFondException("{All}");
         }
@@ -42,36 +42,36 @@ public class AuditingOperationServiceImpl implements AuditingOperationService {
     }
 
     @Override
-    public AuditingOperationDTO findById(Long id) {
-        Optional<AuditingOperation> obj = _repository.findById(id);
+    public AuditOperationDTO findById(Long id) {
+        Optional<AuditOperation> obj = _repository.findById(id);
         return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString())));
     }
 
     @Override
-    public List<AuditingOperationDTO> getWithFilter(AuditingOperationFilterParamDTO params) {
+    public List<AuditOperationDTO> getWithFilter(AuditOperationFilterParamDTO params) {
         return _mapper.toDto(_repository.getWithFilter(_mapperParams.toEntity(params)));
     }
 
     @Override
-    public List<AuditingOperationDTO> getByCardTypes(Collection<Long> cardTypeIds) {
+    public List<AuditOperationDTO> getByCardTypes(Collection<Long> cardTypeIds) {
         return _mapper.toDto(_repository.getByCardTypes(cardTypeIds));
     }
 
     @Override
-    public List<AuditingOperationDTO> getByGrossAmountRange(Double grossAmountFrom, Double grossAmountTo) {
+    public List<AuditOperationDTO> getByGrossAmountRange(Double grossAmountFrom, Double grossAmountTo) {
         return _mapper.toDto(_repository.getByGrossAmountRange(grossAmountFrom, grossAmountTo));
     }
 
     @Override
-    public AuditingOperationDTO save(AuditingOperationDTO obj) {
-        AuditingOperationFilterParam key = AuditingOperationFilterParamFactory.create(_mapper.toEntity(obj));
-        List<AuditingOperation> list = _repository.getWithFilter(key);
+    public AuditOperationDTO save(AuditOperationDTO obj) {
+        AuditOperationFilterParam key = AuditOperationFilterParamFactory.create(_mapper.toEntity(obj));
+        List<AuditOperation> list = _repository.getWithFilter(key);
         if (list.isEmpty()) {
-            AuditingOperation st = _repository.save(_mapper.toEntity(obj));
+            AuditOperation st = _repository.save(_mapper.toEntity(obj));
             return _mapper.toDto(st);
         } else {
             if ((long) list.size() == 1L) {
-                AuditingOperationDTO currentState = _mapper.toDto(list.get(0));
+                AuditOperationDTO currentState = _mapper.toDto(list.get(0));
                 updateData(obj, currentState);
                 return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
             } else {
@@ -81,9 +81,9 @@ public class AuditingOperationServiceImpl implements AuditingOperationService {
     }
 
     @Override
-    public AuditingOperationDTO insert(AuditingOperationDTO obj) {
-        AuditingOperationFilterParam key = AuditingOperationFilterParamFactory.create(_mapper.toEntity(obj));
-        List<AuditingOperation> list = _repository.getWithFilter(key);
+    public AuditOperationDTO insert(AuditOperationDTO obj) {
+        AuditOperationFilterParam key = AuditOperationFilterParamFactory.create(_mapper.toEntity(obj));
+        List<AuditOperation> list = _repository.getWithFilter(key);
         if (list.isEmpty()) {
             return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         } else {
@@ -92,9 +92,9 @@ public class AuditingOperationServiceImpl implements AuditingOperationService {
     }
 
     @Override
-    public AuditingOperationDTO update(Long id, AuditingOperationDTO obj) {
+    public AuditOperationDTO update(Long id, AuditOperationDTO obj) {
         if (obj.getId().equals(id)) {
-            AuditingOperationDTO currentState = this.findById(id);
+            AuditOperationDTO currentState = this.findById(id);
             updateData(obj, currentState);
             return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
         } else {
@@ -104,11 +104,11 @@ public class AuditingOperationServiceImpl implements AuditingOperationService {
 
     @Override
     public void delete(Long id) {
-        Optional<AuditingOperation> obj = _repository.findById(id);
+        Optional<AuditOperation> obj = _repository.findById(id);
         _repository.deleteById(id);
     }
 
-    protected void updateData(AuditingOperationDTO from, AuditingOperationDTO to) {
+    protected void updateData(AuditOperationDTO from, AuditOperationDTO to) {
         to.setDate(from.getDate());
         to.setAuthorizationId(from.getAuthorizationId());
         to.setPointOfSaleId(from.getPointOfSaleId());
@@ -124,7 +124,7 @@ public class AuditingOperationServiceImpl implements AuditingOperationService {
         to.setCardType(from.getCardType());
         to.setModality(from.getModality());
         if (from.getInstallments() != null) {
-            for (AuditingInstallmentDTO i : from.getInstallments()) {
+            for (AuditInstallmentDTO i : from.getInstallments()) {
                 to.getInstallments().add(i);
             }
         }

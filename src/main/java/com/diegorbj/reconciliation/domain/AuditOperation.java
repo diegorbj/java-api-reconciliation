@@ -10,11 +10,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_auditing_operation")
-public class AuditingOperation extends Operation {
+@Table(name = "tb_audit_operation")
+public class AuditOperation extends Operation {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "auditing_operation_id")
-    private Set<AuditingInstallment> auditingInstallments = new HashSet<>();
+    @JoinColumn(name = "audit_operation_id")
+    private Set<AuditInstallment> auditInstallments = new HashSet<>();
 
 }

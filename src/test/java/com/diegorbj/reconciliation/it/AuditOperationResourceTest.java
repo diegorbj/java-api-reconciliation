@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class})
-class AuditingOperationResourceTest {
+class AuditOperationResourceTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,7 +40,7 @@ class AuditingOperationResourceTest {
     @Order(2)
     public void shouldReturnInsertSourceTransactions() throws Exception {
         JSONObject mapToCreate = setObjectToCreate();
-        this.mockMvc.perform(put("/reconciliation/v1/auditing/operations").contentType(MediaType.APPLICATION_JSON)
+        this.mockMvc.perform(put("/reconciliation/v1/operations/audits").contentType(MediaType.APPLICATION_JSON)
                 .content(mapToCreate.toString())).andExpect(status().isCreated());
     }
 
@@ -48,27 +48,27 @@ class AuditingOperationResourceTest {
     @Order(3)
     public void shouldReturnUpdateSourceTransactions() throws Exception {
         JSONObject mapToUpdate = setObjectToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/auditing/operations/4").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/operations/audits/4").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapToUpdate.toString())).andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
     public void shouldReturnFindByIdSourceTransactions() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/auditing/operations/4")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/operations/audits/4")).andExpect(status().isOk());
     }
 
     @Test
     @Order(5)
     public void shouldReturnFindAllSourceTransactions() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/auditing/operations")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/operations/audits")).andExpect(status().isOk());
     }
 
     @Test
     @Order(6)
     public void shouldReturnInsertInstallments() throws Exception {
         JSONObject mapToCreate = setObjectChildToCreate();
-        this.mockMvc.perform(put("/reconciliation/v1/auditing/operations/4/installments").contentType(MediaType.APPLICATION_JSON)
+        this.mockMvc.perform(put("/reconciliation/v1/operations/audits/4/installments").contentType(MediaType.APPLICATION_JSON)
                 .content(mapToCreate.toString())).andExpect(status().isCreated());
     }
 
@@ -76,32 +76,32 @@ class AuditingOperationResourceTest {
     @Order(7)
     public void shouldReturnUpdateinstallments() throws Exception {
         JSONObject mapToUpdate = setObjectChildToUpdate();
-        this.mockMvc.perform(put("/reconciliation/v1/auditing/operations/4/installments/1").contentType(MediaType.APPLICATION_JSON_VALUE)
+        this.mockMvc.perform(put("/reconciliation/v1/operations/audits/4/installments/1").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapToUpdate.toString())).andExpect(status().isOk());
     }
 
     @Test
     @Order(9)
     public void shouldReturnFindByQuotaInstallments() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/auditing/operations/4/installments/1")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/operations/audits/4/installments/1")).andExpect(status().isOk());
     }
 
     @Test
     @Order(8)
     public void shouldReturnFindAllInstallments() throws Exception {
-        this.mockMvc.perform(get("/reconciliation/v1/auditing/operations/4/installments")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/reconciliation/v1/operations/audits/4/installments")).andExpect(status().isOk());
     }
 
     @Test
     @Order(10)
     public void shouldReturnRemoveByQuotaInstallments() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/auditing/operations/4/installments/1")).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/reconciliation/v1/operations/audits/4/installments/1")).andExpect(status().isNoContent());
     }
 
     @Test
     @Order(11)
     public void shouldReturnRemoveByIdSourceTransactions() throws Exception {
-        this.mockMvc.perform(delete("/reconciliation/v1/auditing/operations/4")).andExpect(status().isNoContent());
+        this.mockMvc.perform(delete("/reconciliation/v1/operations/audits/4")).andExpect(status().isNoContent());
     }
 
     private JSONObject setObjectToCreate() throws JSONException {

@@ -1,8 +1,8 @@
 package com.diegorbj.reconciliation.repositories.impls;
 
 import com.diegorbj.reconciliation.domain.*;
-import com.diegorbj.reconciliation.repositories.AuditingOperationCustomRepository;
-import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditingOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.AuditOperationCustomRepository;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditOperationFilterParam;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,16 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class AuditingOperationCustomRepositoryImpl implements AuditingOperationCustomRepository {
+public class AuditOperationCustomRepositoryImpl implements AuditOperationCustomRepository {
 
     @PersistenceContext//(unitName="reconciliation")
     private EntityManager _entityManager;
 
     @Override
-    public List<AuditingOperation> getWithFilter(AuditingOperationFilterParam params) {
+    public List<AuditOperation> getWithFilter(AuditOperationFilterParam params) {
         CriteriaBuilder criteriaBuilder = _entityManager.getCriteriaBuilder();
-        CriteriaQuery<AuditingOperation> query = criteriaBuilder.createQuery(AuditingOperation.class);
-        Root<AuditingOperation> sourceTransaction = query.from(AuditingOperation.class);
+        CriteriaQuery<AuditOperation> query = criteriaBuilder.createQuery(AuditOperation.class);
+        Root<AuditOperation> sourceTransaction = query.from(AuditOperation.class);
         List<Predicate> predicates = new ArrayList<>();
 
         if (params.getFinancialInstitution() != null) {
@@ -90,7 +90,7 @@ public class AuditingOperationCustomRepositoryImpl implements AuditingOperationC
             query.where(predicates.toArray(new Predicate[0]));
         }
 
-        TypedQuery<AuditingOperation> queryResult = this._entityManager.createQuery(query);
+        TypedQuery<AuditOperation> queryResult = this._entityManager.createQuery(query);
 
         return queryResult.getResultList();
     }

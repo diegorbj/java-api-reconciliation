@@ -34,10 +34,10 @@ public class InitialLoadTest implements CommandLineRunner {
     private ServiceLabelService _serviceLabelService;
 
     @Autowired
-    private AuditingOperationService _auditingOperationService;
+    private AuditOperationService _auditOperationService;
 
     @Autowired
-    private AuditingInstallmentService _auditingInstallmentService;
+    private AuditInstallmentService _auditInstallmentService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -86,26 +86,26 @@ public class InitialLoadTest implements CommandLineRunner {
         sl2 = _serviceLabelService.insert(sl2);
         sl3 = _serviceLabelService.insert(sl3);
 
-        AuditingOperationDTO ao1 = new AuditingOperationDTO(null, Instant.now(), 123456L, null, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", "1234-ABC-56789", m2, fi1, fs2, sl2, ct2, mod2);
-        ao1 = _auditingOperationService.save(ao1);
-        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 130.00, ao1));
+        AuditOperationDTO ao1 = new AuditOperationDTO(null, Instant.now(), 123456L, null, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", "1234-ABC-56789", m2, fi1, fs2, sl2, ct2, mod2);
+        ao1 = _auditOperationService.save(ao1);
+        _auditInstallmentService.save(new AuditInstallmentDTO(null, 1, 130.00, ao1));
 
-        AuditingOperationDTO ao2 = new AuditingOperationDTO(null, Instant.now(), null, 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", "1234-ABC-56789", m1, fi2, fs1, sl1, ct1, mod3);
-        ao2 = _auditingOperationService.save(ao2);
-        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 75.00, ao2));
-        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 75.00, ao2));
+        AuditOperationDTO ao2 = new AuditOperationDTO(null, Instant.now(), null, 789456L, "", "4687F3", TransactionStatus.APPROVED, 2, 150.00, "123456******3456", "1234-ABC-56789", m1, fi2, fs1, sl1, ct1, mod3);
+        ao2 = _auditOperationService.save(ao2);
+        _auditInstallmentService.save(new AuditInstallmentDTO(null, 1, 75.00, ao2));
+        _auditInstallmentService.save(new AuditInstallmentDTO(null, 2, 75.00, ao2));
 
-        AuditingOperationDTO ao3 = new AuditingOperationDTO(null, Instant.now(), null, 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", "1234-ABC-56789", m3, fi2, fs1, sl1, ct3, mod3);
-        ao3 = _auditingOperationService.save(ao3);
-        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 33.34, ao3));
-        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 200.00, ao3));
-        _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 3, 33.33, ao3));
+        AuditOperationDTO ao3 = new AuditOperationDTO(null, Instant.now(), null, 456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3456", "1234-ABC-56789", m3, fi2, fs1, sl1, ct3, mod3);
+        ao3 = _auditOperationService.save(ao3);
+        _auditInstallmentService.save(new AuditInstallmentDTO(null, 1, 33.34, ao3));
+        _auditInstallmentService.save(new AuditInstallmentDTO(null, 2, 200.00, ao3));
+        _auditInstallmentService.save(new AuditInstallmentDTO(null, 3, 33.33, ao3));
 
-        ao3 = _auditingOperationService.findById(ao3.getId());
-        for (AuditingInstallmentDTO o : ao3.getInstallments()) {
+        ao3 = _auditOperationService.findById(ao3.getId());
+        for (AuditInstallmentDTO o : ao3.getInstallments()) {
             if (o.getQuota() == 2) {
                 o.setGrossAmount(33.33);
-                _auditingInstallmentService.update(o);
+                _auditInstallmentService.update(o);
             }
         }
 
