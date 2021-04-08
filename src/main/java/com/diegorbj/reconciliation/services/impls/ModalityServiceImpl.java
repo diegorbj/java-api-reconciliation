@@ -21,7 +21,8 @@ public class ModalityServiceImpl implements ModalityService {
     @Autowired
     protected ModalityRepository _repository;
 
-    private ModalityMapper _mapper = new ModalityMapperImpl();
+    @Autowired
+    private ModalityMapper _mapper;
 
     @Override
     public List<ModalityDTO> findAll() {

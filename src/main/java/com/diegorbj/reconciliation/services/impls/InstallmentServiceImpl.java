@@ -20,7 +20,8 @@ public class InstallmentServiceImpl implements InstallmentService {
     @Autowired
     protected InstallmentRepository _repository;
 
-    private InstallmentMapper _mapper = new InstallmentMapperImpl();
+    @Autowired
+    private InstallmentMapper _mapper;
 
     @Override
     public List<InstallmentDTO> findAll() {

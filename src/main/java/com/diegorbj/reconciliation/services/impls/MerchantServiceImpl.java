@@ -21,7 +21,8 @@ public class MerchantServiceImpl implements MerchantService {
     @Autowired
     protected MerchantRepository _repository;
 
-    private MerchantMapper _mapper = new MerchantMapperImpl();
+    @Autowired
+    private MerchantMapper _mapper;
 
     @Override
     public List<MerchantDTO> findAll() {

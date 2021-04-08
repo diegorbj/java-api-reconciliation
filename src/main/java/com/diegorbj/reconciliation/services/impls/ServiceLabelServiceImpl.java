@@ -21,7 +21,8 @@ public class ServiceLabelServiceImpl implements ServiceLabelService {
     @Autowired
     protected ServiceLabelRepository _repository;
 
-    private ServiceLabelMapper _mapper = new ServiceLabelMapperImpl();
+    @Autowired
+    private ServiceLabelMapper _mapper;
 
     @Override
     public List<ServiceLabelDTO> findAll() {

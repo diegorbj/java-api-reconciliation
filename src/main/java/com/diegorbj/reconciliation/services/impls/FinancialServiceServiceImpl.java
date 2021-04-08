@@ -21,7 +21,8 @@ public class FinancialServiceServiceImpl implements FinancialServiceService {
     @Autowired
     protected FinancialServiceRepository _repository;
 
-    private FinancialServiceMapper _mapper = new FinancialServiceMapperImpl();
+    @Autowired
+    private FinancialServiceMapper _mapper;
 
     @Override
     public List<FinancialServiceDTO> findAll() {

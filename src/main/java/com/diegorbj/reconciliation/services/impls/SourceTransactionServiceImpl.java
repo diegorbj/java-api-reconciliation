@@ -28,9 +28,11 @@ public class SourceTransactionServiceImpl implements SourceTransactionService {
     @Autowired
     protected SourceTransactionRepository _repository;
 
-    private SourceTransactionMapper _mapper = new SourceTransactionMapperImpl();
+    @Autowired
+    private SourceTransactionMapper _mapper;
 
-    private SourceTransactionFilterParamMapper _mapperParams = new SourceTransactionFilterParamMapperImpl();
+    @Autowired
+    private SourceTransactionFilterParamMapper _mapperParams;
 
     @Override
     public List<SourceTransactionDTO> findAll() {

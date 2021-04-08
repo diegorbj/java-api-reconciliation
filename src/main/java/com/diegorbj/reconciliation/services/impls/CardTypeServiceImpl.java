@@ -21,8 +21,8 @@ public class CardTypeServiceImpl implements CardTypeService {
     @Autowired
     protected CardTypeRepository _repository;
 
-    private CardTypeMapper _mapper = new CardTypeMapperImpl() {
-    };
+    @Autowired
+    private CardTypeMapper _mapper;
 
     @Override
     public List<CardTypeDTO> findAll() {
