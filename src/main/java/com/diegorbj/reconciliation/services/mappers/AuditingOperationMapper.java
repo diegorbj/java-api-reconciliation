@@ -27,6 +27,7 @@ public abstract class AuditingOperationMapper {
         newObj.setId(entity.getId());
         newObj.setDate(entity.getDate());
         newObj.setAuthorizationId(entity.getAuthorizationId());
+        newObj.setPointOfSaleId(entity.getPointOfSaleId());
         newObj.setTransactionId(entity.getTransactionId());
         newObj.setAuthorizationCode(entity.getAuthorizationCode());
         newObj.setTransactionStatus(entity.getTransactionStatus());
@@ -58,6 +59,7 @@ public abstract class AuditingOperationMapper {
         entity.setId(dto.getId());
         entity.setDate(dto.getDate());
         entity.setAuthorizationId(dto.getAuthorizationId());
+        entity.setPointOfSaleId(dto.getPointOfSaleId());
         entity.setTransactionId(dto.getTransactionId());
         entity.setAuthorizationCode(dto.getAuthorizationCode());
         entity.setTransactionStatus(dto.getTransactionStatus());

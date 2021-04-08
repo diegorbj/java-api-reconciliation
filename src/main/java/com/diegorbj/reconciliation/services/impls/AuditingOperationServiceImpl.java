@@ -111,6 +111,7 @@ public class AuditingOperationServiceImpl implements AuditingOperationService {
     protected void updateData(AuditingOperationDTO from, AuditingOperationDTO to) {
         to.setDate(from.getDate());
         to.setAuthorizationId(from.getAuthorizationId());
+        to.setPointOfSaleId(from.getPointOfSaleId());
         to.setTransactionId(from.getTransactionId());
         to.setAuthorizationCode(from.getAuthorizationCode());
         to.setNumberOfInstallments(from.getNumberOfInstallments());
