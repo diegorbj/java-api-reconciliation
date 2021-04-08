@@ -33,6 +33,7 @@ public abstract class AuditingOperationFilterParamMapper {
         newObj.setGrossAmountFrom(entity.getGrossAmountFrom());
         newObj.setGrossAmountTo(entity.getGrossAmountTo());
         newObj.setTransactionInformation(entity.getTransactionInformation());
+        newObj.setRebateInformation(entity.getRebateInformation());
         newObj.setMerchant(_merchantMapper.toDto(entity.getMerchant()));
         newObj.setFinancialInstitution(_financialInstitutionMapper.toDto(entity.getFinancialInstitution()));
         newObj.setFinancialService(_financialServiceMapper.toDto(entity.getFinancialService()));
@@ -64,6 +65,7 @@ public abstract class AuditingOperationFilterParamMapper {
         entity.setGrossAmountFrom(dto.getGrossAmountFrom());
         entity.setGrossAmountTo(dto.getGrossAmountTo());
         entity.setTransactionInformation(dto.getTransactionInformation());
+        entity.setRebateInformation(dto.getRebateInformation());
         entity.setMerchant(_merchantMapper.toEntity(dto.getMerchant()));
         entity.setFinancialInstitution(_financialInstitutionMapper.toEntity(dto.getFinancialInstitution()));
         entity.setFinancialService(_financialServiceMapper.toEntity(dto.getFinancialService()));

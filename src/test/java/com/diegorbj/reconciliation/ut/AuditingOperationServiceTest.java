@@ -95,6 +95,7 @@ class AuditingOperationServiceTest {
         assertEquals(updatedObject.getNumberOfInstallments(), Integer.parseInt(jsonObject.get("numberOfInstallments").toString()));
         assertEquals(updatedObject.getGrossAmount(), Double.parseDouble(jsonObject.get("grossAmount").toString()));
         assertEquals(updatedObject.getTransactionInformation(), jsonObject.get("transactionInformation"));
+        assertEquals(updatedObject.getRebateInformation(), jsonObject.get("rebateInformation"));
         assertEquals(updatedObject.getMerchant(), MerchantDTO.fromJSON(jsonObject.get("merchant").toString()));
         assertEquals(updatedObject.getFinancialInstitution(), FinancialInstitutionDTO.fromJSON(jsonObject.get("financialInstitution").toString()));
         assertEquals(updatedObject.getFinancialService(), FinancialServiceDTO.fromJSON(jsonObject.get("financialService").toString()));
@@ -186,6 +187,7 @@ class AuditingOperationServiceTest {
         map.put("numberOfInstallments", 1);
         map.put("grossAmount", 100.0);
         map.put("transactionInformation", "123456******3456");
+        map.put("rebateInformation", "1234-ABC-56789");
 
         mapAux = new JSONObject();
         mapAux.put("id", 2);
@@ -238,6 +240,7 @@ class AuditingOperationServiceTest {
         map.put("numberOfInstallments", 1);
         map.put("grossAmount", 100.0);
         map.put("transactionInformation", "123456******3456");
+        map.put("rebateInformation", "1234-ABC-56789");
 
         mapAux = new JSONObject();
         mapAux.put("id", 2);

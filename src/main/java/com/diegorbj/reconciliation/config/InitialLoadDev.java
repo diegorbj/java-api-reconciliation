@@ -89,16 +89,16 @@ public class InitialLoadDev implements CommandLineRunner {
         sl2 = _serviceLabelService.insert(sl2);
         sl3 = _serviceLabelService.insert(sl3);
 
-        AuditingOperationDTO st1 = new AuditingOperationDTO(null, Instant.parse("2021-04-04T00:00:00.00Z"), 123456L,null, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", m2, fi1, fs2, sl2, ct2, mod2);
+        AuditingOperationDTO st1 = new AuditingOperationDTO(null, Instant.parse("2021-04-04T00:00:00.00Z"), 123456L,null, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", "1234-ABC-56789", m2, fi1, fs2, sl2, ct2, mod2);
         st1 = _auditingOperationService.save(st1);
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 130.00, st1));
 
-        AuditingOperationDTO st2 = new AuditingOperationDTO(null, Instant.parse("2021-04-05T00:00:00.00Z"),null, 789456L, "", "4687F3", TransactionStatus.CANCELED, 2, 150.00, "123456******3457", m1, fi2, fs1, sl1, ct1, mod3);
+        AuditingOperationDTO st2 = new AuditingOperationDTO(null, Instant.parse("2021-04-05T00:00:00.00Z"),null, 789456L, "", "4687F3", TransactionStatus.CANCELED, 2, 150.00, "123456******3457", "1234-ABC-56789", m1, fi2, fs1, sl1, ct1, mod3);
         st2 = _auditingOperationService.save(st2);
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 75.00, st2));
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 75.00, st2));
 
-        AuditingOperationDTO st3 = new AuditingOperationDTO(null, Instant.parse("2021-04-06T00:00:00.00Z"), null,456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3458", m3, fi2, fs1, sl1, ct3, mod3);
+        AuditingOperationDTO st3 = new AuditingOperationDTO(null, Instant.parse("2021-04-06T00:00:00.00Z"), null,456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3458", "1234-ABC-56789", m3, fi2, fs1, sl1, ct3, mod3);
         st3 = _auditingOperationService.save(st3);
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 1, 33.34, st3));
         _auditingInstallmentService.save(new AuditingInstallmentDTO(null, 2, 200.00, st3));
@@ -124,6 +124,7 @@ public class InitialLoadDev implements CommandLineRunner {
         params.setGrossAmountFrom(120.00);
         params.setGrossAmountTo(160.00);
         params.setTransactionInformation("123456******3458");
+        params.setTransactionInformation("1234-ABC-56789");
         params.setMerchant(m1);
         params.setFinancialInstitution(fi2);
         params.setFinancialService(fs2);

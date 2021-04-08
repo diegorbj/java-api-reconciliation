@@ -43,6 +43,8 @@ public class AuditingOperation implements Serializable {
     private Double grossAmount;
     @Column(nullable = true, length = 100)
     private String transactionInformation;
+    @Column(nullable = true, length = 100)
+    private String rebateInformation;
 
     @ManyToOne
     @JoinColumn(name = "merchant_id")
@@ -72,7 +74,7 @@ public class AuditingOperation implements Serializable {
     @JoinColumn(name = "auditing_operation_id")
     private Set<AuditingInstallment> auditingInstallments = new HashSet<>();
 
-    public AuditingOperation(Long id, Instant date, Long authorizationId, Long pointOfSaleId, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, Merchant merchant, FinancialInstitution financialInstitution, FinancialService financialService, ServiceLabel serviceLabel, CardType cardType, Modality modality) {
+    public AuditingOperation(Long id, Instant date, Long authorizationId, Long pointOfSaleId, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, String rebateInformation, Merchant merchant, FinancialInstitution financialInstitution, FinancialService financialService, ServiceLabel serviceLabel, CardType cardType, Modality modality) {
         this.id = id;
         this.date = date;
         this.authorizationId = authorizationId;
@@ -83,6 +85,7 @@ public class AuditingOperation implements Serializable {
         this.numberOfInstallments = numberOfInstallments;
         this.grossAmount = grossAmount;
         this.transactionInformation = transactionInformation;
+        this.rebateInformation = rebateInformation;
         this.merchant = merchant;
         this.financialInstitution = financialInstitution;
         this.financialService = financialService;

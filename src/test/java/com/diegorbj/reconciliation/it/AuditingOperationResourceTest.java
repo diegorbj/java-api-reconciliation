@@ -118,6 +118,7 @@ class AuditingOperationResourceTest {
         map.put("numberOfInstallments", 1);
         map.put("grossAmount", 250.0);
         map.put("transactionInformation", "123456******3456");
+        map.put("rebateInformation", "1234-ABC-56789");
 
         mapAux = new JSONObject();
         mapAux.put("id", 2);
@@ -170,6 +171,7 @@ class AuditingOperationResourceTest {
         map.put("numberOfInstallments", 1);
         map.put("grossAmount", 250.0);
         map.put("transactionInformation", "123456******3456");
+        map.put("rebateInformation", "1234-ABC-56789");
 
         mapAux = new JSONObject();
         mapAux.put("id", 2);

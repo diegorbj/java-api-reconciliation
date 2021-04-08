@@ -20,6 +20,7 @@ public abstract class AuditingOperationFilterParamDTO {
     private Double grossAmountFrom;
     private Double grossAmountTo;
     private String transactionInformation;
+    private String rebateInformation;
     private MerchantDTO merchant;
     private FinancialInstitutionDTO financialInstitution;
     private FinancialServiceDTO financialService;

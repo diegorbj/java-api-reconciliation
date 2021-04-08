@@ -31,6 +31,7 @@ public class AuditingOperationDTO implements Serializable {
     private Integer numberOfInstallments;
     private Double grossAmount;
     private String transactionInformation;
+    private String rebateInformation;
     private MerchantDTO merchant;
     private FinancialInstitutionDTO financialInstitution;
     private FinancialServiceDTO financialService;
@@ -39,7 +40,7 @@ public class AuditingOperationDTO implements Serializable {
     private ModalityDTO modality;
     private Set<AuditingInstallmentDTO> installments = new HashSet<>();
 
-    public AuditingOperationDTO(Long id, Instant date, Long authorizationId, Long pointOfSaleId, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, MerchantDTO merchant, FinancialInstitutionDTO financialInstitution, FinancialServiceDTO financialService, ServiceLabelDTO serviceLabel, CardTypeDTO cardType, ModalityDTO modality) {
+    public AuditingOperationDTO(Long id, Instant date, Long authorizationId, Long pointOfSaleId, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, String rebateInformation, MerchantDTO merchant, FinancialInstitutionDTO financialInstitution, FinancialServiceDTO financialService, ServiceLabelDTO serviceLabel, CardTypeDTO cardType, ModalityDTO modality) {
         this.id = id;
         this.date = date;
         this.authorizationId = authorizationId;
@@ -50,6 +51,7 @@ public class AuditingOperationDTO implements Serializable {
         this.numberOfInstallments = numberOfInstallments;
         this.grossAmount = grossAmount;
         this.transactionInformation = transactionInformation;
+        this.rebateInformation = rebateInformation;
         this.merchant = merchant;
         this.financialInstitution = financialInstitution;
         this.financialService = financialService;
@@ -87,6 +89,7 @@ public class AuditingOperationDTO implements Serializable {
         obj.setNumberOfInstallments(jsonObject.get("numberOfInstallments") == JSONObject.NULL ? null : Integer.parseInt(jsonObject.get("numberOfInstallments").toString()));
         obj.setGrossAmount(jsonObject.get("grossAmount") == JSONObject.NULL ? null : Double.parseDouble(jsonObject.get("grossAmount").toString()));
         obj.setTransactionInformation(jsonObject.get("transactionInformation") == JSONObject.NULL ? null : jsonObject.get("transactionInformation").toString());
+        obj.setRebateInformation(jsonObject.get("rebateInformation") == JSONObject.NULL ? null : jsonObject.get("rebateInformation").toString());
         obj.setMerchant(MerchantDTO.fromJSON(jsonObject.get("merchant").toString()));
         obj.setFinancialInstitution(FinancialInstitutionDTO.fromJSON(jsonObject.get("financialInstitution").toString()));
         obj.setFinancialService(FinancialServiceDTO.fromJSON(jsonObject.get("financialService").toString()));

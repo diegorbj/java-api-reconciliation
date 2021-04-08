@@ -20,6 +20,7 @@ public abstract class AuditingOperationFilterParam {
     private Double grossAmountFrom;
     private Double grossAmountTo;
     private String transactionInformation;
+    private String rebateInformation;
     private Merchant merchant;
     private FinancialInstitution financialInstitution;
     private FinancialService financialService;

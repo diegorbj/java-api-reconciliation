@@ -58,6 +58,9 @@ public class AuditingOperationCustomRepositoryImpl implements AuditingOperationC
         if (params.getTransactionInformation() != null) {
             predicates.add(criteriaBuilder.equal(sourceTransaction.get("transactionInformation"), params.getTransactionInformation()));
         }
+        if (params.getRebateInformation() != null) {
+            predicates.add(criteriaBuilder.equal(sourceTransaction.get("rebateInformation"), params.getRebateInformation()));
+        }
         if (params.getCardType() != null) {
             predicates.add(criteriaBuilder.equal(sourceTransaction.get("cardType"), params.getCardType()));
         }

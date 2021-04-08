@@ -33,6 +33,7 @@ public abstract class AuditingOperationMapper {
         newObj.setNumberOfInstallments(entity.getNumberOfInstallments());
         newObj.setGrossAmount(entity.getGrossAmount());
         newObj.setTransactionInformation(entity.getTransactionInformation());
+        newObj.setRebateInformation(entity.getRebateInformation());
         newObj.setMerchant(_merchantMapper.toDto(entity.getMerchant()));
         newObj.setFinancialInstitution(_financialInstitutionMapper.toDto(entity.getFinancialInstitution()));
         newObj.setFinancialService(_financialServiceMapper.toDto(entity.getFinancialService()));
@@ -63,6 +64,7 @@ public abstract class AuditingOperationMapper {
         entity.setNumberOfInstallments(dto.getNumberOfInstallments());
         entity.setGrossAmount(dto.getGrossAmount());
         entity.setTransactionInformation(dto.getTransactionInformation());
+        entity.setRebateInformation(dto.getRebateInformation());
         entity.setMerchant(_merchantMapper.toEntity(dto.getMerchant()));
         entity.setFinancialInstitution(_financialInstitutionMapper.toEntity(dto.getFinancialInstitution()));
         entity.setFinancialService(_financialServiceMapper.toEntity(dto.getFinancialService()));
