@@ -22,7 +22,7 @@ public abstract class AuditInstallmentMapper {
         if (entity.getOperation() != null) {
             AuditOperationDTO stDTO = new AuditOperationDTO();
             stDTO.setId(entity.getOperation().getId());
-            dto.setAuditingOperation(stDTO);
+            dto.setOperation(stDTO);
         }
         return dto;
     }
@@ -32,9 +32,9 @@ public abstract class AuditInstallmentMapper {
         entity.setId(dto.getId());
         entity.setQuota(dto.getQuota());
         entity.setGrossAmount(dto.getGrossAmount());
-        if (dto.getAuditingOperation() != null) {
+        if (dto.getOperation() != null) {
             AuditOperation st = new AuditOperation();
-            st.setId(dto.getAuditingOperation().getId());
+            st.setId(dto.getOperation().getId());
             entity.setOperation(st);
         }
         return entity;

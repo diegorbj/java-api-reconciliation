@@ -11,11 +11,11 @@ public class AuditInstallmentDTO extends InstallmentDTO {
     @Getter
     @Setter
     @EqualsAndHashCode.Exclude
-    private AuditOperationDTO auditingOperation;
+    private AuditOperationDTO operation;
 
-    public AuditInstallmentDTO(Long id, Integer quota, Double grossAmount, AuditOperationDTO auditingOperation) {
+    public AuditInstallmentDTO(Long id, Integer quota, Double grossAmount, AuditOperationDTO operation) {
         super(id, quota,grossAmount);
-        this.auditingOperation = auditingOperation;
+        this.operation = operation;
     }
 
     public static AuditInstallmentDTO fromJSON(String jsonString) {
@@ -27,7 +27,7 @@ public class AuditInstallmentDTO extends InstallmentDTO {
         obj.setId(jsonObject.get("id") == JSONObject.NULL ? null : Long.parseLong(jsonObject.get("id").toString()));
         obj.setQuota(jsonObject.get("quota") == JSONObject.NULL ? null : Integer.parseInt(jsonObject.get("quota").toString()));
         obj.setGrossAmount(jsonObject.get("grossAmount") == JSONObject.NULL ? null : Double.parseDouble(jsonObject.get("grossAmount").toString()));
-        obj.setAuditingOperation(jsonObject.get("operation") == JSONObject.NULL ? null : AuditOperationDTO.fromJSON(jsonObject.get("operation").toString()));
+        obj.setOperation(jsonObject.get("operation") == JSONObject.NULL ? null : AuditOperationDTO.fromJSON(jsonObject.get("operation").toString()));
         return obj;
     }
 

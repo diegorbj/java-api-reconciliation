@@ -99,7 +99,7 @@ public class AuditOperationResource {
         if (ResourceUtil.isJSONValid(data)) {
             try {
                 AuditInstallmentDTO obj = AuditInstallmentDTO.fromJSON(data);
-                obj.setAuditingOperation(_service.findById(id));
+                obj.setOperation(_service.findById(id));
                 obj = _childService.save(obj);
                 URI uri = ServletUriComponentsBuilder
                         .fromCurrentRequest()
@@ -121,7 +121,7 @@ public class AuditOperationResource {
         if (ResourceUtil.isJSONValid(data)) {
             try {
                 AuditInstallmentDTO obj = AuditInstallmentDTO.fromJSON(data);
-                obj.setAuditingOperation(_service.findById(id));
+                obj.setOperation(_service.findById(id));
                 if (obj.getQuota().equals(quota)) {
                     obj = _childService.update(obj);
                     return ResponseEntity.ok().body(obj);

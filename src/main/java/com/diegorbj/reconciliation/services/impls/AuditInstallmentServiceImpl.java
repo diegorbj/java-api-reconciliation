@@ -52,7 +52,7 @@ public class AuditInstallmentServiceImpl implements AuditInstallmentService {
     @Override
     public AuditInstallmentDTO save(AuditInstallmentDTO obj) {
         try {
-            AuditInstallmentDTO currentState = this.getByAuditingOperationIdAndQuota(obj.getAuditingOperation().getId(), obj.getQuota());
+            AuditInstallmentDTO currentState = this.getByAuditingOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
             updateData(obj, currentState);
             return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
         } catch (ResourceNotFondException e) {
@@ -63,8 +63,8 @@ public class AuditInstallmentServiceImpl implements AuditInstallmentService {
     @Override
     public AuditInstallmentDTO insert(AuditInstallmentDTO obj) {
         try {
-            this.getByAuditingOperationIdAndQuota(obj.getAuditingOperation().getId(), obj.getQuota());
-            throw new ResourceAlreadyExistsException("Id: " + obj.getAuditingOperation().getId().toString() + "; Quota: " + obj.getQuota().toString());
+            this.getByAuditingOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
+            throw new ResourceAlreadyExistsException("Id: " + obj.getOperation().getId().toString() + "; Quota: " + obj.getQuota().toString());
         } catch (ResourceNotFondException e) {
             return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
         }
@@ -72,7 +72,7 @@ public class AuditInstallmentServiceImpl implements AuditInstallmentService {
 
     @Override
     public AuditInstallmentDTO update(AuditInstallmentDTO obj) {
-        AuditInstallmentDTO currentState = this.getByAuditingOperationIdAndQuota(obj.getAuditingOperation().getId(), obj.getQuota());
+        AuditInstallmentDTO currentState = this.getByAuditingOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
         updateData(obj, currentState);
         return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
     }
