@@ -129,7 +129,7 @@ class AuditOperationServiceTest {
         assertNotNull(testChildObject.getId());
         assertEquals(testChildObject.getQuota(), Integer.parseInt(jsonObject.get("quota").toString()));
         assertEquals(testChildObject.getGrossAmount(), Double.parseDouble(jsonObject.get("grossAmount").toString()));
-        assertEquals(testChildObject.getAuditingOperation(), AuditOperationDTO.fromJSON(jsonObject.get("operation").toString()));
+        assertEquals(testChildObject.getOperation(), AuditOperationDTO.fromJSON(jsonObject.get("operation").toString()));
     }
 
     @Test
@@ -144,7 +144,7 @@ class AuditOperationServiceTest {
         assertNotNull(updatedObject.getId());
         assertEquals(updatedObject.getQuota(), jsonObject.get("quota"));
         assertEquals(updatedObject.getGrossAmount(), jsonObject.get("grossAmount"));
-        assertEquals(updatedObject.getAuditingOperation().getId(), AuditOperationDTO.fromJSON(jsonObject.get("operation").toString()).getId());
+        assertEquals(updatedObject.getOperation().getId(), AuditOperationDTO.fromJSON(jsonObject.get("operation").toString()).getId());
 
         testChildObject = updatedObject;
     }
