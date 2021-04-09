@@ -11,7 +11,7 @@ public interface ConfirmInstallmentRepository extends JpaRepository<ConfirmInsta
 
     public List<ConfirmInstallment> findAllByOperation_Id(Long id);
 
-    @Query(value = "SELECT * FROM tb_confirm_installment ai WHERE ai.confirm_operation_id = ?1 and ai.quota = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM tb_confirm_installment ci WHERE ci.confirm_operation_id = ?1 and ci.quota = ?2", nativeQuery = true)
     Optional<ConfirmInstallment> getByOperationIdAndQuota(Long operationId, Integer quota);
 
 }

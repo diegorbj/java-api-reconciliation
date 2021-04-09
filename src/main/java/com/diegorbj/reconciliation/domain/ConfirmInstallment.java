@@ -18,7 +18,7 @@ public class ConfirmInstallment extends Installment {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "audit_operation_id")
+    @JoinColumn(name = "confirm_operation_id")
     private ConfirmOperation operation;
 
     public ConfirmInstallment(Long id, Integer quota, Double grossAmount, ConfirmOperation operation) {

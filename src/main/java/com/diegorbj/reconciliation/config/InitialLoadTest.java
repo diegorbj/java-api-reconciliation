@@ -39,6 +39,12 @@ public class InitialLoadTest implements CommandLineRunner {
     @Autowired
     private AuditInstallmentService _auditInstallmentService;
 
+    @Autowired
+    private ConfirmOperationService _confirmOperationService;
+
+    @Autowired
+    private ConfirmInstallmentService _confirmInstallmentService;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -106,6 +112,29 @@ public class InitialLoadTest implements CommandLineRunner {
             if (o.getQuota() == 2) {
                 o.setGrossAmount(33.33);
                 _auditInstallmentService.update(o);
+            }
+        }
+
+        ConfirmOperationDTO co1 = new ConfirmOperationDTO(null, Instant.parse("2021-04-04T00:00:00.00Z"), 123456L,null, "", "987D54", TransactionStatus.APPROVED, 1, 130.00, "123456******3456", "1234-ABC-56789", m2, fi1, fs2, sl2, ct2, mod2);
+        co1 = _confirmOperationService.save(co1);
+        _confirmInstallmentService.save(new ConfirmInstallmentDTO(null, 1, 130.00, co1));
+
+        ConfirmOperationDTO co2 = new ConfirmOperationDTO(null, Instant.parse("2021-04-05T00:00:00.00Z"),null, 789456L, "", "4687F3", TransactionStatus.CANCELED, 2, 150.00, "123456******3457", "1234-ABC-56789", m1, fi2, fs1, sl1, ct1, mod3);
+        co2 = _confirmOperationService.save(co2);
+        _confirmInstallmentService.save(new ConfirmInstallmentDTO(null, 1, 75.00, co2));
+        _confirmInstallmentService.save(new ConfirmInstallmentDTO(null, 2, 75.00, co2));
+
+        ConfirmOperationDTO co3 = new ConfirmOperationDTO(null, Instant.parse("2021-04-06T00:00:00.00Z"), null,456132L, "", "852465", TransactionStatus.APPROVED, 3, 100.00, "123456******3458", "1234-ABC-56789", m3, fi2, fs1, sl1, ct3, mod3);
+        co3 = _confirmOperationService.save(co3);
+        _confirmInstallmentService.save(new ConfirmInstallmentDTO(null, 1, 33.34, co3));
+        _confirmInstallmentService.save(new ConfirmInstallmentDTO(null, 2, 200.00, co3));
+        _confirmInstallmentService.save(new ConfirmInstallmentDTO(null, 3, 33.33, co3));
+
+        co3 = _confirmOperationService.findById(co3.getId());
+        for (ConfirmInstallmentDTO o : co3.getInstallments()) {
+            if (o.getQuota() == 2) {
+                o.setGrossAmount(33.33);
+                _confirmInstallmentService.update(o);
             }
         }
 
