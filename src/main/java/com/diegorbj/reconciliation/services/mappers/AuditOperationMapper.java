@@ -41,7 +41,7 @@ public abstract class AuditOperationMapper {
         newObj.setServiceLabel(_serviceLabelMapper.toDto(entity.getServiceLabel()));
         newObj.setCardType(_cardTypeMapper.toDto(entity.getCardType()));
         newObj.setModality(_modalityMapper.toDto(entity.getModality()));
-        newObj.setInstallments(_auditInstallmentMapper.toDto((Set<AuditInstallment>) entity.getAuditInstallments()));
+        newObj.setInstallments(_auditInstallmentMapper.toDto((Set<AuditInstallment>) entity.getInstallments()));
 
         return newObj;
     }
@@ -73,7 +73,7 @@ public abstract class AuditOperationMapper {
         entity.setServiceLabel(_serviceLabelMapper.toEntity(dto.getServiceLabel()));
         entity.setCardType(_cardTypeMapper.toEntity(dto.getCardType()));
         entity.setModality(_modalityMapper.toEntity(dto.getModality()));
-        entity.setAuditInstallments(_auditInstallmentMapper.toEntity((HashSet<AuditInstallmentDTO>) dto.getInstallments()));
+        entity.setInstallments(_auditInstallmentMapper.toEntity((HashSet<AuditInstallmentDTO>) dto.getInstallments()));
 
         return entity;
     }
