@@ -1,7 +1,7 @@
 package com.diegorbj.reconciliation.repositories;
 
 import com.diegorbj.reconciliation.domain.AuditOperation;
-import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.OperationFilterParam;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface AuditOperationRepository extends JpaRepository<AuditOperation, Long>, AuditOperationCustomRepository {
 
-    List<AuditOperation> getWithFilter(AuditOperationFilterParam params);
+    List<AuditOperation> getWithFilter(OperationFilterParam params);
 
     @Query(value = "SELECT * FROM tb_audit_operation ao WHERE ao.card_type_id in :card_type_ids", nativeQuery = true)
     List<AuditOperation> getByCardTypes(@Param("card_type_ids") Collection<Long> cardTypeIds);

@@ -2,7 +2,7 @@ package com.diegorbj.reconciliation.repositories.impls;
 
 import com.diegorbj.reconciliation.domain.*;
 import com.diegorbj.reconciliation.repositories.AuditOperationCustomRepository;
-import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditOperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.OperationFilterParam;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -22,7 +22,7 @@ public class AuditOperationCustomRepositoryImpl implements AuditOperationCustomR
     private EntityManager _entityManager;
 
     @Override
-    public List<AuditOperation> getWithFilter(AuditOperationFilterParam params) {
+    public List<AuditOperation> getWithFilter(OperationFilterParam params) {
         CriteriaBuilder criteriaBuilder = _entityManager.getCriteriaBuilder();
         CriteriaQuery<AuditOperation> query = criteriaBuilder.createQuery(AuditOperation.class);
         Root<AuditOperation> sourceTransaction = query.from(AuditOperation.class);

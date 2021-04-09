@@ -1,9 +1,9 @@
 package com.diegorbj.reconciliation.services.mappers;
 
-import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditOperationFilterParam;
-import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditOperationSearchParam;
-import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditOperationFilterParamDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditOperationSearchParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.OperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.OperationSearchParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.OperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.OperationSearchParamDTO;
 import org.mapstruct.Mapper;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class AuditOperationFilterParamMapper {
 
-    public AuditOperationFilterParamDTO toDto(AuditOperationFilterParam entity) {
+    public OperationFilterParamDTO toDto(OperationFilterParam entity) {
         MerchantMapper _merchantMapper = new MerchantMapperImpl();
         FinancialInstitutionMapper _financialInstitutionMapper = new FinancialInstitutionMapperImpl();
         FinancialServiceMapper _financialServiceMapper = new FinancialServiceMapperImpl();
@@ -21,7 +21,7 @@ public abstract class AuditOperationFilterParamMapper {
         ModalityMapper _modalityMapper = new ModalityMapperImpl();
         AuditInstallmentMapper _auditInstallmentMapper = new AuditInstallmentMapperImpl();
 
-        AuditOperationFilterParamDTO newObj = new AuditOperationSearchParamDTO();
+        OperationFilterParamDTO newObj = new OperationSearchParamDTO();
         newObj.setDateFrom(entity.getDateFrom());
         newObj.setDateTo(entity.getDateTo());
         newObj.setAuthorizationId(entity.getAuthorizationId());
@@ -44,7 +44,7 @@ public abstract class AuditOperationFilterParamMapper {
         return newObj;
     }
 
-    public AuditOperationFilterParam toEntity(AuditOperationFilterParamDTO dto) {
+    public OperationFilterParam toEntity(OperationFilterParamDTO dto) {
         MerchantMapper _merchantMapper = new MerchantMapperImpl();
         FinancialInstitutionMapper _financialInstitutionMapper = new FinancialInstitutionMapperImpl();
         FinancialServiceMapper _financialServiceMapper = new FinancialServiceMapperImpl();
@@ -53,7 +53,7 @@ public abstract class AuditOperationFilterParamMapper {
         ModalityMapper _modalityMapper = new ModalityMapperImpl();
         AuditInstallmentMapper _auditInstallmentMapper = new AuditInstallmentMapperImpl();
 
-        AuditOperationFilterParam entity = new AuditOperationSearchParam();
+        OperationFilterParam entity = new OperationSearchParam();
         entity.setDateFrom(dto.getDateFrom());
         entity.setDateTo(dto.getDateTo());
         entity.setAuthorizationId(dto.getAuthorizationId());
@@ -76,9 +76,9 @@ public abstract class AuditOperationFilterParamMapper {
         return entity;
     }
 
-    public List<AuditOperationFilterParamDTO> toDto(List<AuditOperationFilterParam> entityList) {
-        List<AuditOperationFilterParamDTO> dtoList = new ArrayList<>();
-        for (AuditOperationFilterParam entity : entityList) {
+    public List<OperationFilterParamDTO> toDto(List<OperationFilterParam> entityList) {
+        List<OperationFilterParamDTO> dtoList = new ArrayList<>();
+        for (OperationFilterParam entity : entityList) {
             dtoList.add(this.toDto(entity));
         }
         return dtoList;

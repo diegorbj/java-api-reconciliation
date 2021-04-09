@@ -4,8 +4,8 @@ import com.diegorbj.reconciliation.domain.enums.FinancialInstitutionCode;
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
 import com.diegorbj.reconciliation.services.*;
 import com.diegorbj.reconciliation.services.dto.*;
-import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditOperationFilterParamDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditOperationSearchParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.OperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.OperationSearchParamDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -112,7 +112,7 @@ public class InitialLoadDev implements CommandLineRunner {
             }
         }
 
-        AuditOperationFilterParamDTO params = new AuditOperationSearchParamDTO();
+        OperationFilterParamDTO params = new OperationSearchParamDTO();
         params.setDateFrom(Instant.parse("2021-04-05T00:00:00.00Z"));
         params.setDateTo(Instant.parse("2021-04-06T00:00:00.00Z"));
         params.setAuthorizationId(789456L);

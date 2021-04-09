@@ -1,7 +1,7 @@
 package com.diegorbj.reconciliation.services;
 
 import com.diegorbj.reconciliation.services.dto.AuditOperationDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditOperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.OperationFilterParamDTO;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,7 +11,7 @@ public interface AuditOperationService {
 
     AuditOperationDTO findById(Long id);
 
-    List<AuditOperationDTO> getWithFilter(AuditOperationFilterParamDTO params);
+    List<AuditOperationDTO> getWithFilter(OperationFilterParamDTO params);
 
     List<AuditOperationDTO> getByCardTypes(Collection<Long> cardTypeIds);
 

@@ -2,12 +2,12 @@ package com.diegorbj.reconciliation.services.impls;
 
 import com.diegorbj.reconciliation.domain.AuditOperation;
 import com.diegorbj.reconciliation.repositories.AuditOperationRepository;
-import com.diegorbj.reconciliation.repositories.criterias.params.domain.AuditOperationFilterParam;
-import com.diegorbj.reconciliation.repositories.criterias.params.AuditOperationFilterParamFactory;
+import com.diegorbj.reconciliation.repositories.criterias.params.domain.OperationFilterParam;
+import com.diegorbj.reconciliation.repositories.criterias.params.OperationFilterParamFactory;
 import com.diegorbj.reconciliation.services.AuditOperationService;
 import com.diegorbj.reconciliation.services.dto.AuditInstallmentDTO;
 import com.diegorbj.reconciliation.services.dto.AuditOperationDTO;
-import com.diegorbj.reconciliation.repositories.criterias.params.dto.AuditOperationFilterParamDTO;
+import com.diegorbj.reconciliation.repositories.criterias.params.dto.OperationFilterParamDTO;
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
@@ -48,7 +48,7 @@ public class AuditOperationServiceImpl implements AuditOperationService {
     }
 
     @Override
-    public List<AuditOperationDTO> getWithFilter(AuditOperationFilterParamDTO params) {
+    public List<AuditOperationDTO> getWithFilter(OperationFilterParamDTO params) {
         return _mapper.toDto(_repository.getWithFilter(_mapperParams.toEntity(params)));
     }
 
@@ -64,7 +64,7 @@ public class AuditOperationServiceImpl implements AuditOperationService {
 
     @Override
     public AuditOperationDTO save(AuditOperationDTO obj) {
-        AuditOperationFilterParam key = AuditOperationFilterParamFactory.create(_mapper.toEntity(obj));
+        OperationFilterParam key = OperationFilterParamFactory.create(_mapper.toEntity(obj));
         List<AuditOperation> list = _repository.getWithFilter(key);
         if (list.isEmpty()) {
             AuditOperation st = _repository.save(_mapper.toEntity(obj));
@@ -82,7 +82,7 @@ public class AuditOperationServiceImpl implements AuditOperationService {
 
     @Override
     public AuditOperationDTO insert(AuditOperationDTO obj) {
-        AuditOperationFilterParam key = AuditOperationFilterParamFactory.create(_mapper.toEntity(obj));
+        OperationFilterParam key = OperationFilterParamFactory.create(_mapper.toEntity(obj));
         List<AuditOperation> list = _repository.getWithFilter(key);
         if (list.isEmpty()) {
             return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));

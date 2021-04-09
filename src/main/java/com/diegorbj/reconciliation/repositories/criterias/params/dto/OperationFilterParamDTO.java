@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
-public abstract class AuditOperationFilterParamDTO {
+public abstract class OperationFilterParamDTO {
     private Instant dateFrom;
     private Instant dateTo;
     private Long authorizationId;
