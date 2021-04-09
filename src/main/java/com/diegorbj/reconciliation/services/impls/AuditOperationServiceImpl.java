@@ -11,12 +11,11 @@ import com.diegorbj.reconciliation.repositories.criterias.params.dto.OperationFi
 import com.diegorbj.reconciliation.services.exceptions.InvalidAttributeException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceAlreadyExistsException;
 import com.diegorbj.reconciliation.services.exceptions.ResourceNotFondException;
-import com.diegorbj.reconciliation.services.mappers.AuditOperationFilterParamMapper;
+import com.diegorbj.reconciliation.services.mappers.OperationFilterParamMapper;
 import com.diegorbj.reconciliation.services.mappers.AuditOperationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +29,7 @@ public class AuditOperationServiceImpl implements AuditOperationService {
     private AuditOperationMapper _mapper;
 
     @Autowired
-    private AuditOperationFilterParamMapper _mapperParams;
+    private OperationFilterParamMapper _mapperParams;
 
     @Override
     public List<AuditOperationDTO> findAll() {

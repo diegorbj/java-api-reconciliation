@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public abstract class AuditOperationFilterParamMapper {
+public abstract class OperationFilterParamMapper {
 
     public OperationFilterParamDTO toDto(OperationFilterParam entity) {
         MerchantMapper _merchantMapper = new MerchantMapperImpl();
