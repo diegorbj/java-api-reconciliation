@@ -90,7 +90,7 @@ public class AuditOperationResource {
 
     @RequestMapping(value = "/{id}/installments/{quota}", method = RequestMethod.GET)
     public ResponseEntity<AuditInstallmentDTO> findInstallmentByQuota(@PathVariable("id") Long id, @PathVariable("quota") Integer quota) {
-        AuditInstallmentDTO obj = _childService.getByAuditingOperationIdAndQuota(id, quota);
+        AuditInstallmentDTO obj = _childService.getByOperationIdAndQuota(id, quota);
         return ResponseEntity.ok().body(obj);
     }
 

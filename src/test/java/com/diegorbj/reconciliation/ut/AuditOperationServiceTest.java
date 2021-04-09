@@ -158,7 +158,7 @@ class AuditOperationServiceTest {
     @Test
     @Order(10)
     public void shouldReturnNotNullInstallmentFindById() {
-        assertNotNull(_childService.getByAuditingOperationIdAndQuota(testObject.getId(), testChildObject.getQuota()));
+        assertNotNull(_childService.getByOperationIdAndQuota(testObject.getId(), testChildObject.getQuota()));
     }
 
     @Test

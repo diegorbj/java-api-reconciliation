@@ -12,6 +12,6 @@ public interface AuditInstallmentRepository extends JpaRepository<AuditInstallme
     public List<AuditInstallment> findAllByOperation_Id(Long id);
 
     @Query(value = "SELECT * FROM tb_audit_installment ai WHERE ai.audit_operation_id = ?1 and ai.quota = ?2", nativeQuery = true)
-    Optional<AuditInstallment> getByAuditingOperationIdAndQuota(Long auditingOperationId, Integer quota);
+    Optional<AuditInstallment> getByOperationIdAndQuota(Long operationId, Integer quota);
 
 }

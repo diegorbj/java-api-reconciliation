@@ -11,7 +11,7 @@ public interface AuditInstallmentService {
 
     List<AuditInstallmentDTO> findAllInstallments(Long id);
 
-    AuditInstallmentDTO getByAuditingOperationIdAndQuota(Long id, Integer quota);
+    AuditInstallmentDTO getByOperationIdAndQuota(Long id, Integer quota);
 
     AuditInstallmentDTO save(AuditInstallmentDTO obj);
 

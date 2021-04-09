@@ -44,15 +44,15 @@ public class AuditInstallmentServiceImpl implements AuditInstallmentService {
     }
 
     @Override
-    public AuditInstallmentDTO getByAuditingOperationIdAndQuota(Long id, Integer quota) {
-        Optional<AuditInstallment> obj = _repository.getByAuditingOperationIdAndQuota(id, quota);
+    public AuditInstallmentDTO getByOperationIdAndQuota(Long id, Integer quota) {
+        Optional<AuditInstallment> obj = _repository.getByOperationIdAndQuota(id, quota);
         return _mapper.toDto(obj.orElseThrow(() -> new ResourceNotFondException("Id: " + id.toString() + "; Quota: " + quota.toString())));
     }
 
     @Override
     public AuditInstallmentDTO save(AuditInstallmentDTO obj) {
         try {
-            AuditInstallmentDTO currentState = this.getByAuditingOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
+            AuditInstallmentDTO currentState = this.getByOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
             updateData(obj, currentState);
             return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
         } catch (ResourceNotFondException e) {
@@ -63,7 +63,7 @@ public class AuditInstallmentServiceImpl implements AuditInstallmentService {
     @Override
     public AuditInstallmentDTO insert(AuditInstallmentDTO obj) {
         try {
-            this.getByAuditingOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
+            this.getByOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
             throw new ResourceAlreadyExistsException("Id: " + obj.getOperation().getId().toString() + "; Quota: " + obj.getQuota().toString());
         } catch (ResourceNotFondException e) {
             return _mapper.toDto(_repository.save(_mapper.toEntity(obj)));
@@ -72,14 +72,14 @@ public class AuditInstallmentServiceImpl implements AuditInstallmentService {
 
     @Override
     public AuditInstallmentDTO update(AuditInstallmentDTO obj) {
-        AuditInstallmentDTO currentState = this.getByAuditingOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
+        AuditInstallmentDTO currentState = this.getByOperationIdAndQuota(obj.getOperation().getId(), obj.getQuota());
         updateData(obj, currentState);
         return _mapper.toDto(_repository.save(_mapper.toEntity(currentState)));
     }
 
     @Override
     public void delete(Long id, Integer quota) {
-        AuditInstallmentDTO obj = this.getByAuditingOperationIdAndQuota(id, quota);
+        AuditInstallmentDTO obj = this.getByOperationIdAndQuota(id, quota);
         _repository.deleteById(obj.getId());
     }
 
