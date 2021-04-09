@@ -12,7 +12,6 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
 @MappedSuperclass
 public class Operation implements Serializable {
 

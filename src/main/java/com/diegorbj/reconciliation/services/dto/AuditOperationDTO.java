@@ -1,75 +1,25 @@
 package com.diegorbj.reconciliation.services.dto;
 
 import com.diegorbj.reconciliation.domain.enums.TransactionStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @ToString
-public class AuditOperationDTO implements Serializable {
+@EqualsAndHashCode
+public class AuditOperationDTO extends OperationDTO {
 
-    private static final long serialVersionUID = 1L;
-
-    private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-    private Instant date;
-    private Long authorizationId;
-    private Long pointOfSaleId;
-    private String transactionId;
-    private String authorizationCode;
-    private TransactionStatus transactionStatus;
-    private Integer numberOfInstallments;
-    private Double grossAmount;
-    private String transactionInformation;
-    private String rebateInformation;
-    private MerchantDTO merchant;
-    private FinancialInstitutionDTO financialInstitution;
-    private FinancialServiceDTO financialService;
-    private ServiceLabelDTO serviceLabel;
-    private CardTypeDTO cardType;
-    private ModalityDTO modality;
+    @Getter
+    @Setter
+    @EqualsAndHashCode.Include
     private Set<AuditInstallmentDTO> installments = new HashSet<>();
 
     public AuditOperationDTO(Long id, Instant date, Long authorizationId, Long pointOfSaleId, String transactionId, String authorizationCode, TransactionStatus transactionStatus, Integer numberOfInstallments, Double grossAmount, String transactionInformation, String rebateInformation, MerchantDTO merchant, FinancialInstitutionDTO financialInstitution, FinancialServiceDTO financialService, ServiceLabelDTO serviceLabel, CardTypeDTO cardType, ModalityDTO modality) {
-        this.id = id;
-        this.date = date;
-        this.authorizationId = authorizationId;
-        this.pointOfSaleId = pointOfSaleId;
-        this.transactionId = transactionId;
-        this.authorizationCode = authorizationCode;
-        this.transactionStatus = transactionStatus;
-        this.numberOfInstallments = numberOfInstallments;
-        this.grossAmount = grossAmount;
-        this.transactionInformation = transactionInformation;
-        this.rebateInformation = rebateInformation;
-        this.merchant = merchant;
-        this.financialInstitution = financialInstitution;
-        this.financialService = financialService;
-        this.serviceLabel = serviceLabel;
-        this.cardType = cardType;
-        this.modality = modality;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AuditOperationDTO that = (AuditOperationDTO) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+        super(id, date, authorizationId, pointOfSaleId, transactionId, authorizationCode, transactionStatus, numberOfInstallments, grossAmount, transactionInformation, rebateInformation, merchant, financialInstitution, financialService, serviceLabel, cardType, modality);
     }
 
     public static AuditOperationDTO fromJSON(String jsonString) {
@@ -97,4 +47,5 @@ public class AuditOperationDTO implements Serializable {
         obj.setModality(ModalityDTO.fromJSON(jsonObject.get("modality").toString()));
         return obj;
     }
+
 }
