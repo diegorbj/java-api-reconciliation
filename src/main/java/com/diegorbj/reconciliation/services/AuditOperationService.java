@@ -13,10 +13,6 @@ public interface AuditOperationService {
 
     List<AuditOperationDTO> getWithFilter(OperationFilterParamDTO params);
 
-    List<AuditOperationDTO> getByCardTypes(Collection<Long> cardTypeIds);
-
-    List<AuditOperationDTO> getByGrossAmountRange(Double grossAmountFrom, Double grossAmountTo);
-
     AuditOperationDTO save(AuditOperationDTO obj);
 
     AuditOperationDTO insert(AuditOperationDTO obj);

@@ -53,16 +53,6 @@ public class AuditOperationServiceImpl implements AuditOperationService {
     }
 
     @Override
-    public List<AuditOperationDTO> getByCardTypes(Collection<Long> cardTypeIds) {
-        return _mapper.toDto(_repository.getByCardTypes(cardTypeIds));
-    }
-
-    @Override
-    public List<AuditOperationDTO> getByGrossAmountRange(Double grossAmountFrom, Double grossAmountTo) {
-        return _mapper.toDto(_repository.getByGrossAmountRange(grossAmountFrom, grossAmountTo));
-    }
-
-    @Override
     public AuditOperationDTO save(AuditOperationDTO obj) {
         OperationFilterParam key = OperationFilterParamFactory.create(_mapper.toEntity(obj));
         List<AuditOperation> list = _repository.getWithFilter(key);
