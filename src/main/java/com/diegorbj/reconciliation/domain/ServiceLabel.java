@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_serviceLabel")
+@Table(name = "tb_service_label")
 public class ServiceLabel implements Serializable {
 
     private static final long serialVersionUID = 1L;

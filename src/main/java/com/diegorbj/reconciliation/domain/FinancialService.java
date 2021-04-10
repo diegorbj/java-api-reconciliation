@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_financialService")
+@Table(name = "tb_financial_service")
 public class FinancialService implements Serializable {
 
     private static final long serialVersionUID = 1L;

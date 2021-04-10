@@ -12,7 +12,7 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_financialInstitution")
+@Table(name = "tb_financial_institution")
 public class FinancialInstitution implements Serializable {
 
     private static final long serialVersionUID = 1L;

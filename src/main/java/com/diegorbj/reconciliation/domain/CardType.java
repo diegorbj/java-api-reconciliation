@@ -11,7 +11,7 @@ import java.io.Serializable;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_cardType")
+@Table(name = "tb_card_type")
 public class CardType implements Serializable {
 
     private static final long serialVersionUID = 1L;
