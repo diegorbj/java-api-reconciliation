@@ -14,7 +14,7 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-public class OperationDTO implements Serializable {
+public abstract class OperationDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EqualsAndHashCode.Include

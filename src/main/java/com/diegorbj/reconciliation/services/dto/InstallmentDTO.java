@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-public class InstallmentDTO implements Serializable {
+public abstract class InstallmentDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
