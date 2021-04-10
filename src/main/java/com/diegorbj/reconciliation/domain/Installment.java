@@ -11,7 +11,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 @MappedSuperclass
-public class Installment implements Serializable {
+public abstract class Installment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

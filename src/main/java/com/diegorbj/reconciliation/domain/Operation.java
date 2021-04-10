@@ -13,7 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 @MappedSuperclass
-public class Operation implements Serializable {
+public abstract class Operation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
