@@ -41,6 +41,8 @@ public class Statement implements Serializable {
     private ServiceLabel serviceLabel;
     @Column(nullable = false)
     private Integer numberOfQuotas;
+    @Column(length = 20)
+    private String merchantIdentification;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "statement_id")

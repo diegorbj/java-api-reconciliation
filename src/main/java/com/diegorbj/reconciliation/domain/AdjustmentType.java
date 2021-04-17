@@ -1,6 +1,5 @@
 package com.diegorbj.reconciliation.domain;
 
-import jdk.jfr.Enabled;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +10,7 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode
-@Enabled
+@Entity
 @Table(name = "tb_adjustment_type")
 public class AdjustmentType implements Serializable {
 

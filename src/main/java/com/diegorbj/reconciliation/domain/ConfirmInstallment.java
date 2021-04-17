@@ -21,9 +21,20 @@ public class ConfirmInstallment extends Installment {
     @JoinColumn(name = "confirm_operation_id")
     private ConfirmOperation operation;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "entry_id")
+    private Entry entry;
+
     public ConfirmInstallment(Long id, Integer quota, Double grossAmount, ConfirmOperation operation) {
-        super(id,quota,grossAmount);
+        super(id, quota, grossAmount);
         this.operation = operation;
+    }
+
+    public ConfirmInstallment(Long id, Integer quota, Double grossAmount, ConfirmOperation operation, Entry entry) {
+        super(id, quota, grossAmount);
+        this.operation = operation;
+        this.entry = entry;
     }
 
 }

@@ -1,9 +1,14 @@
 package com.diegorbj.reconciliation.domain;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 @Getter
@@ -21,23 +26,57 @@ public class Adjustment implements Serializable {
     private Long id;
     @Column(nullable = false, length = 50)
     private String identification;
-    @Column(nullable = false, length = 100)
-    private String motive;
+    @Column(length = 50)
+    private String protocol;
+    @Column(nullable = false)
+    private Double netAmount;
+    private Instant adjustmentDate;
+    private Instant originalTransactionDate;
+    private Long originalAuthorizationId;
+    private Long originalPointOfSaleId;
+    @Column(length = 50)
+    private String originalTransactionId;
+    @Column(length = 10)
+    private String originalAuthorizationCode;
+    @Column(length = 100)
+    private String originalTransactionInformation;
+    @Column(length = 20)
+    private String originalMerchantIdentification;
 
     @ManyToOne
-    @JoinColumn(name = "financialInstitution_id")
-    private FinancialInstitution financialInstitution;
+    @JoinColumn(name = "merchant_id")
+    private Merchant originalMerchant;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "confirm_operation_id")
+    private ConfirmOperation originalOperation;
 
     @ManyToOne
-    @JoinColumn(name = "adjustmentType_id")
-    private AdjustmentType adjustmentType;
+    @JoinColumn(name = "adjustment_motive_id")
+    private AdjustmentMotive adjustmentMotive;
 
-    public Adjustment(Long id, String identification, String motive, AdjustmentType adjustmentType, FinancialInstitution financialInstitution) {
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "entry_id")
+    private Entry entry;
+
+    public Adjustment(Long id, String identification, String protocol, Double netAmount, Instant adjustmentDate, Instant originalTransactionDate, Long originalAuthorizationId, Long originalPointOfSaleId, String originalTransactionId, String originalAuthorizationCode, String originalTransactionInformation, String originalMerchantIdentification, Merchant originalMerchant, ConfirmOperation originalOperation, AdjustmentMotive adjustmentMotive, Entry entry) {
         this.id = id;
         this.identification = identification;
-        this.motive = motive;
-        this.adjustmentType = adjustmentType;
-        this.financialInstitution = financialInstitution;
+        this.protocol = protocol;
+        this.netAmount = netAmount;
+        this.adjustmentDate = adjustmentDate;
+        this.originalTransactionDate = originalTransactionDate;
+        this.originalAuthorizationId = originalAuthorizationId;
+        this.originalPointOfSaleId = originalPointOfSaleId;
+        this.originalTransactionId = originalTransactionId;
+        this.originalAuthorizationCode = originalAuthorizationCode;
+        this.originalTransactionInformation = originalTransactionInformation;
+        this.originalMerchantIdentification = originalMerchantIdentification;
+        this.originalMerchant = originalMerchant;
+        this.originalOperation = originalOperation;
+        this.adjustmentMotive = adjustmentMotive;
+        this.entry = entry;
     }
 
     @Override
@@ -45,7 +84,7 @@ public class Adjustment implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Adjustment that = (Adjustment) o;
-        return Objects.equals(id, that.id);
+        return id.equals(that.id);
     }
 
     @Override

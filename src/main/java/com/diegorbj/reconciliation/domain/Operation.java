@@ -47,19 +47,19 @@ public abstract class Operation implements Serializable {
     private Merchant merchant;
 
     @ManyToOne
-    @JoinColumn(name = "financialInstitution_id")
+    @JoinColumn(name = "financial_institution_id")
     private FinancialInstitution financialInstitution;
 
     @ManyToOne
-    @JoinColumn(name = "financialService_id")
+    @JoinColumn(name = "financial_service_id")
     private FinancialService financialService;
 
     @ManyToOne
-    @JoinColumn(name = "serviceLabel_id")
+    @JoinColumn(name = "service_label_id")
     private ServiceLabel serviceLabel;
 
     @ManyToOne
-    @JoinColumn(name = "cardType_id")
+    @JoinColumn(name = "card_type_id")
     private CardType cardType;
 
     @ManyToOne

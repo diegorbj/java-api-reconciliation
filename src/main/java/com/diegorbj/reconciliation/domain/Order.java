@@ -26,19 +26,19 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @EqualsAndHashCode.Exclude
+    private Integer quota;
+    @EqualsAndHashCode.Exclude
     @NotNull
     private Instant dueDate;
-    @EqualsAndHashCode.Exclude
-    private Integer quota;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
+    private Set<Entry> entries = new HashSet<>();
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "statement_id")
     private Statement statement;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    private Set<Entry> entries = new HashSet<>();
 
     public Order(Long id, Instant dueDate, Integer quota, Statement statement) {
         this.id = id;

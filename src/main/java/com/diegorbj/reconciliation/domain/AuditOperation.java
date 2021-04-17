@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "tb_audit_operation")
 public class AuditOperation extends Operation {
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "audit_operation_id")
     private Set<AuditInstallment> installments = new HashSet<>();
 

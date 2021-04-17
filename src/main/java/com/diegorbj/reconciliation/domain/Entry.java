@@ -1,5 +1,6 @@
 package com.diegorbj.reconciliation.domain;
 
+import com.diegorbj.reconciliation.domain.enums.AmountType;
 import com.diegorbj.reconciliation.domain.enums.EntryType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -13,8 +14,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_entry")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "amount_type", discriminatorType = DiscriminatorType.INTEGER)
 public class Entry implements Serializable {
 
     private final static long serialVersionUID = 1L;
@@ -26,21 +25,18 @@ public class Entry implements Serializable {
     private Double amount;
     @Column(nullable = false)
     private EntryType entryType;
-
-    @ManyToOne
-    @JoinColumn(name = "adjustment_id")
-    private Adjustment adjustment;
+    @Column(nullable = false)
+    private AmountType amountType;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    public Entry(Long id, Double amount, EntryType entryType, Adjustment adjustment) {
+    public Entry(Long id, Double amount, EntryType entryType) {
         this.id = id;
         this.amount = amount;
         this.entryType = entryType;
-        this.adjustment = adjustment;
     }
 
 }
